@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="biyanzhi"
+  id="myeclipse.1430989559684"
+  context-root="/biyanzhi"
+  j2ee-spec="5.0"
+  archive="biyanzhi.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
