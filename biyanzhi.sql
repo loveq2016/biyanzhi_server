@@ -2,21 +2,21 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50520
+Source Server Version : 50703
 Source Host           : localhost:3306
 Source Database       : biyanzhi
 
 Target Server Type    : MYSQL
-Target Server Version : 50520
+Target Server Version : 50703
 File Encoding         : 65001
 
-Date: 2015-05-12 17:31:31
+Date: 2015-05-12 21:45:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `picture`
+-- Table structure for picture
 -- ----------------------------
 DROP TABLE IF EXISTS `picture`;
 CREATE TABLE `picture` (
@@ -30,5 +30,12 @@ CREATE TABLE `picture` (
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of picture
+-- Table structure for picture_image
 -- ----------------------------
+DROP TABLE IF EXISTS `picture_image`;
+CREATE TABLE `picture_image` (
+  `image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `picture_id` int(11) NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  PRIMARY KEY (`image_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
