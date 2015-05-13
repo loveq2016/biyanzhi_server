@@ -11,10 +11,14 @@ import com.biyanzhi.factory.MySqlSession;
 public class PictureDaoImlp implements PictureDao {
 
 	public int insertPicture(Picture picture) {
-		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
-		PictureDao dao = sqlSession.getMapper(PictureDao.class);
-		dao.insertPicture(picture);
-		sqlSession.commit();
+		try {
+			SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
+			PictureDao dao = sqlSession.getMapper(PictureDao.class);
+			dao.insertPicture(picture);
+			sqlSession.commit();
+		} catch (Exception e) {
+ 			e.printStackTrace();
+		}
 		return picture.getPicture_id();
 
 	}

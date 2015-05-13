@@ -37,16 +37,6 @@ public class MySqlSession {
 	}
 
 	public static void main(String[] args) {
-		List<PictureImage> lists = new ArrayList<PictureImage>();
-		for (int i = 0; i < 5; i++) {
-			PictureImage image = new PictureImage();
-			image.setImage_url("aa");
-			lists.add(image);
-		}
-		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
-		PictureImageDao dao = sqlSession.getMapper(PictureImageDao.class);
-		int id = dao.insertPictureImage(lists);
-		sqlSession.commit();
-		System.out.println(id);
+
 	}
 }
