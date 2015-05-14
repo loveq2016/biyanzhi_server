@@ -20,4 +20,9 @@
 		picture(publisher_id,publish_time,content,publisher_name,publisher_avatar)
 		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar})
 	</insert>
+	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
+
+		select * from picture
+
+	</select>
 </mapper>

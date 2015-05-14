@@ -13,12 +13,18 @@
 	</resultMap>
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
 	<insert id="insertPictureImage" parameterType="java.util.List"
-	useGeneratedKeys="true">
-	insert into
-	picture_image(picture_id,image_url)values
+		useGeneratedKeys="true">
+		insert into
+		picture_image(picture_id,image_url)values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(#{item.picture_id},#{item.image_url})
 		</foreach>
 	</insert>
+	<select id="getPictureImageListsByPictureID" parameterType="Integer"
+		resultMap="PictureImage">
+
+		select * from picture_image where picture_id=#{picture_id}
+
+	</select>
 </mapper>

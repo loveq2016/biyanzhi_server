@@ -24,6 +24,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.PictureImage;
 import com.biyanzhi.dao.PictureDao;
+import com.biyanzhi.dao.PictureImageDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
@@ -41,8 +42,19 @@ public class PictureController {
 		this.pictureDao = pictureDao;
 	}
 
+	@Autowired
+	private PictureImageDao picImageDao;
+
+	public PictureImageDao getPicImageDao() {
+		return picImageDao;
+	}
+
+	public void setPicImageDao(PictureImageDao picImageDao) {
+		this.picImageDao = picImageDao;
+	}
+
 	@ResponseBody
-	@RequestMapping(value = "/addpicture.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/addpicture.do", method = RequestMethod.POST)
 	public String addPicture(HttpServletRequest request) {
 		String img_path = request.getSession().getServletContext()
 				.getRealPath("picture_image");
@@ -97,6 +109,7 @@ public class PictureController {
 				}
 				imgIndex++;
 			}
+			picImageDao.insertPictureImage(imageLists);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,5 +119,23 @@ public class PictureController {
 		params.put("time", publicsh_time);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getpicturelists.do", method = RequestMethod.POST)
+	public String getPictureList(HttpServletRequest request) {
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.getPictureList());
+		for (Picture pic : lists) {
+			pic.setImages(picImageDao.getPictureImageListsByPictureID(pic
+					.getPicture_id()));
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println(jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
 	}
 }
