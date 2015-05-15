@@ -22,9 +22,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.biyanzhi.bean.Picture;
-import com.biyanzhi.bean.PictureImage;
 import com.biyanzhi.dao.PictureDao;
-import com.biyanzhi.dao.PictureImageDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
@@ -42,16 +40,16 @@ public class PictureController {
 		this.pictureDao = pictureDao;
 	}
 
-	@Autowired
-	private PictureImageDao picImageDao;
-
-	public PictureImageDao getPicImageDao() {
-		return picImageDao;
-	}
-
-	public void setPicImageDao(PictureImageDao picImageDao) {
-		this.picImageDao = picImageDao;
-	}
+	// @Autowired
+	// private PictureImageDao picImageDao;
+	//
+	// public PictureImageDao getPicImageDao() {
+	// return picImageDao;
+	// }
+	//
+	// public void setPicImageDao(PictureImageDao picImageDao) {
+	// this.picImageDao = picImageDao;
+	// }
 
 	@ResponseBody
 	@RequestMapping(value = "/addpicture.do", method = RequestMethod.POST)
@@ -75,48 +73,45 @@ public class PictureController {
 		pic.setPublisher_name(publisher_name);
 		pic.setPublisher_id(publisher_id);
 		pic.setPublisher_avatar(publisher_avatar);
-		int picture_id = pictureDao.insertPicture(pic);
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (picture_id <= 0) {
+		int picture_id = 0;
+		// ±£´æÍ¼Æ¬
+		MultipartFile file = multipartRequest.getFile("image");
+		String serverPath = Constants.SERVER_PATH + "/picture_image/";
+		try {
+			if (file != null && !file.isEmpty()) {
+				String file_name = file.getOriginalFilename();
+				String save_filename = DateUtils.getUpLoadFileName()
+						+ file_name.substring(file_name.length() - 4,
+								file_name.length());
+				File targetFile = new File(img_path, save_filename);
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
+				}
+				file.transferTo(targetFile);
+				pic.setPicture_image_url(serverPath + save_filename);
+				picture_id = pictureDao.insertPicture(pic);
+				if (picture_id <= 0) {
+					params.put("rt", 0);
+					params.put("err", ErrorEnum.INVALID.name());
+					JSONObject jsonObjectFromMap = JSONObject
+							.fromObject(params);
+					return jsonObjectFromMap.toString();
+				}
+			} else {
+				params.put("rt", 0);
+				params.put("err", ErrorEnum.INVALID.name());
+				JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+				return jsonObjectFromMap.toString();
+			}
+		} catch (IOException e) {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
 			JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 			return jsonObjectFromMap.toString();
 		}
-		// ±£´æÍ¼Æ¬
-		List<MultipartFile> files = multipartRequest.getFiles("image");
-		String serverPath = Constants.SERVER_PATH + "/picture_image/";
-		List<PictureImage> imageLists = new ArrayList<PictureImage>();
-		int imgIndex = 1;
-		try {
-			for (MultipartFile multipartFile : files) {
-				if (!multipartFile.isEmpty()) {
-					String file_name = multipartFile.getOriginalFilename();
-					String save_filename = DateUtils.getUpLoadFileName()
-							+ "_"
-							+ imgIndex
-							+ file_name.substring(file_name.length() - 4,
-									file_name.length());
-					File targetFile = new File(img_path, save_filename);
-					if (!targetFile.exists()) {
-						targetFile.mkdirs();
-					}
-					multipartFile.transferTo(targetFile);
-					PictureImage img = new PictureImage();
-					img.setPicture_id(picture_id);
-					img.setImage_url(serverPath + save_filename);
-					imageLists.add(img);
-				}
-				imgIndex++;
-			}
-			picImageDao.insertPictureImage(imageLists);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		params.put("rt", 1);
 		params.put("picture_id", picture_id);
-		params.put("images", imageLists);
-		params.put("time", publicsh_time);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 	}
@@ -126,10 +121,10 @@ public class PictureController {
 	public String getPictureList(HttpServletRequest request) {
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList());
-		for (Picture pic : lists) {
-			pic.setImages(picImageDao.getPictureImageListsByPictureID(pic
-					.getPicture_id()));
-		}
+		// for (Picture pic : lists) {
+		// pic.setImages(picImageDao.getPictureImageListsByPictureID(pic
+		// .getPicture_id()));
+		// }
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);

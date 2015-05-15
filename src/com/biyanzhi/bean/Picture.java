@@ -10,7 +10,8 @@ public class Picture {
 	private String content = "";
 	private String publisher_name = "";
 	private String publisher_avatar = "";
-	private List<PictureImage> images = new ArrayList<PictureImage>();
+	// private List<PictureImage> images = new ArrayList<PictureImage>();
+	private String picture_image_url = "";
 
 	public int getPicture_id() {
 		return picture_id;
@@ -60,12 +61,20 @@ public class Picture {
 		this.publisher_avatar = publisher_avatar;
 	}
 
-	public List<PictureImage> getImages() {
-		return images;
+	public String getPicture_image_url() {
+		return picture_image_url;
 	}
 
-	public void setImages(List<PictureImage> images) {
-		this.images = images;
+	public void setPicture_image_url(String picture_image_url) {
+		this.picture_image_url = picture_image_url;
 	}
+
+	// public List<PictureImage> getImages() {
+	// return images;
+	// }
+	//
+	// public void setImages(List<PictureImage> images) {
+	// this.images = images;
+	// }
 
 }
