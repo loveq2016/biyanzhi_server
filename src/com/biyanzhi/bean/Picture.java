@@ -12,6 +12,15 @@ public class Picture {
 	private String publisher_avatar = "";
 	// private List<PictureImage> images = new ArrayList<PictureImage>();
 	private String picture_image_url = "";
+	private int average_score;
+
+	public int getAverage_score() {
+		return average_score;
+	}
+
+	public void setAverage_score(int average_score) {
+		this.average_score = average_score;
+	}
 
 	public int getPicture_id() {
 		return picture_id;

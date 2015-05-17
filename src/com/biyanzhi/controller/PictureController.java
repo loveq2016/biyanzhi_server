@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.biyanzhi.bean.Picture;
+import com.biyanzhi.bean.PictureScore;
 import com.biyanzhi.dao.PictureDao;
+import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
@@ -40,16 +42,16 @@ public class PictureController {
 		this.pictureDao = pictureDao;
 	}
 
-	// @Autowired
-	// private PictureImageDao picImageDao;
-	//
-	// public PictureImageDao getPicImageDao() {
-	// return picImageDao;
-	// }
-	//
-	// public void setPicImageDao(PictureImageDao picImageDao) {
-	// this.picImageDao = picImageDao;
-	// }
+	@Autowired
+	private PictureScoreDao scoreDao;
+
+	public PictureScoreDao getScoreDao() {
+		return scoreDao;
+	}
+
+	public void setScoreDao(PictureScoreDao scoreDao) {
+		this.scoreDao = scoreDao;
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/addpicture.do", method = RequestMethod.POST)
@@ -121,15 +123,37 @@ public class PictureController {
 	public String getPictureList(HttpServletRequest request) {
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList());
-		// for (Picture pic : lists) {
-		// pic.setImages(picImageDao.getPictureImageListsByPictureID(pic
-		// .getPicture_id()));
-		// }
+		for (Picture pic : lists) {
+			pic.setAverage_score(scoreDao.getPictureAvgScore(pic
+					.getPicture_id()));
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addpicturescore.do", method = RequestMethod.POST)
+	public String addPictureScore(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
+		int picture_score = Integer.valueOf(request
+				.getParameter("picture_score"));
+		PictureScore score = new PictureScore();
+		score.setPicture_id(picture_id);
+		score.setPicture_score(picture_score);
+		score.setUser_id(user_id);
+		int result = scoreDao.addPictureScore(score);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 
 	}

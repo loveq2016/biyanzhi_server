@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.biyanzhi.dao.PictureScoreDao">
+	<resultMap type="com.biyanzhi.bean.PictureScore" id="PictureScore">
+		<id property="id" column="id" />
+		<result property="picture_id" column="picture_id" />
+		<result property="user_id" column="user_id" />
+		<result property="picture_score" column="picture_score" />
+
+
+	</resultMap>
+	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
+	<select id="getPictureScores" parameterType="Integer" resultMap="PictureScore">
+
+		select * from picture_score where picture_id=#{picture_id}
+
+	</select>
+	<select id="getPictureAvgScore" parameterType="Integer"
+		resultType="Integer">
+
+		SELECT ROUND(AVG(picture_score)) FROM picture_score WHERE
+		picture_id=#{picture_id}
+
+	</select>
+	<insert id="addPictureScore" parameterType="com.biyanzhi.bean.PictureScore">
+		insert into
+		picture_score(user_id,picture_id,picture_score )
+		values(#{user_id},#{picture_id},#{picture_score})
+	</insert>
+</mapper>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50703
 File Encoding         : 65001
 
-Date: 2015-05-12 21:45:21
+Date: 2015-05-17 20:23:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,8 +26,9 @@ CREATE TABLE `picture` (
   `content` varchar(255) DEFAULT NULL,
   `publisher_name` varchar(255) DEFAULT NULL,
   `publisher_avatar` varchar(255) DEFAULT NULL,
+  `picture_image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`picture_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for picture_image
@@ -38,4 +39,16 @@ CREATE TABLE `picture_image` (
   `picture_id` int(11) NOT NULL,
   `image_url` varchar(255) NOT NULL,
   PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for picture_score
+-- ----------------------------
+DROP TABLE IF EXISTS `picture_score`;
+CREATE TABLE `picture_score` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `picture_id` int(11) DEFAULT NULL,
+  `picture_score` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;

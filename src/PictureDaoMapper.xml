@@ -19,8 +19,8 @@
 	<insert id="insertPicture" parameterType="com.biyanzhi.bean.Picture"
 		useGeneratedKeys="true" keyProperty="picture_id">
 		insert into
-		picture(publisher_id,publish_time,content,publisher_name,publisher_avatar)
-		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar})
+		picture(publisher_id,publish_time,content,publisher_name,publisher_avatar,picture_image_url)
+		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar},#{picture_image_url})
 	</insert>
 	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
 

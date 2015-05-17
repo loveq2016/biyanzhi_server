@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.biyanzhi.bean.PictureImage;
 import com.biyanzhi.dao.PictureImageDao;
+import com.biyanzhi.dao.PictureScoreDao;
 
 public class MySqlSession {
 	/**
@@ -37,17 +38,9 @@ public class MySqlSession {
 	}
 
 	public static void main(String[] args) {
-		List<PictureImage> imageLists = new ArrayList<PictureImage>();
-		for (int i = 0; i < 5; i++) {
-			PictureImage img = new PictureImage();
-			img.setImage_url("http://www.baidu.com");
-			img.setPicture_id(2);
-			imageLists.add(img);
-		}
-
 		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
-		PictureImageDao dao = sqlSession.getMapper(PictureImageDao.class);
-		int id = dao.insertPictureImage(imageLists);
+		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
+		int id = dao.getPictureAvgScore(30);
 		System.out.println(id);
 
 	}
