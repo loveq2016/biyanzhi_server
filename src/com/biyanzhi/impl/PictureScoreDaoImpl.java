@@ -32,13 +32,16 @@ public class PictureScoreDaoImpl implements PictureScoreDao {
 		return 1;
 	}
 
-	public int getPictureAvgScore(int picture_id) {
-		int score;
+	public Integer getPictureAvgScore(int picture_id) {
+		Integer score;
 		try {
 			SqlSession sqlSession = MySqlSession.getSessionFactory()
 					.openSession();
 			PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
 			score = dao.getPictureAvgScore(picture_id);
+			if (null == score) {
+				return 0;
+			}
 			return score;
 		} catch (Exception e) {
 			e.printStackTrace();

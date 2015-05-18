@@ -40,7 +40,7 @@ public class MySqlSession {
 	public static void main(String[] args) {
 		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
 		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
-		int id = dao.getPictureAvgScore(30);
+		Integer id = dao.getPictureAvgScore(30);
 		System.out.println(id);
 
 	}
