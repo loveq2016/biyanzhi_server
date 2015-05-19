@@ -1,8 +1,5 @@
 package com.biyanzhi.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Picture {
 	private int picture_id;
 	private int publisher_id = 0;
@@ -10,9 +7,10 @@ public class Picture {
 	private String content = "";
 	private String publisher_name = "";
 	private String publisher_avatar = "";
-	// private List<PictureImage> images = new ArrayList<PictureImage>();
 	private String picture_image_url = "";
 	private int average_score;
+	private int picture_image_height;
+	private int picture_image_width;
 
 	public int getAverage_score() {
 		return average_score;
@@ -78,12 +76,20 @@ public class Picture {
 		this.picture_image_url = picture_image_url;
 	}
 
-	// public List<PictureImage> getImages() {
-	// return images;
-	// }
-	//
-	// public void setImages(List<PictureImage> images) {
-	// this.images = images;
-	// }
+	public int getPicture_image_height() {
+		return picture_image_height;
+	}
+
+	public void setPicture_image_height(int picture_image_height) {
+		this.picture_image_height = picture_image_height;
+	}
+
+	public int getPicture_image_width() {
+		return picture_image_width;
+	}
+
+	public void setPicture_image_width(int picture_image_width) {
+		this.picture_image_width = picture_image_width;
+	}
 
 }

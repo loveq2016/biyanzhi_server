@@ -13,14 +13,16 @@
 		<result property="publisher_name" column="publisher_name" />
 		<result property="publisher_avatar" column="publisher_avatar" />
 		<result property="picture_image_url" column="picture_image_url" />
+		<result property="picture_image_height" column="picture_image_height" />
+		<result property="picture_image_width" column="picture_image_width" />
 
 	</resultMap>
 	<!-- getAppLists必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
 	<insert id="insertPicture" parameterType="com.biyanzhi.bean.Picture"
 		useGeneratedKeys="true" keyProperty="picture_id">
 		insert into
-		picture(publisher_id,publish_time,content,publisher_name,publisher_avatar,picture_image_url)
-		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar},#{picture_image_url})
+		picture(publisher_id,publish_time,content,publisher_name,publisher_avatar,picture_image_url,picture_image_height,picture_image_width)
+		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar},#{picture_image_url},#{picture_image_height},#{picture_image_width})
 	</insert>
 	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
 

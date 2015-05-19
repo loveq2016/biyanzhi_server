@@ -68,6 +68,10 @@ public class PictureController {
 		String publisher_name = multipartRequest.getParameter("publisher_name");
 		String publisher_avatar = multipartRequest
 				.getParameter("publisher_avatar");
+		int picture_image_height = Integer.valueOf(multipartRequest
+				.getParameter("picture_image_height"));
+		int picture_image_width = Integer.valueOf(multipartRequest
+				.getParameter("picture_image_width"));
 		String publicsh_time = DateUtils.getPicturePublishTime();
 		Picture pic = new Picture();
 		pic.setContent(content);
@@ -75,6 +79,8 @@ public class PictureController {
 		pic.setPublisher_name(publisher_name);
 		pic.setPublisher_id(publisher_id);
 		pic.setPublisher_avatar(publisher_avatar);
+		pic.setPicture_image_height(picture_image_height);
+		pic.setPicture_image_width(picture_image_width);
 		Map<String, Object> params = new HashMap<String, Object>();
 		int picture_id = 0;
 		// ±£´æÍ¼Æ¬
@@ -131,6 +137,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println(jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
 	}
