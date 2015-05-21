@@ -1,6 +1,7 @@
 package com.biyanzhi.bean;
 
 public class PictureScore {
+	private int id;
 	private int user_id;
 	private int picture_id;
 	private int picture_score;
@@ -29,4 +30,12 @@ public class PictureScore {
 		this.picture_score = picture_score;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

@@ -130,6 +130,8 @@ public class PictureController {
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList());
 		for (Picture pic : lists) {
+			pic.setScore_number(scoreDao.getPictureScores(pic.getPicture_id())
+					.size());
 			pic.setAverage_score(scoreDao.getPictureAvgScore(pic
 					.getPicture_id()));
 		}
