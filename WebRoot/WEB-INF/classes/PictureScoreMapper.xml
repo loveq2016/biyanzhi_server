@@ -5,7 +5,7 @@
 <!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
 <mapper namespace="com.biyanzhi.dao.PictureScoreDao">
 	<resultMap type="com.biyanzhi.bean.PictureScore" id="PictureScore">
-		<id property="id" column="id" />
+		<id property="id" column="id"/>
 		<result property="picture_id" column="picture_id" />
 		<result property="user_id" column="user_id" />
 		<result property="picture_score" column="picture_score" />
