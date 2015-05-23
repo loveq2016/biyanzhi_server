@@ -20,6 +20,7 @@
 		<mapper resource="PictureDaoMapper.xml" />
 		<mapper resource="PictureImageDaoMapper.xml" />
 		<mapper resource="PictureScoreMapper.xml" />
+		<mapper resource="CommentDaoMapper.xml" />
 
 	</mappers>
 </configuration> 
