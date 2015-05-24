@@ -24,5 +24,10 @@
 		comment(picture_id,publisher_id,comment_content,comment_time,publisher_name,publisher_avatar,reply_someone_name,reply_someone_id)
 		values(#{picture_id},#{publisher_id},#{comment_content},#{comment_time},#{publisher_name},#{publisher_avatar},#{reply_someone_name},#{reply_someone_id})
 	</insert>
+	<select id="getCommentByPictureID" parameterType="Integer"
+		resultMap="Comment">
 
+		select * from comment where picture_id=#{picture_id}
+
+	</select>
 </mapper>

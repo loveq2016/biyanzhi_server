@@ -26,6 +26,14 @@ public class CommentImpl implements CommentDao {
 	}
 
 	public List<Comment> getCommentByPictureID(int picture_id) {
+		try {
+			SqlSession sqlSession = MySqlSession.getSessionFactory()
+					.openSession();
+			CommentDao dao = sqlSession.getMapper(CommentDao.class);
+			return dao.getCommentByPictureID(picture_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.biyanzhi.bean.Comment;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.PictureScore;
+import com.biyanzhi.dao.CommentDao;
 import com.biyanzhi.dao.PictureDao;
 import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.enums.ErrorEnum;
@@ -51,6 +53,17 @@ public class PictureController {
 
 	public void setScoreDao(PictureScoreDao scoreDao) {
 		this.scoreDao = scoreDao;
+	}
+
+	@Autowired
+	private CommentDao dao;
+
+	public CommentDao getDao() {
+		return dao;
+	}
+
+	public void setDao(CommentDao dao) {
+		this.dao = dao;
 	}
 
 	@ResponseBody
@@ -134,6 +147,11 @@ public class PictureController {
 					.size());
 			pic.setAverage_score(scoreDao.getPictureAvgScore(pic
 					.getPicture_id()));
+			List<Comment> comments = new ArrayList<Comment>();
+			comments = dao.getCommentByPictureID(pic.getPicture_id());
+			if (comments != null) {
+				pic.setComments(comments);
+			}
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
