@@ -30,6 +30,12 @@
 		#{user_cellphone}
 
 	</select>
+	<select id="findUserByUserCellPhoneAndPassword" resultType="com.biyanzhi.bean.User">
+		select * from user where user_cellphone =
+		#{user_cellphone}
+		and
+		user_password=#{user_password}
 
+	</select>
 </mapper>
  

@@ -24,4 +24,11 @@ public class UserDaoImpl implements UserDao {
 		String result = dao.verifyCellphone(cellPhone);
 		return result;
 	}
+
+	public User findUserByUserCellPhoneAndPassword(String cell_phone,
+			String password) {
+		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.findUserByUserCellPhoneAndPassword(cell_phone, password);
+	}
 }

@@ -175,22 +175,23 @@ public class UserController {
 	@RequestMapping(value = "/userLogin.do", method = RequestMethod.POST)
 	public String userLogin(HttpServletRequest request) {
 		String cellphone = request.getParameter("user_cellphone");
+		String password = request.getParameter("user_password");
 		String result = uDao.verifyCellphone(cellphone);
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (null != result) {
-			params.put("err", ErrorEnum.USER_ALREADY_EXIST.name());
+		if (null == result) {
+			params.put("err", ErrorEnum.NOT_EXIST_USER.name());
 			params.put("rt", 0);
 		} else {
-			SMSCode code = new SMSCode();
-			String str_code = Utils.getSMSCode();
-			code.setSms_code(str_code);
-			code.setUser_cellphone(cellphone);
-			code.setTime(DateUtils.getUpLoadFileName());
-			dao.delCodeByUserCellPhone(cellphone);
-			dao.insertToDB(code);
-			RestSMSCode.sendCode(str_code, cellphone);
-			System.out.println("sms_code:" + str_code);
-			params.put("rt", 1);
+			User user = uDao.findUserByUserCellPhoneAndPassword(cellphone,
+					password);
+			if (user == null) {
+				params.put("err", ErrorEnum.WRONG_PASSWORD.name());
+				params.put("rt", 0);
+			} else {
+				params.put("user", user);
+				params.put("rt", 1);
+			}
+
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();

@@ -1,5 +1,7 @@
 package com.biyanzhi.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.biyanzhi.bean.User;
 
 public interface UserDao {
@@ -7,4 +9,7 @@ public interface UserDao {
 
 	String verifyCellphone(String cellPhone);// 验证手机号是否存在
 
+	User findUserByUserCellPhoneAndPassword(
+			@Param("user_cellphone") String cell_phone,
+			@Param("user_password") String password);// Mybatis 多个参数查询
 }

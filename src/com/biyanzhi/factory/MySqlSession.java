@@ -14,6 +14,7 @@ import com.biyanzhi.bean.SMSCode;
 import com.biyanzhi.dao.PictureImageDao;
 import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.dao.SMSCodeDao;
+import com.biyanzhi.dao.UserDao;
 
 public class MySqlSession {
 	/**
@@ -42,9 +43,8 @@ public class MySqlSession {
 	public static void main(String[] args) {
 
 		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
-		SMSCodeDao dao = sqlSession.getMapper(SMSCodeDao.class);
-		System.out.println(dao.delCodeByUserCellPhone("111"));
-		sqlSession.commit();
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		System.out.println(dao.findUserByUserCellPhoneAndPassword("18560133195", "123456"));
 
 	}
 }
