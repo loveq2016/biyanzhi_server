@@ -10,8 +10,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.biyanzhi.bean.PictureImage;
+import com.biyanzhi.bean.SMSCode;
 import com.biyanzhi.dao.PictureImageDao;
 import com.biyanzhi.dao.PictureScoreDao;
+import com.biyanzhi.dao.SMSCodeDao;
 
 public class MySqlSession {
 	/**
@@ -38,10 +40,11 @@ public class MySqlSession {
 	}
 
 	public static void main(String[] args) {
+
 		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
-		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
-		Integer id = dao.getPictureAvgScore(30);
-		System.out.println(id);
+		SMSCodeDao dao = sqlSession.getMapper(SMSCodeDao.class);
+		System.out.println(dao.delCodeByUserCellPhone("111"));
+		sqlSession.commit();
 
 	}
 }

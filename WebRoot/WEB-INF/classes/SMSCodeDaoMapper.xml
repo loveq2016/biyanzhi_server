@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.biyanzhi.dao.SMSCodeDao">
+	<resultMap type="com.biyanzhi.bean.SMSCode" id="SMSCode">
+		<id property="id" column="id" />
+		<result property="user_cellphone" column="user_cellphone" />
+		<result property="sms_code" column="sms_code" />
+		<result property="time" column="time" />
+
+
+	</resultMap>
+	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
+	<insert id="insertToDB" parameterType="com.biyanzhi.bean.SMSCode">
+		insert into
+		sms_code(user_cellphone,sms_code,time )
+		values(#{user_cellphone},#{sms_code},#{time})
+	</insert>
+	<select id="findCodeByCellphone" parameterType="String"
+		resultType="String">
+
+		select sms_code from sms_code where user_cellphone =
+		#{user_cellphone}
+
+	</select>
+	<delete id="delCodeByUserCellPhone" parameterType="String">
+		delete
+		from sms_code where user_cellphone = #{user_cellphone}
+	</delete>
+</mapper>
+ 

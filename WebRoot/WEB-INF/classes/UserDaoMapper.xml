@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.biyanzhi.dao.UserDao">
+	<resultMap type="com.biyanzhi.bean.User" id="User">
+		<id property="id" column="id" />
+		<result property="user_id" column="user_id" />
+		<result property="user_name" column="user_name" />
+		<result property="user_cellphone" column="user_cellphone" />
+		<result property="user_avatar" column="user_avatar" />
+		<result property="user_gender" column="user_gender" />
+		<result property="user_birthday" column="user_birthday" />
+		<result property="user_password" column="user_password" />
+		<result property="user_address" column="user_address" />
+		<result property="user_province" column="user_province" />
+
+
+	</resultMap>
+	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
+	<insert id="insertUserToDB" parameterType="com.biyanzhi.bean.User">
+		insert into
+		user(user_id,user_name,user_cellphone,user_avatar
+		,user_gender,user_birthday,user_password,user_address,user_province)
+		values(#{user_id},#{user_name},#{user_cellphone},#{user_avatar},#{user_gender},#{user_birthday},#{user_password},#{user_address},#{user_province})
+	</insert>
+	<select id="verifyCellphone" parameterType="String" resultType="String">
+		select user_cellphone from user where user_cellphone =
+		#{user_cellphone}
+
+	</select>
+
+</mapper>
+ 

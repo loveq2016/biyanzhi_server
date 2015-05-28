@@ -11,7 +11,7 @@
 				<property name="driver" value="com.mysql.jdbc.Driver" />
 				<property name="url" value="jdbc:mysql://127.0.0.1:3306/biyanzhi" />
 				<property name="username" value="root" />
-				<property name="password" value="passwordbinbin" />
+				<property name="password" value="123456" />
 			</dataSource>
 		</environment>
 	</environments>
@@ -21,6 +21,8 @@
 		<mapper resource="PictureImageDaoMapper.xml" />
 		<mapper resource="PictureScoreMapper.xml" />
 		<mapper resource="CommentDaoMapper.xml" />
+		<mapper resource="SMSCodeDaoMapper.xml" />
+		<mapper resource="UserDaoMapper.xml" />
 
 	</mappers>
 </configuration> 
