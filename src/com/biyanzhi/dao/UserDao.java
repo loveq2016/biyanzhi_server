@@ -12,4 +12,6 @@ public interface UserDao {
 	User findUserByUserCellPhoneAndPassword(
 			@Param("user_cellphone") String cell_phone,
 			@Param("user_password") String password);// Mybatis 多个参数查询
+
+	User findUserByUserID(int user_id);
 }

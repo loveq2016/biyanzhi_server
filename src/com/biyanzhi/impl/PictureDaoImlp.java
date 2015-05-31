@@ -31,4 +31,10 @@ public class PictureDaoImlp implements PictureDao {
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
 		return dao.getPictureList();
 	}
+
+	public List<Picture> getPictureListByUserID(int publisher_id) {
+		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
+		PictureDao dao = sqlSession.getMapper(PictureDao.class);
+		return dao.getPictureListByUserID(publisher_id);
+	}
 }
