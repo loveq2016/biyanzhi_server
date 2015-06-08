@@ -186,7 +186,7 @@ public class UserController {
 			if (file != null && !file.isEmpty()) {
 				String file_name = file.getOriginalFilename();
 				String save_filename = DateUtils.getUpLoadFileName()
-						+ file_name.substring(file_name.length() - 4,
+						+ file_name.substring(file_name.lastIndexOf("."),
 								file_name.length());
 				File targetFile = new File(img_path, save_filename);
 				if (!targetFile.exists()) {
