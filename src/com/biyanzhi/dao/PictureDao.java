@@ -8,4 +8,7 @@ public interface PictureDao {
 	int insertPicture(Picture picture);
 
 	List<Picture> getPictureList();
+
+	List<Picture> getPictureListByUserID(int publisher_id);
+
 }

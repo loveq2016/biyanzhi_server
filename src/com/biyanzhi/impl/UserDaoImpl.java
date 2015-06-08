@@ -31,4 +31,10 @@ public class UserDaoImpl implements UserDao {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.findUserByUserCellPhoneAndPassword(cell_phone, password);
 	}
+
+	public User findUserByUserID(int user_id) {
+		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.findUserByUserID(user_id);
+	}
 }

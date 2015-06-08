@@ -2,7 +2,9 @@ package com.biyanzhi.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +21,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.biyanzhi.bean.Comment;
+import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.SMSCode;
 import com.biyanzhi.bean.User;
+import com.biyanzhi.dao.CommentDao;
+import com.biyanzhi.dao.PictureDao;
+import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.dao.SMSCodeDao;
 import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
@@ -51,6 +58,39 @@ public class UserController {
 
 	public void setuDao(UserDao uDao) {
 		this.uDao = uDao;
+	}
+
+	@Autowired
+	private PictureDao pDao;
+
+	public PictureDao getpDao() {
+		return pDao;
+	}
+
+	public void setpDao(PictureDao pDao) {
+		this.pDao = pDao;
+	}
+
+	@Autowired
+	private PictureScoreDao scoreDao;
+
+	public PictureScoreDao getScoreDao() {
+		return scoreDao;
+	}
+
+	public void setScoreDao(PictureScoreDao scoreDao) {
+		this.scoreDao = scoreDao;
+	}
+
+	@Autowired
+	private CommentDao commentDdao;
+
+	public CommentDao getCommentDdao() {
+		return commentDdao;
+	}
+
+	public void setCommentDdao(CommentDao commentDdao) {
+		this.commentDdao = commentDdao;
 	}
 
 	@ResponseBody
@@ -192,6 +232,39 @@ public class UserController {
 				params.put("rt", 1);
 			}
 
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.POST)
+	public String getUserInfo(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		Map<String, Object> params = new HashMap<String, Object>();
+		User user = uDao.findUserByUserID(user_id);
+		if (user == null) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		} else {
+			List<Picture> lists = new ArrayList<Picture>();
+			lists.addAll(pDao.getPictureList());
+			for (Picture pic : lists) {
+				pic.setScore_number(scoreDao.getPictureScores(
+						pic.getPicture_id()).size());
+				pic.setAverage_score(scoreDao.getPictureAvgScore(pic
+						.getPicture_id()));
+				List<Comment> comments = new ArrayList<Comment>();
+				comments = commentDdao.getCommentByPictureID(pic
+						.getPicture_id());
+				if (comments != null) {
+					pic.setComments(comments);
+				}
+			}
+			params.put("user", user);
+			params.put("pictures", lists);
+			params.put("rt", 1);
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();

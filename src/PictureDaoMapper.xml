@@ -29,4 +29,8 @@
 		select * from picture
 
 	</select>
+	<select id="getPictureListByUserID" parameterType="Integer"
+		resultMap="Picture">
+		select * from picture where publisher_id=#{publisher_id}
+	</select>
 </mapper>

@@ -37,5 +37,11 @@
 		user_password=#{user_password}
 
 	</select>
+	<select id="findUserByUserID" resultType="com.biyanzhi.bean.User"
+		parameterType="Integer">
+		select * from user
+		where user_id =
+		#{user_id}
+	</select>
 </mapper>
  
