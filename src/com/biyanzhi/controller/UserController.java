@@ -22,10 +22,12 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.biyanzhi.bean.Comment;
+import com.biyanzhi.bean.GuanZhu;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.SMSCode;
 import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.CommentDao;
+import com.biyanzhi.dao.GuanZhuDao;
 import com.biyanzhi.dao.PictureDao;
 import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.dao.SMSCodeDao;
@@ -91,6 +93,17 @@ public class UserController {
 
 	public void setCommentDdao(CommentDao commentDdao) {
 		this.commentDdao = commentDdao;
+	}
+
+	@Autowired
+	private GuanZhuDao guanzhuDao;
+
+	public GuanZhuDao getGuanzhuDao() {
+		return guanzhuDao;
+	}
+
+	public void setGuanzhuDao(GuanZhuDao guanzhuDao) {
+		this.guanzhuDao = guanzhuDao;
 	}
 
 	@ResponseBody
@@ -262,8 +275,34 @@ public class UserController {
 					pic.setComments(comments);
 				}
 			}
+			List<GuanZhu> gLists = guanzhuDao.getGuanZhuCountByUserID(user_id);
+			if (gLists != null) {
+				user.setGuanzhu_count(gLists.size());
+			}
 			params.put("user", user);
 			params.put("pictures", lists);
+			params.put("rt", 1);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addGuanZhu.do", method = RequestMethod.POST)
+	public String addGuanZhu(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int guanzhu_user_id = Integer.valueOf(request
+				.getParameter("guanzhu_user_id"));
+		GuanZhu gz = new GuanZhu();
+		gz.setGuanzhu_user_id(guanzhu_user_id);
+		gz.setUser_id(user_id);
+		int result = guanzhuDao.addGuanZhu(gz);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result <= 0) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		} else {
 			params.put("rt", 1);
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);

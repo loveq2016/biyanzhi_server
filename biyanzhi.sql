@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50703
 File Encoding         : 65001
 
-Date: 2015-05-24 19:58:42
+Date: 2015-06-09 21:55:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,18 @@ CREATE TABLE `comment` (
   `publisher_name` varchar(255) DEFAULT NULL,
   `publisher_avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+-- Table structure for guanzhu
+-- ----------------------------
+DROP TABLE IF EXISTS `guanzhu`;
+CREATE TABLE `guanzhu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `guanzhu_user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for picture
@@ -47,7 +58,7 @@ CREATE TABLE `picture` (
   `picture_image_height` int(11) DEFAULT NULL,
   `picture_image_width` int(11) DEFAULT NULL,
   PRIMARY KEY (`picture_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for picture_score
@@ -59,4 +70,33 @@ CREATE TABLE `picture_score` (
   `picture_id` int(11) DEFAULT NULL,
   `picture_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sms_code
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_code`;
+CREATE TABLE `sms_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_cellphone` varchar(255) DEFAULT NULL,
+  `sms_code` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1709 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL,
+  `user_cellphone` varchar(255) NOT NULL,
+  `user_password` varchar(255) NOT NULL,
+  `user_gender` varchar(255) DEFAULT NULL,
+  `user_birthday` varchar(255) DEFAULT NULL,
+  `user_avatar` varchar(255) DEFAULT NULL,
+  `user_address` varchar(255) DEFAULT NULL,
+  `user_province` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=933 DEFAULT CHARSET=utf8;
