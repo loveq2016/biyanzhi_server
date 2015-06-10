@@ -1,7 +1,5 @@
 package com.biyanzhi.impl;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +10,7 @@ import com.biyanzhi.factory.MySqlSession;
 @Repository
 public class PictureScoreDaoImpl implements PictureScoreDao {
 
-	public List<PictureScore> getPictureScores(int picture_id) {
+	public int getPictureScores(int picture_id) {
 		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
 		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
 		return dao.getPictureScores(picture_id);

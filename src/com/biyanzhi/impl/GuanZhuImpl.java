@@ -26,7 +26,7 @@ public class GuanZhuImpl implements GuanZhuDao {
 		return 0;
 	}
 
-	public List<GuanZhu> getGuanZhuCountByUserID(int user_id) {
+	public int getGuanZhuCountByUserID(int user_id) {
 		try {
 			SqlSession sqlSession = MySqlSession.getSessionFactory()
 					.openSession();
@@ -35,7 +35,7 @@ public class GuanZhuImpl implements GuanZhuDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return 0;
 	}
 
 }

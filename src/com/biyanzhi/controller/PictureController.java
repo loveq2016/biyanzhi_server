@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.biyanzhi.bean.Comment;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.PictureScore;
 import com.biyanzhi.dao.CommentDao;
@@ -142,17 +141,6 @@ public class PictureController {
 	public String getPictureList(HttpServletRequest request) {
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList());
-		for (Picture pic : lists) {
-			pic.setScore_number(scoreDao.getPictureScores(pic.getPicture_id())
-					.size());
-			pic.setAverage_score(scoreDao.getPictureAvgScore(pic
-					.getPicture_id()));
-			List<Comment> comments = new ArrayList<Comment>();
-			comments = dao.getCommentByPictureID(pic.getPicture_id());
-			if (comments != null) {
-				pic.setComments(comments);
-			}
-		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);

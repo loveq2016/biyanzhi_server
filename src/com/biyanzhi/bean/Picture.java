@@ -15,7 +15,7 @@ public class Picture {
 	private int picture_image_height;
 	private int picture_image_width;
 	private int score_number;// 打分人数
-	List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	public List<Comment> getComments() {
 		return comments;

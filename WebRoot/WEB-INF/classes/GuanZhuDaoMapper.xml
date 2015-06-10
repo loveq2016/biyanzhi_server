@@ -18,9 +18,9 @@
 		values(#{user_id},#{guanzhu_user_id}
 		)
 	</insert>
-	<select id="getGuanZhuCountByUserID" resultType="com.biyanzhi.bean.GuanZhu"
+	<select id="getGuanZhuCountByUserID" resultType="int"
 		parameterType="Integer">
-		select * from guanzhu
+		select count(*) from guanzhu
 		where guanzhu_user_id =
 		#{guanzhu_user_id}
 	</select>

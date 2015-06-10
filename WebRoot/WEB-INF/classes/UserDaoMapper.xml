@@ -15,7 +15,8 @@
 		<result property="user_password" column="user_password" />
 		<result property="user_address" column="user_address" />
 		<result property="user_province" column="user_province" />
-
+		<association property="guanzhu_count" column="user_id"
+			javaType="int" select="getGuanZhuCountByUserID" />
 
 	</resultMap>
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
@@ -37,10 +38,15 @@
 		user_password=#{user_password}
 
 	</select>
-	<select id="findUserByUserID" resultType="com.biyanzhi.bean.User"
-		parameterType="Integer">
+	<select id="findUserByUserID" resultMap="User" parameterType="Integer">
 		select * from user
 		where user_id =
+		#{user_id}
+	</select>
+	<select id="getGuanZhuCountByUserID" resultType="int"
+		parameterType="Integer">
+		select count(*) from guanzhu
+		where guanzhu_user_id =
 		#{user_id}
 	</select>
 </mapper>

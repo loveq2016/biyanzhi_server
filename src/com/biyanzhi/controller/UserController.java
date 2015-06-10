@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.biyanzhi.bean.Comment;
 import com.biyanzhi.bean.GuanZhu;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.SMSCode;
@@ -263,22 +262,7 @@ public class UserController {
 		} else {
 			List<Picture> lists = new ArrayList<Picture>();
 			lists.addAll(pDao.getPictureList());
-			for (Picture pic : lists) {
-				pic.setScore_number(scoreDao.getPictureScores(
-						pic.getPicture_id()).size());
-				pic.setAverage_score(scoreDao.getPictureAvgScore(pic
-						.getPicture_id()));
-				List<Comment> comments = new ArrayList<Comment>();
-				comments = commentDdao.getCommentByPictureID(pic
-						.getPicture_id());
-				if (comments != null) {
-					pic.setComments(comments);
-				}
-			}
-			List<GuanZhu> gLists = guanzhuDao.getGuanZhuCountByUserID(user_id);
-			if (gLists != null) {
-				user.setGuanzhu_count(gLists.size());
-			}
+			// user.setGuanzhu_count(guanzhuDao.getGuanZhuCountByUserID(user_id));
 			params.put("user", user);
 			params.put("pictures", lists);
 			params.put("rt", 1);
