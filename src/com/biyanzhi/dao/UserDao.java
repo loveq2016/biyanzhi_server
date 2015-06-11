@@ -14,4 +14,13 @@ public interface UserDao {
 			@Param("user_password") String password);// Mybatis 多个参数查询
 
 	User findUserByUserID(int user_id);
+
+	int upDateUserAvatar(@Param("user_avatar") String user_avatar,
+			@Param("user_id") int user_id);
+
+	int upDateUserName(@Param("user_name") String user_name,
+			@Param("user_id") int user_id);
+
+	int upDateUserAddress(@Param("user_address") String user_address,
+			@Param("user_id") int user_id);
 }

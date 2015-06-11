@@ -46,4 +46,19 @@ public class UserDaoImpl implements UserDao {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.findUserByUserID(user_id);
 	}
+
+	public int upDateUserAvatar(String user_avatar, int user_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.upDateUserAvatar(user_avatar, user_id);
+	}
+
+	public int upDateUserName(String user_name, int user_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.upDateUserName(user_name, user_id);
+	}
+
+	public int upDateUserAddress(String user_address, int user_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.upDateUserAddress(user_address, user_id);
+	}
 }

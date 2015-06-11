@@ -9,9 +9,7 @@ public class User {
 	private String user_birthday = "";// 用户注册生日
 	private String user_password = "";// 用户注册密码
 	private String user_address = "";
-	private String user_province = "";
 	private int guanzhu_count;
-	private int renqi;
 	private int isGuanZhu;
 
 	public int getIsGuanZhu() {
@@ -20,14 +18,6 @@ public class User {
 
 	public void setIsGuanZhu(int isGuanZhu) {
 		this.isGuanZhu = isGuanZhu;
-	}
-
-	public int getRenqi() {
-		return renqi;
-	}
-
-	public void setRenqi(int renqi) {
-		this.renqi = renqi;
 	}
 
 	public int getGuanzhu_count() {
@@ -100,14 +90,6 @@ public class User {
 
 	public void setUser_address(String user_address) {
 		this.user_address = user_address;
-	}
-
-	public String getUser_province() {
-		return user_province;
-	}
-
-	public void setUser_province(String user_province) {
-		this.user_province = user_province;
 	}
 
 }

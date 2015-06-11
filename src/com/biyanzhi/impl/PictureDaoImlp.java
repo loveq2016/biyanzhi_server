@@ -12,16 +12,16 @@ import com.biyanzhi.dao.PictureDao;
 
 @Repository
 public class PictureDaoImlp implements PictureDao {
-	// private SqlSession sqlSession;
-	//
-	// public SqlSession getSqlSession() {
-	// return sqlSession;
-	// }
-	//
-	// @Resource(name = "sqlSession")
-	// public void setSqlSession(SqlSession sqlSession) {
-	// this.sqlSession = sqlSession;
-	// }
+	private SqlSession sqlSession;
+
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	@Resource(name = "sqlSession")
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 
 	public int insertPicture(Picture picture) {
 		try {

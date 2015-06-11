@@ -177,17 +177,13 @@ public class UserController {
 		String user_birthday = multipartRequest.getParameter("user_birthday")
 				.toString();
 		String user_address = "";
-		String user_province = "";
 		user_address = multipartRequest.getParameter("user_address").toString();
-		user_province = multipartRequest.getParameter("user_province")
-				.toString();
 		User user = new User();
 		user.setUser_address(user_address);
 		user.setUser_birthday(user_birthday);
 		user.setUser_cellphone(user_cellphone);
 		user.setUser_gender(user_gender);
 		user.setUser_name(user_name);
-		user.setUser_province(user_province);
 		user.setUser_password(user_password);
 		Map<String, Object> params = new HashMap<String, Object>();
 		int user_id = 0;
@@ -290,6 +286,87 @@ public class UserController {
 		} else {
 			params.put("rt", 1);
 		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDateUserName.do", method = RequestMethod.POST)
+	public String upDateUserName(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		String user_name = request.getParameter("user_name");
+		int result = uDao.upDateUserName(user_name, user_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result <= 0) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		} else {
+			params.put("rt", 1);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDateUserAddress.do", method = RequestMethod.POST)
+	public String upDateUserAddress(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		String user_address = request.getParameter("user_address");
+		int result = uDao.upDateUserAddress(user_address, user_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result <= 0) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		} else {
+			params.put("rt", 1);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upLoadUserAvatar.do", method = RequestMethod.POST)
+	public String upLoadUserAvatar(HttpServletRequest request) {
+		String img_path = request.getSession().getServletContext()
+				.getRealPath("user-avatar");
+		MultipartResolver resolver = new CommonsMultipartResolver(request
+				.getSession().getServletContext());
+		MultipartHttpServletRequest multipartRequest = resolver
+				.resolveMultipart(request);
+		Map<String, Object> params = new HashMap<String, Object>();
+		int user_id = Integer.valueOf(multipartRequest.getParameter("user_id"));
+		// ±£´æÍ¼Æ¬
+		MultipartFile file = multipartRequest.getFile("image");
+		String serverPath = Constants.SERVER_PATH + "/user-avatar/";
+		try {
+			if (file != null && !file.isEmpty()) {
+				String file_name = file.getOriginalFilename();
+				String save_filename = DateUtils.getUpLoadFileName()
+						+ file_name.substring(file_name.lastIndexOf("."),
+								file_name.length());
+				File targetFile = new File(img_path, save_filename);
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
+				}
+				file.transferTo(targetFile);
+				int result = uDao.upDateUserAvatar(serverPath + save_filename,
+						user_id);
+				if (result > 0) {
+					params.put("rt", 1);
+					params.put("user_avatar", serverPath + save_filename);
+				} else {
+					params.put("err", ErrorEnum.INVALID.name());
+					params.put("rt", 0);
+				}
+			}
+		} catch (IOException e) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		}
+
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 

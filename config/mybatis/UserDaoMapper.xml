@@ -14,7 +14,6 @@
 		<result property="user_birthday" column="user_birthday" />
 		<result property="user_password" column="user_password" />
 		<result property="user_address" column="user_address" />
-		<result property="user_province" column="user_province" />
 		<association property="guanzhu_count" column="user_id"
 			javaType="int" select="getGuanZhuCountByUserID" />
 
@@ -23,8 +22,9 @@
 	<insert id="insertUserToDB" parameterType="com.biyanzhi.bean.User">
 		insert into
 		user(user_id,user_name,user_cellphone,user_avatar
-		,user_gender,user_birthday,user_password,user_address,user_province)
-		values(#{user_id},#{user_name},#{user_cellphone},#{user_avatar},#{user_gender},#{user_birthday},#{user_password},#{user_address},#{user_province})
+		,user_gender,user_birthday,user_password,user_address)
+		values(#{user_id},#{user_name},#{user_cellphone},#{user_avatar},#{user_gender},#{user_birthday},#{user_password},#{user_address}
+		)
 	</insert>
 	<select id="verifyCellphone" parameterType="String" resultType="String">
 		select user_cellphone from user where user_cellphone =
@@ -49,5 +49,17 @@
 		where guanzhu_user_id =
 		#{user_id}
 	</select>
+	<update id="upDateUserAvatar" parameterType="String">
+		UPDATE user SET
+		user_avatar = #{user_avatar} WHERE user_id = #{user_id}
+	</update>
+	<update id="upDateUserName" parameterType="String">
+		UPDATE user SET
+		user_name = #{user_name} WHERE user_id = #{user_id}
+	</update>
+	<update id="upDateUserAddress" parameterType="String">
+		UPDATE user SET
+		user_address = #{user_address} WHERE user_id = #{user_id}
+	</update>
 </mapper>
  
