@@ -253,21 +253,22 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.POST)
 	public String getUserInfo(HttpServletRequest request) {
-		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int publisher_user_id = Integer.valueOf(request
+				.getParameter("publicsher_user_id"));
 		Map<String, Object> params = new HashMap<String, Object>();
-		User user = uDao.findUserByUserID(user_id);
+		User user = uDao.findUserByUserID(publisher_user_id);
 		if (user == null) {
 			params.put("err", ErrorEnum.INVALID.name());
 			params.put("rt", 0);
 		} else {
 			List<Picture> lists = new ArrayList<Picture>();
 			lists.addAll(pDao.getPictureList());
-			// user.setGuanzhu_count(guanzhuDao.getGuanZhuCountByUserID(user_id));
 			params.put("user", user);
 			params.put("pictures", lists);
 			params.put("rt", 1);
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("info:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
 	}

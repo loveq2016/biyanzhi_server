@@ -11,6 +11,24 @@ public class User {
 	private String user_address = "";
 	private String user_province = "";
 	private int guanzhu_count;
+	private int renqi;
+	private int isGuanZhu;
+
+	public int getIsGuanZhu() {
+		return isGuanZhu;
+	}
+
+	public void setIsGuanZhu(int isGuanZhu) {
+		this.isGuanZhu = isGuanZhu;
+	}
+
+	public int getRenqi() {
+		return renqi;
+	}
+
+	public void setRenqi(int renqi) {
+		this.renqi = renqi;
+	}
 
 	public int getGuanzhu_count() {
 		return guanzhu_count;
