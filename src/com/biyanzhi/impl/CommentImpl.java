@@ -2,23 +2,32 @@ package com.biyanzhi.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.biyanzhi.bean.Comment;
 import com.biyanzhi.dao.CommentDao;
-import com.biyanzhi.factory.MySqlSession;
 
 @Repository
 public class CommentImpl implements CommentDao {
+	private SqlSession sqlSession;
+
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	@Resource(name = "sqlSession")
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 
 	public int insertComment(Comment comment) {
 		try {
-			SqlSession sqlSession = MySqlSession.getSessionFactory()
-					.openSession();
 			CommentDao dao = sqlSession.getMapper(CommentDao.class);
 			dao.insertComment(comment);
-			sqlSession.commit();
+			// sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,8 +36,6 @@ public class CommentImpl implements CommentDao {
 
 	public List<Comment> getCommentByPictureID(int picture_id) {
 		try {
-			SqlSession sqlSession = MySqlSession.getSessionFactory()
-					.openSession();
 			CommentDao dao = sqlSession.getMapper(CommentDao.class);
 			return dao.getCommentByPictureID(picture_id);
 		} catch (Exception e) {

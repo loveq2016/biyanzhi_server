@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.dao.PictureDao;
-import com.biyanzhi.factory.MySqlSession;
 
 @Repository
 public class PictureDaoImlp implements PictureDao {
@@ -26,11 +25,9 @@ public class PictureDaoImlp implements PictureDao {
 
 	public int insertPicture(Picture picture) {
 		try {
-			SqlSession sqlSession = MySqlSession.getSessionFactory()
-					.openSession();
 			PictureDao dao = sqlSession.getMapper(PictureDao.class);
 			dao.insertPicture(picture);
-			sqlSession.commit();
+			// sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,13 +36,11 @@ public class PictureDaoImlp implements PictureDao {
 	}
 
 	public List<Picture> getPictureList() {
-		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
 		return dao.getPictureList();
 	}
 
 	public List<Picture> getPictureListByUserID(int publisher_id) {
-		SqlSession sqlSession = MySqlSession.getSessionFactory().openSession();
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
 		return dao.getPictureListByUserID(publisher_id);
 	}
