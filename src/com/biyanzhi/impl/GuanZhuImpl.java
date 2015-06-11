@@ -1,24 +1,32 @@
 package com.biyanzhi.impl;
 
-import java.util.List;
+import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.biyanzhi.bean.GuanZhu;
 import com.biyanzhi.dao.GuanZhuDao;
-import com.biyanzhi.factory.MySqlSession;
 
 @Repository
 public class GuanZhuImpl implements GuanZhuDao {
+	private SqlSession sqlSession;
+
+	public SqlSession getSqlSession() {
+		return sqlSession;
+	}
+
+	@Resource(name = "sqlSession")
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
 
 	public int addGuanZhu(GuanZhu guanzhu) {
 		try {
-			SqlSession sqlSession = MySqlSession.getSessionFactory()
-					.openSession();
+
 			GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
 			int result = dao.addGuanZhu(guanzhu);
-			sqlSession.commit();
+			// sqlSession.commit();
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -28,8 +36,6 @@ public class GuanZhuImpl implements GuanZhuDao {
 
 	public int getGuanZhuCountByUserID(int user_id) {
 		try {
-			SqlSession sqlSession = MySqlSession.getSessionFactory()
-					.openSession();
 			GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
 			return dao.getGuanZhuCountByUserID(user_id);
 		} catch (Exception e) {
