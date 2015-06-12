@@ -1,5 +1,7 @@
 package com.biyanzhi.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -60,5 +62,10 @@ public class UserDaoImpl implements UserDao {
 	public int upDateUserAddress(String user_address, int user_id) {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.upDateUserAddress(user_address, user_id);
+	}
+
+	public List<User> getGuanZhuUsersByUserID(int user_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

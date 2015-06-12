@@ -1,5 +1,7 @@
 package com.biyanzhi.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.biyanzhi.bean.User;
@@ -23,4 +25,6 @@ public interface UserDao {
 
 	int upDateUserAddress(@Param("user_address") String user_address,
 			@Param("user_id") int user_id);
+
+	List<User> getGuanZhuUsersByUserID(int user_id);// 获取关注用户列表
 }
