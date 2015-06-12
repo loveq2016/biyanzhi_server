@@ -251,6 +251,7 @@ public class UserController {
 	public String getUserInfo(HttpServletRequest request) {
 		int publisher_user_id = Integer.valueOf(request
 				.getParameter("publicsher_user_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		Map<String, Object> params = new HashMap<String, Object>();
 		User user = uDao.findUserByUserID(publisher_user_id);
 		if (user == null) {
@@ -259,6 +260,11 @@ public class UserController {
 		} else {
 			List<Picture> lists = new ArrayList<Picture>();
 			lists.addAll(pDao.getPictureList());
+			GuanZhu guanzhu = new GuanZhu();
+			guanzhu.setUser_id(user_id);
+			guanzhu.setGuanzhu_user_id(publisher_user_id);
+			user.setGuanZhu(guanzhuDao.isGuanZhuByUserIDAndGuanZhuUserID(
+					user_id, publisher_user_id) > 0);
 			params.put("user", user);
 			params.put("pictures", lists);
 			params.put("rt", 1);

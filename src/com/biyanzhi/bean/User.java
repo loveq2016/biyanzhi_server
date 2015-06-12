@@ -10,13 +10,13 @@ public class User {
 	private String user_password = "";// ÓÃ»§×¢²áÃÜÂë
 	private String user_address = "";
 	private int guanzhu_count;
-	private int isGuanZhu;
+	private boolean isGuanZhu;
 
-	public int getIsGuanZhu() {
+	public boolean isGuanZhu() {
 		return isGuanZhu;
 	}
 
-	public void setIsGuanZhu(int isGuanZhu) {
+	public void setGuanZhu(boolean isGuanZhu) {
 		this.isGuanZhu = isGuanZhu;
 	}
 

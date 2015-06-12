@@ -24,5 +24,11 @@
 		where guanzhu_user_id =
 		#{guanzhu_user_id}
 	</select>
+	<select id="isGuanZhuByUserIDAndGuanZhuUserID" resultType="int">
+		select count(*) from guanzhu
+		where guanzhu_user_id =
+		#{guanzhu_user_id}
+		and user_id=#{user_id}
+	</select>
 </mapper>
  

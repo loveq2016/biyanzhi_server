@@ -44,4 +44,10 @@ public class GuanZhuImpl implements GuanZhuDao {
 		return 0;
 	}
 
+	public int isGuanZhuByUserIDAndGuanZhuUserID(int user_id,
+			int guanzhu_user_id) {
+		GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
+		return dao.isGuanZhuByUserIDAndGuanZhuUserID(user_id, guanzhu_user_id);
+	}
+
 }
