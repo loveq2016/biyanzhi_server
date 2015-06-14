@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50703
 File Encoding         : 65001
 
-Date: 2015-06-09 21:55:51
+Date: 2015-06-14 20:43:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `comment` (
   `publisher_name` varchar(255) DEFAULT NULL,
   `publisher_avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Table structure for guanzhu
@@ -41,7 +41,7 @@ CREATE TABLE `guanzhu` (
   `user_id` int(11) DEFAULT NULL,
   `guanzhu_user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for picture
@@ -58,7 +58,7 @@ CREATE TABLE `picture` (
   `picture_image_height` int(11) DEFAULT NULL,
   `picture_image_width` int(11) DEFAULT NULL,
   PRIMARY KEY (`picture_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for picture_score
@@ -70,7 +70,7 @@ CREATE TABLE `picture_score` (
   `picture_id` int(11) DEFAULT NULL,
   `picture_score` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for sms_code
@@ -82,7 +82,7 @@ CREATE TABLE `sms_code` (
   `sms_code` varchar(255) DEFAULT NULL,
   `time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1709 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1714 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -97,6 +97,6 @@ CREATE TABLE `user` (
   `user_birthday` varchar(255) DEFAULT NULL,
   `user_avatar` varchar(255) DEFAULT NULL,
   `user_address` varchar(255) DEFAULT NULL,
-  `user_province` varchar(255) DEFAULT NULL,
+  `user_chat_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=933 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=938 DEFAULT CHARSET=utf8;

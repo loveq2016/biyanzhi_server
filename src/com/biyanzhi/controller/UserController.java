@@ -32,9 +32,11 @@ import com.biyanzhi.dao.PictureScoreDao;
 import com.biyanzhi.dao.SMSCodeDao;
 import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
+import com.biyanzhi.huanxinImpl.EasemobIMUsers;
 import com.biyanzhi.smscode.RestSMSCode;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
+import com.biyanzhi.util.MD5;
 import com.biyanzhi.util.Utils;
 
 @Controller
@@ -184,6 +186,7 @@ public class UserController {
 		user.setUser_cellphone(user_cellphone);
 		user.setUser_gender(user_gender);
 		user.setUser_name(user_name);
+		user.setUser_chat_id(MD5.Md5(user_cellphone));
 		user.setUser_password(user_password);
 		Map<String, Object> params = new HashMap<String, Object>();
 		int user_id = 0;
@@ -207,6 +210,8 @@ public class UserController {
 					params.put("rt", 1);
 					JSONObject jsonObjectFromMap = JSONObject
 							.fromObject(params);
+					EasemobIMUsers.createNewUser(MD5.Md5(user_cellphone),
+							MD5.Md5(user_cellphone));
 					return jsonObjectFromMap.toString();
 				}
 			}
@@ -377,4 +382,19 @@ public class UserController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getGuanZhuUserListsByUserID.do", method = RequestMethod.POST)
+	public String getGuanZhuUserListsByUserID(HttpServletRequest request) {
+		int guanzhu_user_id = Integer.valueOf(request
+				.getParameter("guanzhu_user_id"));
+		List<User> users = uDao.getGuanZhuUsersByUserID(guanzhu_user_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		params.put("users", users);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
 }

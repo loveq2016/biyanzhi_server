@@ -36,7 +36,7 @@ public class SMSCodeDaoImpl implements SMSCodeDao {
 	public int delCodeByUserCellPhone(String user_cellphone) {
 		SMSCodeDao dao = sqlSession.getMapper(SMSCodeDao.class);
 		int result = dao.delCodeByUserCellPhone(user_cellphone);
-		sqlSession.commit();
+		// sqlSession.commit();
 		return result;
 	}
 

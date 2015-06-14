@@ -64,8 +64,8 @@ public class UserDaoImpl implements UserDao {
 		return dao.upDateUserAddress(user_address, user_id);
 	}
 
-	public List<User> getGuanZhuUsersByUserID(int user_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> getGuanZhuUsersByUserID(int guanzhu_user_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.getGuanZhuUsersByUserID(guanzhu_user_id);
 	}
 }

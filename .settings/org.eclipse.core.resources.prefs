@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
+encoding//src/com/biyanzhi/huanxinImpl/EasemobChatGroups.java=UTF-8
+encoding//src/com/biyanzhi/huanxinImpl/EasemobChatMessage.java=UTF-8
+encoding//src/com/biyanzhi/huanxinImpl/EasemobFiles.java=UTF-8
+encoding//src/com/biyanzhi/huanxinImpl/EasemobIMUsers.java=UTF-8
+encoding//src/com/biyanzhi/huanxinImpl/EasemobMessages.java=UTF-8
 encoding//src/com/biyanzhi/smscode/DateUtil.java=UTF-8
 encoding//src/com/biyanzhi/smscode/SSLHttpClient.java=UTF-8
+encoding//src/com/biyanzhi/util/MD5.java=UTF-8

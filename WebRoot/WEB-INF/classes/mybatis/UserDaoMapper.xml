@@ -14,6 +14,7 @@
 		<result property="user_birthday" column="user_birthday" />
 		<result property="user_password" column="user_password" />
 		<result property="user_address" column="user_address" />
+		<result property="user_chat_id" column="user_chat_id" />
 		<association property="guanzhu_count" column="user_id"
 			javaType="int" select="getGuanZhuCountByUserID" />
 
@@ -22,9 +23,9 @@
 	<insert id="insertUserToDB" parameterType="com.biyanzhi.bean.User">
 		insert into
 		user(user_id,user_name,user_cellphone,user_avatar
-		,user_gender,user_birthday,user_password,user_address)
+		,user_gender,user_birthday,user_password,user_address,user_chat_id)
 		values(#{user_id},#{user_name},#{user_cellphone},#{user_avatar},#{user_gender},#{user_birthday},#{user_password},#{user_address}
-		)
+		,#{user_chat_id})
 	</insert>
 	<select id="verifyCellphone" parameterType="String" resultType="String">
 		select user_cellphone from user where user_cellphone =
@@ -48,6 +49,16 @@
 		select count(*) from guanzhu
 		where guanzhu_user_id =
 		#{user_id}
+	</select>
+	<select id="getGuanZhuUsersByUserID" resultMap="User"
+		parameterType="Integer">
+		SELECT
+		`user`.user_id,`user`.user_name,`user`.user_avatar,`user`.user_address
+		,`user`.user_gender
+		FROM guanzhu INNER JOIN `user` ON
+		guanzhu_user_id=`user`.user_id WHERE
+		guanzhu_user_id= #{user_id} GROUP
+		BY guanzhu.user_id
 	</select>
 	<update id="upDateUserAvatar" parameterType="String">
 		UPDATE user SET
