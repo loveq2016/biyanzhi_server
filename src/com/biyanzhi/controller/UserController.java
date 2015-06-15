@@ -264,7 +264,7 @@ public class UserController {
 			params.put("rt", 0);
 		} else {
 			List<Picture> lists = new ArrayList<Picture>();
-			lists.addAll(pDao.getPictureList());
+			lists.addAll(pDao.getPictureListByUserID(publisher_user_id));
 			GuanZhu guanzhu = new GuanZhu();
 			guanzhu.setUser_id(user_id);
 			guanzhu.setGuanzhu_user_id(publisher_user_id);
