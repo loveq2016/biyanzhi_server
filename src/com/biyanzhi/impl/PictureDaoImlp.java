@@ -35,13 +35,18 @@ public class PictureDaoImlp implements PictureDao {
 
 	}
 
-	public List<Picture> getPictureList() {
+	public List<Picture> getPictureList(String publish_time) {
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
-		return dao.getPictureList();
+		return dao.getPictureList(publish_time);
 	}
 
 	public List<Picture> getPictureListByUserID(int publisher_id) {
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
 		return dao.getPictureListByUserID(publisher_id);
+	}
+
+	public List<Picture> loadMorePictureList(String publish_time) {
+		PictureDao dao = sqlSession.getMapper(PictureDao.class);
+		return dao.loadMorePictureList(publish_time);
 	}
 }

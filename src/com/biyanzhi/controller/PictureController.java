@@ -139,8 +139,24 @@ public class PictureController {
 	@ResponseBody
 	@RequestMapping(value = "/getpicturelists.do", method = RequestMethod.POST)
 	public String getPictureList(HttpServletRequest request) {
+		String publish_time = request.getParameter("publish_time");
 		List<Picture> lists = new ArrayList<Picture>();
-		lists.addAll(pictureDao.getPictureList());
+		lists.addAll(pictureDao.getPictureList(publish_time));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println(jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadMorePictureList.do", method = RequestMethod.POST)
+	public String loadMorePictureList(HttpServletRequest request) {
+		String publish_time = request.getParameter("publish_time");
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.loadMorePictureList(publish_time));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);

@@ -31,8 +31,15 @@
 		values(#{publisher_id},#{publish_time},#{content},#{publisher_name},#{publisher_avatar},#{picture_image_url},#{picture_image_height},#{picture_image_width})
 	</insert>
 	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
+		select * from picture where publish_time > #{publish_time} order by
+		publish_time desc limit 0,6
 
-		select * from picture
+	</select>
+	<select id="loadMorePictureList" parameterType="Integer"
+		resultMap="Picture">
+	<![CDATA[	select * from picture where publish_time < #{publish_time}
+		order by
+		publish_time desc limit 0,6]]>
 
 	</select>
 	<select id="getPictureListByUserID" parameterType="Integer"
