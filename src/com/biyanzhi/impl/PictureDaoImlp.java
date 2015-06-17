@@ -49,4 +49,14 @@ public class PictureDaoImlp implements PictureDao {
 		PictureDao dao = sqlSession.getMapper(PictureDao.class);
 		return dao.loadMorePictureList(publish_time);
 	}
+
+	public List<Picture> getGirlBangPictureList() {
+		PictureDao dao = sqlSession.getMapper(PictureDao.class);
+		return dao.getGirlBangPictureList();
+	}
+
+	public List<Picture> getBoyBangPictureList() {
+		PictureDao dao = sqlSession.getMapper(PictureDao.class);
+		return dao.getBoyBangPictureList();
+	}
 }
