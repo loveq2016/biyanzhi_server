@@ -39,13 +39,14 @@
 		resultMap="Picture">
 	<![CDATA[	select * from picture where publish_time < #{publish_time}
 		order by
-		publish_time desc limit 0,6]]>
+		publish_time desc limit 0,2]]>
 
 	</select>
 	<select id="getPictureListByUserID" parameterType="Integer"
 		resultMap="Picture">
 		select * from picture where publisher_id=#{publisher_id}
 	</select>
+
 	<select id="getCommentByPictureID" parameterType="Integer"
 		resultType="com.biyanzhi.bean.Comment">
 
@@ -64,6 +65,13 @@
 
 		SELECT ROUND(AVG(picture_score)) FROM picture_score WHERE
 		picture_id=#{picture_id}
+
+	</select>
+	<select id="getGirlBangPictureList" parameterType="Integer"
+		resultMap="Picture">
+		select * from picture where publish_time > #{publish_time}
+		order by
+		publish_time desc limit 0,6
 
 	</select>
 </mapper>

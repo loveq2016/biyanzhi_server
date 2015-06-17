@@ -13,4 +13,8 @@ public interface PictureDao {
 
 	List<Picture> getPictureListByUserID(int publisher_id);
 
+	List<Picture> getGirlBangPictureList();// √¿≈Æ∞Ò
+
+	List<Picture> getBoyBangPictureList();// Àß∏Á∞Ò
+
 }
