@@ -167,6 +167,34 @@ public class PictureController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getGirlBangPictureList.do", method = RequestMethod.POST)
+	public String getGirlBangPictureList(HttpServletRequest request) {
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.getGirlBangPictureList());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println(jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getBoyBangPictureList.do", method = RequestMethod.POST)
+	public String getBoyBangPictureList(HttpServletRequest request) {
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.getBoyBangPictureList());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println(jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/addpicturescore.do", method = RequestMethod.POST)
 	public String addPictureScore(HttpServletRequest request) {
 		int user_id = Integer.valueOf(request.getParameter("user_id"));

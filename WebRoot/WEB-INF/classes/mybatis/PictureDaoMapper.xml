@@ -69,9 +69,38 @@
 	</select>
 	<select id="getGirlBangPictureList" parameterType="Integer"
 		resultMap="Picture">
-		select * from picture where publish_time > #{publish_time}
-		order by
-		publish_time desc limit 0,6
-
+		SELECT
+		p.picture_id,
+		ROUND(AVG(picture_score)) avg_score,
+		pic.*,
+		u.user_gender
+		FROM
+		picture_score p
+		LEFT JOIN picture pic ON
+		p.picture_id = pic.picture_id
+		LEFT JOIN `user` u ON pic.publisher_id =
+		u.user_id WHERE u.user_gender="女"
+		GROUP BY
+		p.picture_id
+		ORDER BY
+		avg_score DESC limit 0,10
+	</select>
+	<select id="getBoyBangPictureList" parameterType="Integer"
+		resultMap="Picture">
+		SELECT
+		p.picture_id,
+		ROUND(AVG(picture_score)) avg_score,
+		pic.*,
+		u.user_gender
+		FROM
+		picture_score p
+		LEFT JOIN picture pic ON
+		p.picture_id = pic.picture_id
+		LEFT JOIN `user` u ON pic.publisher_id =
+		u.user_id WHERE u.user_gender="男"
+		GROUP BY
+		p.picture_id
+		ORDER BY
+		avg_score DESC limit 0,10
 	</select>
 </mapper>
