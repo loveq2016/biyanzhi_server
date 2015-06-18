@@ -160,6 +160,32 @@ public class UserController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getFindPassWordVerifyCode.do", method = RequestMethod.POST)
+	public String getFindPassWordVerifyCode(HttpServletRequest request) {
+		String cellphone = request.getParameter("user_cellphone");
+		String result = uDao.verifyCellphone(cellphone);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (null != result) {
+			params.put("rt", 1);
+			SMSCode code = new SMSCode();
+			String str_code = Utils.getSMSCode();
+			code.setSms_code(str_code);
+			code.setUser_cellphone(cellphone);
+			code.setTime(DateUtils.getUpLoadFileName());
+			dao.delCodeByUserCellPhone(cellphone);
+			dao.insertToDB(code);
+			RestSMSCode.sendCode(str_code, cellphone);
+			System.out.println("sms_code:" + str_code);
+		} else {
+			params.put("err", ErrorEnum.NOT_EXIST_USER.name());
+			params.put("rt", 0);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/userRegister.do", method = RequestMethod.POST)
 	public String userRegister(HttpServletRequest request) {
 		String img_path = request.getSession().getServletContext()
@@ -411,4 +437,21 @@ public class UserController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
+	public String changePassword(HttpServletRequest request) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String user_password = request.getParameter("user_password");
+		String cell_phone = request.getParameter("cell_phone");
+		int res = uDao.changeUserPassword(cell_phone, user_password);
+		if (res <= 0) {
+			params.put("err", ErrorEnum.INVALID);
+			params.put("rt", 0);
+		} else {
+			params.put("err", 1);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
 }

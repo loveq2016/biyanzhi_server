@@ -27,4 +27,10 @@ public interface UserDao {
 			@Param("user_id") int user_id);
 
 	List<User> getGuanZhuUsersByUserID(int user_id);// 获取关注用户列表
+
+	int changeUserPassword(@Param("user_cellphone") String cell_phone,
+			@Param("user_password") String password);
+
+	String getUserChatIDByPictureID(@Param("picture_id") int picture_id,
+			@Param("picture_publisher_id") int picture_publisher_id);
 }

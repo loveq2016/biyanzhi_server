@@ -72,5 +72,17 @@
 		UPDATE user SET
 		user_address = #{user_address} WHERE user_id = #{user_id}
 	</update>
+	<update id="changeUserPassword" parameterType="String">
+		UPDATE user SET
+		user_password = #{user_password} WHERE user_cellphone =
+		#{user_cellphone}
+	</update>
+	<select id="getUserChatIDByPictureID" parameterType="Map"
+		resultType="String">
+		SELECT `user`.user_chat_id FROM `user` ,picture WHERE
+		picture.picture_id=#{picture_id} and
+		`user`.user_id=#{picture_publisher_id}
+
+	</select>
 </mapper>
  

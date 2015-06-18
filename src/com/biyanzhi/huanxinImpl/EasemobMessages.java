@@ -277,18 +277,17 @@ public class EasemobMessages {
 	}
 
 	/**
-	 * 赞 提醒
+	 * 评论 提醒
 	 * 
 	 * 
 	 */
-	public static void sendTextMessageForpRraiseAndComment(int cid,
-			int growth_id, String to_user_id, String message_content) {
+	public static void sendTextMessageForComment(int picture_id,
+			String to_user_chat_id, String message_content) {
 		ObjectNode ext = factory.objectNode();
-		ext.put("user_name", "趣友");
+		ext.put("user_name", "比颜值");
 		ext.put("user_avatar", Constants.APP_AVATAR);
-		ext.put("growth_id", growth_id + "");
-		ext.put("circle_id", cid + "");
-		sendUserMessage(to_user_id, EasemobConstans.PRAISE_USER_ID,
+		ext.put("picture", picture_id);
+		sendUserMessage(to_user_chat_id, EasemobConstans.COMMENT_USER_ID,
 				message_content, ext);
 	}
 
