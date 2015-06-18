@@ -397,4 +397,18 @@ public class UserController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/getVersion.do", method = RequestMethod.POST)
+	public String getVersion(HttpServletRequest request) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		params.put("app_version_name", Constants.APP_VSERSION_NAME);
+		params.put("app_version_code", Constants.APP_VSERSION_CODE);
+		params.put("version_info", Constants.VERSION_INFO);
+		params.put("app_link", Constants.APP_LINK);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
 }
