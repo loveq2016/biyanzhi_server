@@ -12,8 +12,7 @@ public class Picture {
 	private String publisher_avatar = "";
 	private String picture_image_url = "";
 	private int average_score;
-	private int picture_image_height;
-	private int picture_image_width;
+
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
 
@@ -95,22 +94,6 @@ public class Picture {
 
 	public void setPicture_image_url(String picture_image_url) {
 		this.picture_image_url = picture_image_url;
-	}
-
-	public int getPicture_image_height() {
-		return picture_image_height;
-	}
-
-	public void setPicture_image_height(int picture_image_height) {
-		this.picture_image_height = picture_image_height;
-	}
-
-	public int getPicture_image_width() {
-		return picture_image_width;
-	}
-
-	public void setPicture_image_width(int picture_image_width) {
-		this.picture_image_width = picture_image_width;
 	}
 
 }

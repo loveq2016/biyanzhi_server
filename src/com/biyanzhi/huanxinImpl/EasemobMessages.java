@@ -286,7 +286,7 @@ public class EasemobMessages {
 		ObjectNode ext = factory.objectNode();
 		ext.put("user_name", "比颜值");
 		ext.put("user_avatar", Constants.APP_AVATAR);
-		ext.put("picture", picture_id);
+		ext.put("picture_id", picture_id);
 		sendUserMessage(to_user_chat_id, EasemobConstans.COMMENT_USER_ID,
 				message_content, ext);
 	}
