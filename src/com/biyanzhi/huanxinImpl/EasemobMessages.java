@@ -284,9 +284,10 @@ public class EasemobMessages {
 	public static void sendTextMessageForComment(int picture_id,
 			String to_user_chat_id, String message_content) {
 		ObjectNode ext = factory.objectNode();
-		ext.put("user_name", "比颜值");
-		ext.put("user_avatar", Constants.APP_AVATAR);
+		ext.put("from_user_name", "比颜值");
+		ext.put("from_user_avatar", Constants.APP_AVATAR);
 		ext.put("picture_id", picture_id);
+		ext.put("user_id", -1);
 		sendUserMessage(to_user_chat_id, EasemobConstans.COMMENT_USER_ID,
 				message_content, ext);
 	}

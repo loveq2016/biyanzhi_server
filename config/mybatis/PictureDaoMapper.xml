@@ -32,7 +32,7 @@
 	</insert>
 	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
 		select * from picture where publish_time > #{publish_time} order by
-		publish_time desc limit 0,6
+		publish_time desc limit 0,10
 
 	</select>
 	<select id="getPictureByPictureID" parameterType="Integer"
@@ -43,7 +43,7 @@
 		resultMap="Picture">
 	<![CDATA[	select * from picture where publish_time < #{publish_time}
 		order by
-		publish_time desc limit 0,2]]>
+		publish_time desc limit 0,10]]>
 
 	</select>
 	<select id="getPictureListByUserID" parameterType="Integer"
