@@ -33,4 +33,6 @@ public interface UserDao {
 
 	String getUserChatIDByPictureID(@Param("picture_id") int picture_id,
 			@Param("picture_publisher_id") int picture_publisher_id);
+
+	String getUserChatIDByCommentID(int comment_id);
 }

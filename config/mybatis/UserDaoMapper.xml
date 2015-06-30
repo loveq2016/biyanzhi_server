@@ -84,5 +84,11 @@
 		`user`.user_id=#{picture_publisher_id}
 
 	</select>
+	<select id="getUserChatIDByCommentID" parameterType="Int"
+		resultType="String">
+		SELECT `user`.user_chat_id FROM `user` WHERE
+		`user`.user_id=#{comment_id}
+
+	</select>
 </mapper>
  
