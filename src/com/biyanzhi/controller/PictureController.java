@@ -140,7 +140,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
+		System.out.println("size:" + lists.size());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -155,7 +155,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
+		System.out.println("size:" + lists.size());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -169,7 +169,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
+		System.out.println("size:" + lists.size());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -183,7 +183,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
+		System.out.println("size:" + lists.size());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -202,7 +202,6 @@ public class PictureController {
 			params.put("picture", picture);
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println(jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
 	}
