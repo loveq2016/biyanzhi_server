@@ -79,4 +79,9 @@ public class UserDaoImpl implements UserDao {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.getUserChatIDByPictureID(picture_id, picture_publisher_id);
 	}
+
+	public String getUserChatIDByCommentID(int comment_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.getUserChatIDByCommentID(comment_id);
+	}
 }

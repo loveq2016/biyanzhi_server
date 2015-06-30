@@ -73,10 +73,18 @@ public class PictureCommentController {
 		} else {
 			params.put("rt", 1);
 			params.put("comment_id", comment_id);
-			String user_chat_id = uDao.getUserChatIDByPictureID(picture_id,
-					picture_publisher_id);
-			EasemobMessages.sendTextMessageForComment(picture_id, user_chat_id,
-					"'" + publisher_name + "‘ 评论了您的照片");
+
+			if (!"".equals(reply_someone_name)) {
+				String user_chat_id = uDao.getUserChatIDByCommentID(Integer
+						.valueOf(reply_someone_id));
+				EasemobMessages.sendTextMessageForComment(picture_id,
+						user_chat_id, "'" + publisher_name + "‘ 回复了您的评论");
+			} else {
+				String user_chat_id = uDao.getUserChatIDByPictureID(picture_id,
+						picture_publisher_id);
+				EasemobMessages.sendTextMessageForComment(picture_id,
+						user_chat_id, "'" + publisher_name + "‘ 评论了您的照片");
+			}
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
