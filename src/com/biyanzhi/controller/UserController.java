@@ -431,7 +431,7 @@ public class UserController {
 		params.put("app_version_name", Constants.APP_VSERSION_NAME);
 		params.put("app_version_code", Constants.APP_VSERSION_CODE);
 		params.put("version_info", Constants.VERSION_INFO);
-		params.put("app_link", Constants.APP_LINK); 
+		params.put("app_link", Constants.APP_LINK);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		System.out.println("version:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
@@ -441,9 +441,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
 	public String changePassword(HttpServletRequest request) {
-		Map<String, Object> params = new HashMap<String, Object>();
 		String user_password = request.getParameter("user_password");
 		String cell_phone = request.getParameter("cell_phone");
+		Map<String, Object> params = new HashMap<String, Object>();
 		int res = uDao.changeUserPassword(cell_phone, user_password);
 		if (res <= 0) {
 			params.put("err", ErrorEnum.INVALID);
@@ -454,5 +454,36 @@ public class UserController {
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upLoadCrash.do", method = RequestMethod.POST)
+	public String upLoadCrash(HttpServletRequest request) {
+		String img_path = request.getSession().getServletContext()
+				.getRealPath("crash");
+		MultipartResolver resolver = new CommonsMultipartResolver(request
+				.getSession().getServletContext());
+		MultipartHttpServletRequest multipartRequest = resolver
+				.resolveMultipart(request);
+		MultipartFile file = multipartRequest.getFile("image");
+		try {
+			if (file != null && !file.isEmpty()) {
+				String file_name = file.getOriginalFilename();
+				String save_filename = DateUtils.getUpLoadFileName()
+						+ file_name.substring(file_name.lastIndexOf("."),
+								file_name.length());
+				File targetFile = new File(img_path, save_filename);
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
+				}
+				file.transferTo(targetFile);
+			}
+		} catch (IOException e) {
+
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
 	}
 }
