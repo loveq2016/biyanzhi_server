@@ -2,6 +2,8 @@ package com.biyanzhi.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.biyanzhi.bean.Picture;
 
 public interface PictureDao {
@@ -18,5 +20,8 @@ public interface PictureDao {
 	List<Picture> getGirlBangPictureList();// √¿≈Æ∞Ò
 
 	List<Picture> getBoyBangPictureList();// Àß∏Á∞Ò
+
+	int updatePictureUpdateTime(@Param("picture_id") int picture_id,
+			@Param("publish_time_last_update") String publish_time_last_update);
 
 }

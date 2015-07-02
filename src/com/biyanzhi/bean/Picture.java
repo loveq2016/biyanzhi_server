@@ -7,6 +7,7 @@ public class Picture {
 	private int picture_id;
 	private int publisher_id = 0;
 	private String publish_time = "";
+	private String publish_time_last_update = "";
 	private String content = "";
 	private String publisher_name = "";
 	private String publisher_avatar = "";
@@ -62,6 +63,14 @@ public class Picture {
 
 	public void setPublish_time(String publish_time) {
 		this.publish_time = publish_time;
+	}
+
+	public String getPublish_time_last_update() {
+		return publish_time_last_update;
+	}
+
+	public void setPublish_time_last_update(String publish_time_last_update) {
+		this.publish_time_last_update = publish_time_last_update;
 	}
 
 	public String getContent() {

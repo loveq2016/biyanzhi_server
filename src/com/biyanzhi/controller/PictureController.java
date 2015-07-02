@@ -87,6 +87,7 @@ public class PictureController {
 		pic.setPublisher_name(publisher_name);
 		pic.setPublisher_id(publisher_id);
 		pic.setPublisher_avatar(publisher_avatar);
+		pic.setPublish_time_last_update(publicsh_time);
 		Map<String, Object> params = new HashMap<String, Object>();
 		int picture_id = 0;
 		// ±£´æÍ¼Æ¬
@@ -218,6 +219,23 @@ public class PictureController {
 		score.setPicture_score(picture_score);
 		score.setUser_id(user_id);
 		int result = scoreDao.addPictureScore(score);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDatePictureTime.do", method = RequestMethod.POST)
+	public String upDatePictureTime(HttpServletRequest request) {
+		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
+		int result = pictureDao.updatePictureUpdateTime(picture_id,
+				DateUtils.getPicturePublishTime());
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
