@@ -1,11 +1,14 @@
 package com.biyanzhi.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.biyanzhi.bean.PictureScore;
+import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.PictureScoreDao;
 
 @Repository
@@ -51,6 +54,11 @@ public class PictureScoreDaoImpl implements PictureScoreDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public List<User> getPlayScoreUserListByPictureID(int picture_id) {
+		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
+		return dao.getPlayScoreUserListByPictureID(picture_id);
 	}
 
 }
