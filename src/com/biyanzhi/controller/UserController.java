@@ -486,4 +486,18 @@ public class UserController {
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getPlayScoreUserListsByPictureID.do")
+	public String getPlayScoreUserListsByPictureID(HttpServletRequest request) {
+		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
+		List<User> users = scoreDao.getPlayScoreUserListByPictureID(picture_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		params.put("users", users);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
 }
