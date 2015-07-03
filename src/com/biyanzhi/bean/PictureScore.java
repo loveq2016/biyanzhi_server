@@ -5,6 +5,15 @@ public class PictureScore {
 	private int user_id;
 	private int picture_id;
 	private int picture_score;
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getUser_id() {
 		return user_id;

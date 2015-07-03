@@ -26,12 +26,25 @@ import com.biyanzhi.bean.PictureScore;
 import com.biyanzhi.dao.CommentDao;
 import com.biyanzhi.dao.PictureDao;
 import com.biyanzhi.dao.PictureScoreDao;
+import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
+import com.biyanzhi.huanxinImpl.EasemobMessages;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
 
 @Controller
 public class PictureController {
+	@Autowired
+	private UserDao uDao;
+
+	public UserDao getuDao() {
+		return uDao;
+	}
+
+	public void setuDao(UserDao uDao) {
+		this.uDao = uDao;
+	}
+
 	@Autowired
 	private PictureDao pictureDao;
 
@@ -93,7 +106,7 @@ public class PictureController {
 		// 保存图片
 		MultipartFile file = multipartRequest.getFile("image");
 		String serverPath = Constants.SERVER_PATH + "/picture_image/";
-		try {
+		try { 
 			if (file != null && !file.isEmpty()) {
 				String file_name = file.getOriginalFilename();
 				String save_filename = DateUtils.getUpLoadFileName()
@@ -214,6 +227,10 @@ public class PictureController {
 		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
 		int picture_score = Integer.valueOf(request
 				.getParameter("picture_score"));
+		int picture_publisher_id = Integer.valueOf(request
+				.getParameter("picture_publisher_id"));
+		String user_name = request.getParameter("user_name");
+
 		PictureScore score = new PictureScore();
 		score.setPicture_id(picture_id);
 		score.setPicture_score(picture_score);
@@ -222,6 +239,10 @@ public class PictureController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			String user_chat_id = uDao.getUserChatIDByPictureID(picture_id,
+					picture_publisher_id);
+			EasemobMessages.sendTextMessageForPlayScore(picture_id,
+					user_chat_id, "'" + user_name + "‘ 给你的照片打分了快去看看吧");
 		} else {
 			params.put("rt", 0);
 		}

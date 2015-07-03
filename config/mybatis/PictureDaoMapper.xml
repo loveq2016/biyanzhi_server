@@ -31,7 +31,7 @@
 		)
 	</insert>
 	<select id="getPictureList" parameterType="Integer" resultMap="Picture">
-		select * from picture where publish_time_last_update >
+		select * from picture where publish_time >
 		#{publish_time}
 		order by
 		publish_time desc limit 0,10
