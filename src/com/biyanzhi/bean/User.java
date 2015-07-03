@@ -12,6 +12,15 @@ public class User {
 	private String user_chat_id = "";
 	private int guanzhu_count;
 	private boolean isGuanZhu;
+	private PictureScore pictureScore;
+
+	public PictureScore getPictureScore() {
+		return pictureScore;
+	}
+
+	public void setPictureScore(PictureScore pictureScore) {
+		this.pictureScore = pictureScore;
+	}
 
 	public String getUser_chat_id() {
 		return user_chat_id;
