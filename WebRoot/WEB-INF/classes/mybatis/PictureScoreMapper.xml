@@ -9,7 +9,9 @@
 		<result property="picture_id" column="picture_id" />
 		<result property="user_id" column="user_id" />
 		<result property="picture_score" column="picture_score" />
-		<association property="user" select="com.biyanzhi.dao.UserDao.findUserByUserID" column="user_id"
+		<result property="play_score_time" column="play_score_time" />
+		<association property="user"
+			select="com.biyanzhi.dao.UserDao.findUserByUserID" column="user_id"
 			javaType="com.biyanzhi.bean.User" />
 	</resultMap>
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
@@ -29,18 +31,20 @@
 	</select>
 	<insert id="addPictureScore" parameterType="com.biyanzhi.bean.PictureScore">
 		insert into
-		picture_score(user_id,picture_id,picture_score )
-		values(#{user_id},#{picture_id},#{picture_score})
+		picture_score(user_id,picture_id,picture_score ,play_score_time)
+		values(#{user_id},#{picture_id},#{picture_score},#{play_score_time})
 	</insert>
 	<select id="getPlayScoreUserListByPictureID" parameterType="Integer"
 		resultMap="PictureScore">
 		select * from picture_score where picture_id=#{picture_id}
+		order by
+		play_score_time desc
 
-		<!-- SELECT -->
-		<!-- `user`.user_avatar,`user`.user_name,`user`.user_id,picture_score.picture_score -->
-		<!-- FROM picture_score LEFT JOIN `user` ON -->
-		<!-- picture_score.user_id=`user`.user_id WHERE -->
-		<!-- picture_score.picture_id=#{picture_id} -->
 
+	</select>
+	<select id="getPlayScoreByUserID" parameterType="Integer"
+		resultType="int">
+		SELECT count(*) from picture_score WHERE
+		picture_score.user_id=#{user_id}
 	</select>
 </mapper>

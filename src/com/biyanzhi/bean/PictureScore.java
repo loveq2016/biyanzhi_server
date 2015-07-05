@@ -5,7 +5,16 @@ public class PictureScore {
 	private int user_id;
 	private int picture_id;
 	private int picture_score;
+	private String play_score_time;
 	private User user;
+
+	public String getPlay_score_time() {
+		return play_score_time;
+	}
+
+	public void setPlay_score_time(String play_score_time) {
+		this.play_score_time = play_score_time;
+	}
 
 	public User getUser() {
 		return user;
@@ -46,5 +55,5 @@ public class PictureScore {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 }

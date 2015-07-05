@@ -106,7 +106,7 @@ public class PictureController {
 		// ±£´æÍ¼Æ¬
 		MultipartFile file = multipartRequest.getFile("image");
 		String serverPath = Constants.SERVER_PATH + "/picture_image/";
-		try { 
+		try {
 			if (file != null && !file.isEmpty()) {
 				String file_name = file.getOriginalFilename();
 				String save_filename = DateUtils.getUpLoadFileName()
@@ -148,13 +148,17 @@ public class PictureController {
 	@RequestMapping(value = "/getpicturelists.do", method = RequestMethod.POST)
 	public String getPictureList(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");
+		// int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList(publish_time));
+		// for (Picture pic : lists) {
+		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
+		// }
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println("size:" + lists.size());
+		System.out.println("size:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -163,8 +167,12 @@ public class PictureController {
 	@RequestMapping(value = "/loadMorePictureList.do", method = RequestMethod.POST)
 	public String loadMorePictureList(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");
+		// int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.loadMorePictureList(publish_time));
+		// for (Picture pic : lists) {
+		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
+		// }
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -177,8 +185,12 @@ public class PictureController {
 	@ResponseBody
 	@RequestMapping(value = "/getGirlBangPictureList.do", method = RequestMethod.POST)
 	public String getGirlBangPictureList(HttpServletRequest request) {
+		// int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getGirlBangPictureList());
+		// for (Picture pic : lists) {
+		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
+		// }
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -191,8 +203,12 @@ public class PictureController {
 	@ResponseBody
 	@RequestMapping(value = "/getBoyBangPictureList.do", method = RequestMethod.POST)
 	public String getBoyBangPictureList(HttpServletRequest request) {
+		// int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getBoyBangPictureList());
+		// for (Picture pic : lists) {
+		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
+		// }
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -235,6 +251,7 @@ public class PictureController {
 		score.setPicture_id(picture_id);
 		score.setPicture_score(picture_score);
 		score.setUser_id(user_id);
+		score.setPlay_score_time(DateUtils.getPicturePublishTime());
 		int result = scoreDao.addPictureScore(score);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
