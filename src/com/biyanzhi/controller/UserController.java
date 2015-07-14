@@ -34,6 +34,7 @@ import com.biyanzhi.dao.SMSCodeDao;
 import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.huanxinImpl.EasemobIMUsers;
+import com.biyanzhi.huanxinImpl.EasemobMessages;
 import com.biyanzhi.smscode.RestSMSCode;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
@@ -313,6 +314,9 @@ public class UserController {
 		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		int guanzhu_user_id = Integer.valueOf(request
 				.getParameter("guanzhu_user_id"));
+		String user_name = request.getParameter("user_name");
+		String guanzhu_user_chat_id = request
+				.getParameter("guanzhu_user_chat_id");
 		GuanZhu gz = new GuanZhu();
 		gz.setGuanzhu_user_id(guanzhu_user_id);
 		gz.setUser_id(user_id);
@@ -323,6 +327,8 @@ public class UserController {
 			params.put("rt", 0);
 		} else {
 			params.put("rt", 1);
+			EasemobMessages.sendTextMessageForGuanzhu(guanzhu_user_chat_id,
+					"' " + user_name + " '¹Ø×¢ÁËÄã");
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
@@ -424,21 +430,21 @@ public class UserController {
 
 	}
 
-	@ResponseBody 
+	@ResponseBody
 	@RequestMapping(value = "/getVersion.do", method = RequestMethod.POST)
 	public String getVersion(HttpServletRequest request) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);
 		params.put("app_version_name", Constants.APP_VSERSION_NAME);
 		params.put("app_version_code", Constants.APP_VSERSION_CODE);
-		params.put("version_info", Constants.VERSION_INFO); 
+		params.put("version_info", Constants.VERSION_INFO);
 		params.put("app_link", Constants.APP_LINK);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		System.out.println("version:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
- 
+
 	}
- 
+
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
 	public String changePassword(HttpServletRequest request) {
