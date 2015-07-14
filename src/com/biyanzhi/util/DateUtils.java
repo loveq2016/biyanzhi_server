@@ -16,7 +16,7 @@ public class DateUtils {
 		return fileNameDF.format(new Date());
 
 	}
-
+ 
 	public static String getPicturePublishTime() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return df.format(new Date());

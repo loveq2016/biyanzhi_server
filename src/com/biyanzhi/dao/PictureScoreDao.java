@@ -12,4 +12,6 @@ public interface PictureScoreDao {
 	int addPictureScore(PictureScore pictureScore);
 
 	List<PictureScore> getPlayScoreUserListByPictureID(int picture_id);
+
+//	int getPlayScoreByUserID(int user_id);
 }

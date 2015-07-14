@@ -13,6 +13,7 @@
 		<result property="publisher_name" column="publisher_name" />
 		<result property="publisher_avatar" column="publisher_avatar" />
 		<result property="picture_image_url" column="picture_image_url" />
+
 		<association property="score_number" column="picture_id"
 			javaType="int" select="getPictureScores" />
 		<association property="average_score" column="picture_id"
@@ -66,6 +67,8 @@
 		picture_id=#{picture_id}
 
 	</select>
+
+
 	<select id="getPictureAvgScore" parameterType="Integer"
 		resultType="Integer">
 
