@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.biyanzhi.bean.FeedBack;
 import com.biyanzhi.bean.GuanZhu;
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.PictureScore;
@@ -508,4 +509,26 @@ public class UserController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/addFeedBack.do", method = RequestMethod.POST)
+	public String addFeedBack(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		String feedback_content = request.getParameter("feedback_content");
+		String feedback_time = DateUtils.getPicturePublishTime();
+		FeedBack fb = new FeedBack();
+		fb.setFeedback_content(feedback_content);
+		fb.setFeedback_time(feedback_time);
+		fb.setUser_id(user_id);
+		int res = uDao.addFeedBack(fb);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (res > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID);
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
 }

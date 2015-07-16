@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.biyanzhi.bean.FeedBack;
 import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.UserDao;
 
@@ -83,5 +84,10 @@ public class UserDaoImpl implements UserDao {
 	public String getUserChatIDByCommentID(int comment_id) {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.getUserChatIDByCommentID(comment_id);
+	}
+
+	public int addFeedBack(FeedBack fb) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.addFeedBack(fb);
 	}
 }

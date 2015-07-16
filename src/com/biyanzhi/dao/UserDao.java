@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.biyanzhi.bean.FeedBack;
 import com.biyanzhi.bean.User;
 
 public interface UserDao {
@@ -35,4 +36,6 @@ public interface UserDao {
 			@Param("picture_publisher_id") int picture_publisher_id);
 
 	String getUserChatIDByCommentID(int comment_id);
+
+	int addFeedBack(FeedBack fb);
 }
