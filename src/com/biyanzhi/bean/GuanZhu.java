@@ -3,6 +3,15 @@ package com.biyanzhi.bean;
 public class GuanZhu {
 	private int user_id;
 	private int guanzhu_user_id;
+	private String guanzhu_time = "";
+
+	public String getGuanzhu_time() {
+		return guanzhu_time;
+	}
+
+	public void setGuanzhu_time(String guanzhu_time) {
+		this.guanzhu_time = guanzhu_time;
+	}
 
 	public int getUser_id() {
 		return user_id;

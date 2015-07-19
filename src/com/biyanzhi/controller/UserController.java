@@ -321,6 +321,7 @@ public class UserController {
 		GuanZhu gz = new GuanZhu();
 		gz.setGuanzhu_user_id(guanzhu_user_id);
 		gz.setUser_id(user_id);
+		gz.setGuanzhu_time(DateUtils.getPicturePublishTime());
 		int result = guanzhuDao.addGuanZhu(gz);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result <= 0) {
