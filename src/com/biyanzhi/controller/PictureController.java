@@ -284,4 +284,21 @@ public class PictureController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/delPicture.do", method = RequestMethod.POST)
+	public String delPicture(HttpServletRequest request) {
+		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
+		int result = pictureDao.delPicture(picture_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID.name());
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
 }

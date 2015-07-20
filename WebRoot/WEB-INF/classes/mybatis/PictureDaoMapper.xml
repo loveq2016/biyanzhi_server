@@ -119,4 +119,7 @@
 		publish_time_last_update = #{publish_time_last_update} WHERE
 		picture_id = #{picture_id}
 	</update>
+	<delete id="delPicture">
+		DELETE FROM picture WHERE picture_id=#{picture_id}
+	</delete>
 </mapper>

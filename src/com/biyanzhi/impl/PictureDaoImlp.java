@@ -71,4 +71,9 @@ public class PictureDaoImlp implements PictureDao {
 		return dao
 				.updatePictureUpdateTime(picture_id, publish_time_last_update);
 	}
+
+	public int delPicture(int picture_id) {
+		PictureDao dao = sqlSession.getMapper(PictureDao.class);
+		return dao.delPicture(picture_id);
+	}
 }

@@ -24,4 +24,6 @@ public interface PictureDao {
 	int updatePictureUpdateTime(@Param("picture_id") int picture_id,
 			@Param("publish_time_last_update") String publish_time_last_update);
 
+	int delPicture(int picture_id);
+
 }
