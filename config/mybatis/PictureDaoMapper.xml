@@ -52,8 +52,16 @@
 	<select id="getPictureListByUserID" parameterType="Integer"
 		resultMap="Picture">
 		select * from picture where publisher_id=#{publisher_id}
+		order by
+		publish_time desc limit 0,10
 	</select>
+	<select id="getPictureListMoreByUserID" parameterType="Map"
+		resultMap="Picture">
+	<![CDATA[	select * from picture where publisher_id=#{publisher_id} and publish_time < #{publish_time}
+		order by
+		publish_time desc limit 0,10]]>
 
+	</select>
 	<select id="getCommentByPictureID" parameterType="Integer"
 		resultType="com.biyanzhi.bean.Comment">
 

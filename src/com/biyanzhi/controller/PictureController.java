@@ -164,6 +164,24 @@ public class PictureController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getPictureListMoreByUserID.do", method = RequestMethod.POST)
+	public String getPictureListMoreByUserID(HttpServletRequest request) {
+		String publish_time = request.getParameter("publish_time");
+		int publisher_user_id = Integer.valueOf(request
+				.getParameter("publicsher_user_id"));
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.getPictureListMoreByUserID(publisher_user_id,
+				publish_time));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/loadMorePictureList.do", method = RequestMethod.POST)
 	public String loadMorePictureList(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");

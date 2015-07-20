@@ -17,6 +17,10 @@ public interface PictureDao {
 
 	List<Picture> getPictureListByUserID(int publisher_id);
 
+	List<Picture> getPictureListMoreByUserID(
+			@Param("publisher_id") int publisher_id,
+			@Param("publish_time") String publish_time);
+
 	List<Picture> getGirlBangPictureList();// √¿≈Æ∞Ò
 
 	List<Picture> getBoyBangPictureList();// Àß∏Á∞Ò
