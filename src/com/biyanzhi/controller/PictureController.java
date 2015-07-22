@@ -164,11 +164,26 @@ public class PictureController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getPictureListsByUserID.do", method = RequestMethod.POST)
+	public String getPictureListByUserID(HttpServletRequest request) {
+		int publisher_user_id = Integer.valueOf(request
+				.getParameter("publisher_user_id"));
+		List<Picture> lists = new ArrayList<Picture>();
+		lists.addAll(pictureDao.getPictureListByUserID(publisher_user_id));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pictures", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/getPictureListMoreByUserID.do", method = RequestMethod.POST)
 	public String getPictureListMoreByUserID(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");
 		int publisher_user_id = Integer.valueOf(request
-				.getParameter("publicsher_user_id"));
+				.getParameter("publisher_user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureListMoreByUserID(publisher_user_id,
 				publish_time));
@@ -176,7 +191,7 @@ public class PictureController {
 		params.put("pictures", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println("size:" + jsonObjectFromMap.toString());
+		System.out.println(jsonObjectFromMap);
 		return jsonObjectFromMap.toString();
 
 	}
