@@ -17,6 +17,15 @@ public class Picture {
 
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public boolean isIs_play_score() {
 		return is_play_score;
