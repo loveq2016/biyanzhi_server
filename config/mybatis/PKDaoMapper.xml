@@ -25,4 +25,10 @@
 		* from pk where pk_time > #{pk_time} order by pk_time desc limit 0,10
 
 	</select>
+	<select id="loadMorePKList" parameterType="Integer" resultMap="PK">
+	<![CDATA[	select * from pk where pk_time < #{pk_time}
+		order by
+		pk_time desc limit 0,10]]>
+
+	</select>
 </mapper>

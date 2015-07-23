@@ -79,4 +79,19 @@ public class PKController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadMorePKList.do", method = RequestMethod.POST)
+	public String loadMorePKList(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.loadMorePKList(pk_time));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + lists.size());
+		return jsonObjectFromMap.toString();
+
+	}
 }

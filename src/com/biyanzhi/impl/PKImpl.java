@@ -33,4 +33,9 @@ public class PKImpl implements PKDao {
 		return dao.getPKList(pk_time);
 	}
 
+	public List<PK> loadMorePKList(String pk_time) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.loadMorePKList(pk_time);
+	}
+
 }
