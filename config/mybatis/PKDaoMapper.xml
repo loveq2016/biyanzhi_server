@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.biyanzhi.dao.PKDao">
+	<resultMap type="com.biyanzhi.bean.PK" id="PK">
+		<id property="pk1_user_id" column="pk1_user_id" />
+		<result property="pk1_user_picture" column="pk1_user_picture" />
+		<result property="pk1_ticket_count" column="pk1_ticket_count" />
+		<result property="pk2_user_id" column="pk2_user_id" />
+		<result property="pk2_user_picture" column="pk2_user_picture" />
+		<result property="pk2_ticket_count" column="pk2_ticket_count" />
+		<result property="pk_time" column="pk_time" />
+
+	</resultMap>
+	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
+	<insert id="addPK" parameterType="com.biyanzhi.bean.PK">
+		insert into
+		pk(pk1_user_id,pk1_user_picture,pk1_ticket_count,pk2_user_id,pk2_user_picture,pk2_ticket_count,pk_time)
+		values(#{pk1_user_id},#{pk1_user_picture},#{pk1_ticket_count},#{pk2_user_id},#{pk2_user_picture},#{pk2_ticket_count},#{pk_time})
+	</insert>
+	<select id="getPKList" parameterType="Integer" resultMap="PK">
+		select
+		* from pk where pk_time > #{pk_time} order by pk_time desc limit 0,10
+
+	</select>
+</mapper>
