@@ -11,8 +11,17 @@ public class User {
 	private String user_address = "";
 	private String user_chat_id = "";
 	private int guanzhu_count;
+	private int my_guanzhu_count;
 	private boolean isGuanZhu;
 	private PictureScore pictureScore;
+
+	public int getMy_guanzhu_count() {
+		return my_guanzhu_count;
+	}
+
+	public void setMy_guanzhu_count(int my_guanzhu_count) {
+		this.my_guanzhu_count = my_guanzhu_count;
+	}
 
 	public PictureScore getPictureScore() {
 		return pictureScore;

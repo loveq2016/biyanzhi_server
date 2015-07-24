@@ -27,7 +27,9 @@ public interface UserDao {
 	int upDateUserAddress(@Param("user_address") String user_address,
 			@Param("user_id") int user_id);
 
-	List<User> getGuanZhuUsersByUserID(int user_id);// 获取关注用户列表
+	List<User> getGuanZhuUsersByUserID(int user_id);// 获取关注我的用户列表
+
+	List<User> getMyGuanZhuUsersByUserID(int user_id);// 获取我关注的用户列表
 
 	int changeUserPassword(@Param("user_cellphone") String cell_phone,
 			@Param("user_password") String password);

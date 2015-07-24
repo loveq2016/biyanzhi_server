@@ -23,7 +23,13 @@
 		parameterType="Integer">
 		select count(*) from guanzhu
 		where guanzhu_user_id =
-		#{guanzhu_user_id} 
+		#{guanzhu_user_id}
+	</select>
+	<select id="getMyGuanZhuCountByUserID" resultType="int"
+		parameterType="Integer">
+		select count(*) from guanzhu
+		where user_id =
+		#{user_id}
 	</select>
 	<select id="isGuanZhuByUserIDAndGuanZhuUserID" resultType="int">
 		select count(*) from guanzhu
@@ -31,5 +37,11 @@
 		#{guanzhu_user_id}
 		and user_id=#{user_id}
 	</select>
+	<delete id="cancleGuanZhu">
+		DELETE FROM guanzhu WHERE  guanzhu_user_id =
+		#{guanzhu_user_id}
+		and user_id=#{user_id}
+
+	</delete>
 </mapper>
  

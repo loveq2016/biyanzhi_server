@@ -38,4 +38,19 @@ public class PKImpl implements PKDao {
 		return dao.loadMorePKList(pk_time);
 	}
 
+	public int upDatePK2(int pk_id, int pk2_user_id, String pk2_user_picture) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.upDatePK2(pk_id, pk2_user_id, pk2_user_picture);
+	}
+
+	public int upDatePK2TicketCount(int pk_id, int pk2_ticket_count) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.upDatePK2TicketCount(pk_id, pk2_ticket_count);
+	}
+
+	public int upDatePK1TicketCount(int pk_id, int pk1_ticket_count) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.upDatePK1TicketCount(pk_id, pk1_ticket_count);
+	}
+
 }

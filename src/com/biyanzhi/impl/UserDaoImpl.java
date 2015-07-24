@@ -70,6 +70,11 @@ public class UserDaoImpl implements UserDao {
 		return dao.getGuanZhuUsersByUserID(guanzhu_user_id);
 	}
 
+	public List<User> getMyGuanZhuUsersByUserID(int user_id) {
+		UserDao dao = sqlSession.getMapper(UserDao.class);
+		return dao.getMyGuanZhuUsersByUserID(user_id);
+	}
+
 	public int changeUserPassword(String cell_phone, String password) {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.changeUserPassword(cell_phone, password);
@@ -90,4 +95,5 @@ public class UserDaoImpl implements UserDao {
 		UserDao dao = sqlSession.getMapper(UserDao.class);
 		return dao.addFeedBack(fb);
 	}
+
 }

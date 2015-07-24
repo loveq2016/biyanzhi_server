@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biyanzhi.bean.PK;
-import com.biyanzhi.bean.Picture;
 import com.biyanzhi.dao.PKDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.util.DateUtils;
@@ -38,6 +37,7 @@ public class PKController {
 	@RequestMapping(value = "/addPK.do", method = RequestMethod.POST)
 	public String addPK(HttpServletRequest request) {
 		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
+		String pk1_user_gender = request.getParameter("pk1_user_gender");
 		String pk1_user_picture = request.getParameter("pk1_user_picture");
 		int pk1_ticket_count = Integer.valueOf(request
 				.getParameter("pk1_ticket_count"));
@@ -48,6 +48,7 @@ public class PKController {
 		PK pk = new PK();
 		pk.setPk1_ticket_count(pk1_ticket_count);
 		pk.setPk1_user_id(pk1_user_id);
+		pk.setPk1_user_gender(pk1_user_gender);
 		pk.setPk1_user_picture(pk1_user_picture);
 		pk.setPk2_ticket_count(pk2_ticket_count);
 		pk.setPk2_user_id(pk2_user_id);
@@ -91,6 +92,62 @@ public class PKController {
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		System.out.println("size:" + lists.size());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDatePK2.do", method = RequestMethod.POST)
+	public String upDatePK2(HttpServletRequest request) {
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
+		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
+		String pk2_user_picture = request.getParameter("pk2_user_picture");
+		int result = dao.upDatePK2(pk_id, pk2_user_id, pk2_user_picture);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID.name());
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDatePK2TicketCount.do", method = RequestMethod.POST)
+	public String upDatePK2TicketCount(HttpServletRequest request) {
+		int pk2_ticket_count = Integer.valueOf(request
+				.getParameter("pk2_ticket_count"));
+		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
+		int result = dao.upDatePK2TicketCount(pk_id, pk2_ticket_count);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID.name());
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/upDatePK1TicketCount.do", method = RequestMethod.POST)
+	public String upDatePK1TicketCount(HttpServletRequest request) {
+		int pk1_ticket_count = Integer.valueOf(request
+				.getParameter("pk1_ticket_count"));
+		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
+		int result = dao.upDatePK1TicketCount(pk_id, pk1_ticket_count);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID.name());
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 
 	}

@@ -44,10 +44,25 @@ public class GuanZhuImpl implements GuanZhuDao {
 		return 0;
 	}
 
+	public int getMyGuanZhuCountByUserID(int user_id) {
+		try {
+			GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
+			return dao.getMyGuanZhuCountByUserID(user_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public int isGuanZhuByUserIDAndGuanZhuUserID(int user_id,
 			int guanzhu_user_id) {
 		GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
 		return dao.isGuanZhuByUserIDAndGuanZhuUserID(user_id, guanzhu_user_id);
+	}
+
+	public int cancleGuanZhu(GuanZhu guanzhu) {
+		GuanZhuDao dao = sqlSession.getMapper(GuanZhuDao.class);
+		return dao.cancleGuanZhu(guanzhu);
 	}
 
 }

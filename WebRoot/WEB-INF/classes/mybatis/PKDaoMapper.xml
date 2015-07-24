@@ -5,7 +5,9 @@
 <!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
 <mapper namespace="com.biyanzhi.dao.PKDao">
 	<resultMap type="com.biyanzhi.bean.PK" id="PK">
+		<id property="pk_id" column="pk_id" />
 		<id property="pk1_user_id" column="pk1_user_id" />
+		<id property="pk1_user_gender" column="pk1_user_gender" />
 		<result property="pk1_user_picture" column="pk1_user_picture" />
 		<result property="pk1_ticket_count" column="pk1_ticket_count" />
 		<result property="pk2_user_id" column="pk2_user_id" />
@@ -17,8 +19,8 @@
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
 	<insert id="addPK" parameterType="com.biyanzhi.bean.PK">
 		insert into
-		pk(pk1_user_id,pk1_user_picture,pk1_ticket_count,pk2_user_id,pk2_user_picture,pk2_ticket_count,pk_time)
-		values(#{pk1_user_id},#{pk1_user_picture},#{pk1_ticket_count},#{pk2_user_id},#{pk2_user_picture},#{pk2_ticket_count},#{pk_time})
+		pk(pk1_user_id,pk1_user_gender,pk1_user_picture,pk1_ticket_count,pk2_user_id,pk2_user_picture,pk2_ticket_count,pk_time)
+		values(#{pk1_user_id},#{pk1_user_gender},#{pk1_user_picture},#{pk1_ticket_count},#{pk2_user_id},#{pk2_user_picture},#{pk2_ticket_count},#{pk_time})
 	</insert>
 	<select id="getPKList" parameterType="Integer" resultMap="PK">
 		select
@@ -31,4 +33,19 @@
 		pk_time desc limit 0,10]]>
 
 	</select>
+	<update id="upDatePK2" parameterType="Map">
+		UPDATE pk SET
+		pk2_user_id =
+		#{pk2_user_id} , pk2_user_picture = #{pk2_user_picture} WHERE pk_id=
+		#{pk_id}
+	</update>
+	<update id="upDatePK2TicketCount" parameterType="Map">
+		UPDATE pk SET
+		pk2_ticket_count =
+		#{pk2_ticket_count} WHERE pk_id = #{pk_id}
+	</update>
+	<update id="upDatePK1TicketCount" parameterType="Map">
+		UPDATE pk SET
+		pk1_ticket_count = #{pk1_ticket_count} WHERE pk_id = #{pk_id}
+	</update>
 </mapper>

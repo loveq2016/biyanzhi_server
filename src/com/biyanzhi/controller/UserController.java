@@ -299,6 +299,8 @@ public class UserController {
 			guanzhu.setGuanzhu_user_id(publisher_user_id);
 			user.setGuanZhu(guanzhuDao.isGuanZhuByUserIDAndGuanZhuUserID(
 					user_id, publisher_user_id) > 0);
+			user.setMy_guanzhu_count(guanzhuDao
+					.getMyGuanZhuCountByUserID(publisher_user_id));
 			params.put("user", user);
 			params.put("pictures", lists);
 			params.put("rt", 1);
@@ -331,6 +333,28 @@ public class UserController {
 			params.put("rt", 1);
 			EasemobMessages.sendTextMessageForGuanzhu(guanzhu_user_chat_id,
 					"' " + user_name + " '¹Ø×¢ÁËÄã");
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/cancleGuanZhu.do", method = RequestMethod.POST)
+	public String cancleGuanZhu(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int guanzhu_user_id = Integer.valueOf(request
+				.getParameter("guanzhu_user_id"));
+		GuanZhu gz = new GuanZhu();
+		gz.setGuanzhu_user_id(guanzhu_user_id);
+		gz.setUser_id(user_id);
+		int result = guanzhuDao.cancleGuanZhu(gz);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result <= 0) {
+			params.put("err", ErrorEnum.INVALID.name());
+			params.put("rt", 0);
+		} else {
+			params.put("rt", 1);
 		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
@@ -424,6 +448,19 @@ public class UserController {
 		int guanzhu_user_id = Integer.valueOf(request
 				.getParameter("guanzhu_user_id"));
 		List<User> users = uDao.getGuanZhuUsersByUserID(guanzhu_user_id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		params.put("users", users);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getMyGuanZhuUserListsByUserID.do", method = RequestMethod.POST)
+	public String getMyGuanZhuUserListsByUserID(HttpServletRequest request) {
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		List<User> users = uDao.getMyGuanZhuUsersByUserID(user_id);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);
 		params.put("users", users);
