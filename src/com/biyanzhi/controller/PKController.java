@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biyanzhi.bean.PK;
+import com.biyanzhi.bean.PKVote;
 import com.biyanzhi.dao.PKDao;
+import com.biyanzhi.dao.PKVoteDao;
 import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.util.DateUtils;
 
@@ -31,6 +33,17 @@ public class PKController {
 
 	public void setDao(PKDao dao) {
 		this.dao = dao;
+	}
+
+	@Autowired
+	private PKVoteDao voteDao;
+
+	public PKVoteDao getVoteDao() {
+		return voteDao;
+	}
+
+	public void setVoteDao(PKVoteDao voteDao) {
+		this.voteDao = voteDao;
 	}
 
 	@ResponseBody
@@ -70,8 +83,12 @@ public class PKController {
 	@RequestMapping(value = "/getPKList.do", method = RequestMethod.POST)
 	public String getPKList(HttpServletRequest request) {
 		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<PK> lists = new ArrayList<PK>();
 		lists.addAll(dao.getPKList(pk_time));
+		for (PK pk : lists) {
+			pk.setIs_voted(voteDao.findPKVote(new PKVote(pk.getPk_id(), user_id)) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pks", lists);
 		params.put("rt", 1);
@@ -85,8 +102,12 @@ public class PKController {
 	@RequestMapping(value = "/loadMorePKList.do", method = RequestMethod.POST)
 	public String loadMorePKList(HttpServletRequest request) {
 		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<PK> lists = new ArrayList<PK>();
 		lists.addAll(dao.loadMorePKList(pk_time));
+		for (PK pk : lists) {
+			pk.setIs_voted(voteDao.findPKVote(new PKVote(pk.getPk_id(), user_id)) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pks", lists);
 		params.put("rt", 1);
@@ -118,13 +139,19 @@ public class PKController {
 	@ResponseBody
 	@RequestMapping(value = "/upDatePK2TicketCount.do", method = RequestMethod.POST)
 	public String upDatePK2TicketCount(HttpServletRequest request) {
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
 		int pk2_ticket_count = Integer.valueOf(request
 				.getParameter("pk2_ticket_count"));
 		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		int result = dao.upDatePK2TicketCount(pk_id, pk2_ticket_count);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			if (pk2_ticket_count >= 2) {
+				dao.upDatePKState(pk_id, 1, pk2_user_id);
+			}
+			voteDao.addPKVode(new PKVote(pk_id, user_id));
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -136,13 +163,19 @@ public class PKController {
 	@ResponseBody
 	@RequestMapping(value = "/upDatePK1TicketCount.do", method = RequestMethod.POST)
 	public String upDatePK1TicketCount(HttpServletRequest request) {
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
 		int pk1_ticket_count = Integer.valueOf(request
 				.getParameter("pk1_ticket_count"));
 		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		int result = dao.upDatePK1TicketCount(pk_id, pk1_ticket_count);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			if (pk1_ticket_count >= 2) {
+				dao.upDatePKState(pk_id, 1, pk1_user_id);
+			}
+			voteDao.addPKVode(new PKVote(pk_id, user_id));
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());

@@ -17,8 +17,13 @@ public interface PKDao {
 			@Param("pk2_user_id") int pk2_user_id,
 			@Param("pk2_user_picture") String pk2_user_picture);
 
-	int upDatePK2TicketCount(@Param("pk_id") int pk_id, int pk2_ticket_count);
+	int upDatePK2TicketCount(@Param("pk_id") int pk_id,
+			@Param("pk2_ticket_count") int pk2_ticket_count);
 
-	int upDatePK1TicketCount(@Param("pk_id") int pk_id, int pk1_ticket_count);
+	int upDatePK1TicketCount(@Param("pk_id") int pk_id,
+			@Param("pk1_ticket_count") int pk1_ticket_count);
 
+	int upDatePKState(@Param("pk_id") int pk_id,
+			@Param("pk_state") int pk_state,
+			@Param("pk_winer_user_id") int pk_winer_user_id);
 }

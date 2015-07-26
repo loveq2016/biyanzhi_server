@@ -10,6 +10,33 @@ public class PK {
 	private String pk2_user_picture = "";
 	private int pk2_ticket_count;
 	private String pk_time = "";
+	private boolean is_voted;// 是否已经投票
+	private int pk_state;// 0 PK中 ，1 PK结束
+	private int pk_winer_user_id;
+
+	public int getPk_state() {
+		return pk_state;
+	}
+
+	public void setPk_state(int pk_state) {
+		this.pk_state = pk_state;
+	}
+
+	public int getPk_winer_user_id() {
+		return pk_winer_user_id;
+	}
+
+	public void setPk_winer_user_id(int pk_winer_user_id) {
+		this.pk_winer_user_id = pk_winer_user_id;
+	}
+
+	public boolean isIs_voted() {
+		return is_voted;
+	}
+
+	public void setIs_voted(boolean is_voted) {
+		this.is_voted = is_voted;
+	}
 
 	public int getPk_id() {
 		return pk_id;
