@@ -16,7 +16,8 @@
 		<result property="pk_time" column="pk_time" />
 		<result property="pk_state" column="pk_state" />
 		<result property="pk_winer_user_id" column="pk_winer_user_id" />
-
+		<collection property="pkVotes" column="pk_id"
+			ofType="com.biyanzhi.bean.PKVote" select="getPKVoteListByPKID" />
 	</resultMap>
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
 	<insert id="addPK" parameterType="com.biyanzhi.bean.PK">
@@ -57,4 +58,9 @@
 		WHERE pk_id=
 		#{pk_id}
 	</update>
+	<select id="getPKVoteListByPKID" parameterType="Integer"
+		resultType="com.biyanzhi.bean.PKVote">
+		select * from pk_vote where pk_id = #{pk_id}
+
+	</select>
 </mapper>

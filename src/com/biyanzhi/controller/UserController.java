@@ -447,6 +447,7 @@ public class UserController {
 	public String getGuanZhuUserListsByUserID(HttpServletRequest request) {
 		int guanzhu_user_id = Integer.valueOf(request
 				.getParameter("guanzhu_user_id"));
+		System.out.println(guanzhu_user_id);
 		List<User> users = uDao.getGuanZhuUsersByUserID(guanzhu_user_id);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);
@@ -459,7 +460,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/getMyGuanZhuUserListsByUserID.do", method = RequestMethod.POST)
 	public String getMyGuanZhuUserListsByUserID(HttpServletRequest request) {
-		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int user_id = Integer.valueOf(request.getParameter("guanzhu_user_id"));
+		System.out.println(user_id);
 		List<User> users = uDao.getMyGuanZhuUsersByUserID(user_id);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);

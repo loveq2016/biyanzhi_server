@@ -292,6 +292,22 @@ public class EasemobMessages {
 	}
 
 	/**
+	 * PK提醒
+	 * 
+	 * @param to_user_chat_id
+	 * @param message_content
+	 */
+	public static void sendTextMessageForPK(String to_user_chat_id,
+			String message_content) {
+		ObjectNode ext = factory.objectNode();
+		ext.put("from_user_name", "比颜值");
+		ext.put("from_user_avatar", Constants.APP_AVATAR);
+		ext.put("user_id", -1);
+		sendUserMessage(to_user_chat_id, EasemobConstans.PK_USER_ID,
+				message_content, ext);
+	}
+
+	/**
 	 * 评论 提醒
 	 * 
 	 * 
@@ -308,7 +324,7 @@ public class EasemobMessages {
 	}
 
 	/**
-	 * 评论 提醒
+	 * 打分 提醒
 	 * 
 	 * 
 	 */
