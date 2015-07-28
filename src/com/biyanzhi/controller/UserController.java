@@ -217,6 +217,7 @@ public class UserController {
 		user.setUser_name(user_name);
 		user.setUser_chat_id(MD5.Md5(user_cellphone));
 		user.setUser_password(user_password);
+		user.setRegister_time(DateUtils.getPicturePublishTime());
 		Map<String, Object> params = new HashMap<String, Object>();
 		int user_id = 0;
 		// ±£´æÍ¼Æ¬
@@ -484,7 +485,7 @@ public class UserController {
 		System.out.println("version:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
-	} 
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
