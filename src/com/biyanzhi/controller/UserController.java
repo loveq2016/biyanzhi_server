@@ -484,7 +484,7 @@ public class UserController {
 		System.out.println("version:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
-	}
+	} 
 
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)

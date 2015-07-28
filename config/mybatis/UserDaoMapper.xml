@@ -57,8 +57,7 @@
 		,`user`.user_gender
 		FROM guanzhu INNER JOIN `user` ON
 		guanzhu.user_id=`user`.user_id WHERE
-		guanzhu_user_id= #{user_id} GROUP
-		BY guanzhu.user_id order by guanzhu.guanzhu_time desc
+		guanzhu_user_id= #{user_id}  order by guanzhu.guanzhu_time desc
 	</select>
 	<select id="getMyGuanZhuUsersByUserID" resultMap="User"
 		parameterType="Integer">
@@ -67,9 +66,7 @@
 		,`user`.user_gender
 		FROM guanzhu INNER JOIN `user` ON
 		guanzhu_user_id=`user`.user_id WHERE
-		guanzhu.user_id=#{user_id} GROUP
-		BY
-		guanzhu.user_id order by guanzhu.guanzhu_time desc
+		guanzhu.user_id=#{user_id}  order by guanzhu.guanzhu_time desc
 	</select>
 	<update id="upDateUserAvatar" parameterType="String">
 		UPDATE user SET
