@@ -15,6 +15,7 @@
 		<result property="user_password" column="user_password" />
 		<result property="user_address" column="user_address" />
 		<result property="user_chat_id" column="user_chat_id" />
+		<result property="register_time" column="register_time" />
 		<association property="guanzhu_count" column="user_id"
 			javaType="int" select="getGuanZhuCountByUserID" />
 
@@ -23,9 +24,9 @@
 	<insert id="insertUserToDB" parameterType="com.biyanzhi.bean.User">
 		insert into
 		user(user_id,user_name,user_cellphone,user_avatar
-		,user_gender,user_birthday,user_password,user_address,user_chat_id)
+		,user_gender,user_birthday,user_password,user_address,user_chat_id,register_time)
 		values(#{user_id},#{user_name},#{user_cellphone},#{user_avatar},#{user_gender},#{user_birthday},#{user_password},#{user_address}
-		,#{user_chat_id})
+		,#{user_chat_id},#{register_time})
 	</insert>
 	<select id="verifyCellphone" parameterType="String" resultType="String">
 		select user_cellphone from user where user_cellphone =
