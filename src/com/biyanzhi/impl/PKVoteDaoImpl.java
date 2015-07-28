@@ -1,5 +1,7 @@
 package com.biyanzhi.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +31,11 @@ public class PKVoteDaoImpl implements PKVoteDao {
 	public int findPKVote(PKVote vote) {
 		PKVoteDao dao = sqlSession.getMapper(PKVoteDao.class);
 		return dao.findPKVote(vote);
+	}
+
+	public List<PKVote> getPKVoteListByPKID(int pk_id) {
+		PKVoteDao dao = sqlSession.getMapper(PKVoteDao.class);
+		return dao.getPKVoteListByPKID(pk_id);
 	}
 
 }

@@ -5,6 +5,9 @@ public class PKVote {
 	private int pk_id;
 	private int vote_user_id;
 
+	public PKVote() {
+	}
+
 	public PKVote(int pk_id, int vote_user_id) {
 		this.pk_id = pk_id;
 		this.vote_user_id = vote_user_id;

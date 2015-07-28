@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biyanzhi.bean.PK;
 import com.biyanzhi.bean.PKVote;
+import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.PKDao;
 import com.biyanzhi.dao.PKVoteDao;
+import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
+import com.biyanzhi.huanxinImpl.EasemobMessages;
 import com.biyanzhi.util.DateUtils;
 
 @Controller
@@ -44,6 +47,17 @@ public class PKController {
 
 	public void setVoteDao(PKVoteDao voteDao) {
 		this.voteDao = voteDao;
+	}
+
+	@Autowired
+	private UserDao uDao;
+
+	public UserDao getuDao() {
+		return uDao;
+	}
+
+	public void setuDao(UserDao uDao) {
+		this.uDao = uDao;
 	}
 
 	@ResponseBody
@@ -87,13 +101,17 @@ public class PKController {
 		List<PK> lists = new ArrayList<PK>();
 		lists.addAll(dao.getPKList(pk_time));
 		for (PK pk : lists) {
-			pk.setIs_voted(voteDao.findPKVote(new PKVote(pk.getPk_id(), user_id)) > 0);
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pks", lists);
 		params.put("rt", 1);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
-		System.out.println("size:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
 
 	}
@@ -106,7 +124,12 @@ public class PKController {
 		List<PK> lists = new ArrayList<PK>();
 		lists.addAll(dao.loadMorePKList(pk_time));
 		for (PK pk : lists) {
-			pk.setIs_voted(voteDao.findPKVote(new PKVote(pk.getPk_id(), user_id)) > 0);
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pks", lists);
@@ -123,10 +146,18 @@ public class PKController {
 		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
 		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
 		String pk2_user_picture = request.getParameter("pk2_user_picture");
+		String pk2_user_name = request.getParameter("pk2_user_name");
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
 		int result = dao.upDatePK2(pk_id, pk2_user_id, pk2_user_picture);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			User user = uDao.findUserByUserID(pk1_user_id);
+			if (user != null) {
+				String pk1_user_chat_id = user.getUser_chat_id();
+				EasemobMessages.sendTextMessageForPK(pk1_user_chat_id,
+						pk2_user_name + " 和你PK了快去PK大厅看看吧");
+			}
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -145,13 +176,29 @@ public class PKController {
 		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
 		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		int result = dao.upDatePK2TicketCount(pk_id, pk2_ticket_count);
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
-			if (pk2_ticket_count >= 2) {
+			if (pk2_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk2_user_id);
+				User pk2_user = uDao.findUserByUserID(pk2_user_id);
+				if (pk2_user != null) {
+					User pk1_user = uDao.findUserByUserID(pk1_user_id);
+					if (pk2_user != null) {
+						EasemobMessages.sendTextMessageForPK(
+								pk2_user.getUser_chat_id(), "恭喜你,你和 "
+										+ pk1_user.getUser_name()
+										+ " 的PK中取得了胜利,快去PK大厅查看结果吧");
+						EasemobMessages.sendTextMessageForPK(
+								pk1_user.getUser_chat_id(), "很遗憾,你和 "
+										+ pk2_user.getUser_name()
+										+ " 的PK中失败了,快去打扮一下继续PK TA");
+					}
+				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
+
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -168,14 +215,30 @@ public class PKController {
 				.getParameter("pk1_ticket_count"));
 		int pk_id = Integer.valueOf(request.getParameter("pk_id"));
 		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
 		int result = dao.upDatePK1TicketCount(pk_id, pk1_ticket_count);
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
-			if (pk1_ticket_count >= 2) {
+			if (pk1_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk1_user_id);
+				User pk1_user = uDao.findUserByUserID(pk1_user_id);
+				if (pk1_user != null) {
+					User pk2_user = uDao.findUserByUserID(pk2_user_id);
+					if (pk2_user != null) {
+						EasemobMessages.sendTextMessageForPK(
+								pk1_user.getUser_chat_id(), "恭喜你,你和 "
+										+ pk2_user.getUser_name()
+										+ " 的PK中取得了胜利,快去PK大厅查看结果吧");
+						EasemobMessages.sendTextMessageForPK(
+								pk2_user.getUser_chat_id(), "很遗憾,你和 "
+										+ pk1_user.getUser_name()
+										+ " 的PK中失败了,快去打扮一下继续PK TA");
+					}
+				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
+
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());

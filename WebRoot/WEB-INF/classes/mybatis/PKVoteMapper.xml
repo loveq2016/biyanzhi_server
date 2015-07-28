@@ -24,6 +24,9 @@
 		where pk_id = #{pk_id} and
 		vote_user_id=#{vote_user_id}
 	</select>
-
+	<select id="getPKVoteListByPKID" resultMap="PKVote"
+		parameterType="int">
+		select * from pk_vote where pk_id = #{pk_id}
+	</select>
 </mapper>
  

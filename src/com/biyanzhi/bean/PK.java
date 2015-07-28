@@ -1,5 +1,8 @@
 package com.biyanzhi.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PK {
 	private int pk_id;
 	private int pk1_user_id;
@@ -13,6 +16,7 @@ public class PK {
 	private boolean is_voted;// 是否已经投票
 	private int pk_state;// 0 PK中 ，1 PK结束
 	private int pk_winer_user_id;
+	private List<PKVote> pkVotes = new ArrayList<PKVote>();
 
 	public int getPk_state() {
 		return pk_state;
@@ -110,4 +114,11 @@ public class PK {
 		this.pk_time = pk_time;
 	}
 
+	public List<PKVote> getPkVotes() {
+		return pkVotes;
+	}
+
+	public void setPkVotes(List<PKVote> pkVotes) {
+		this.pkVotes = pkVotes;
+	}
 }
