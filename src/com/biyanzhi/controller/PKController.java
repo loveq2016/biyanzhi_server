@@ -247,4 +247,99 @@ public class PKController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getPKIngList.do", method = RequestMethod.POST)
+	public String getPKIngList(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.getPKIngList(pk_time));
+		for (PK pk : lists) {
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("pk_ing:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadPKIngMorePKList.do", method = RequestMethod.POST)
+	public String loadPKIngMorePKList(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.loadPKIngMorePKList(pk_time));
+		for (PK pk : lists) {
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getPKFinishedList.do", method = RequestMethod.POST)
+	public String getPKFinishedList(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.getPKFinishedList(pk_time));
+		for (PK pk : lists) {
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadPKFinishedMorePKList.do", method = RequestMethod.POST)
+	public String loadPKFinishedMorePKList(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.loadPKFinishedMorePKList(pk_time));
+		for (PK pk : lists) {
+			List<PKVote> pkVotes = pk.getPkVotes();
+			for (PKVote pkVote : pkVotes) {
+				if (user_id == pkVote.getVote_user_id()) {
+					pk.setIs_voted(true);
+				}
+			}
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
 }

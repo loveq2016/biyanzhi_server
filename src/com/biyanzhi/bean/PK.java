@@ -18,6 +18,43 @@ public class PK {
 	private int pk_winer_user_id;
 	private List<PKVote> pkVotes = new ArrayList<PKVote>();
 
+	private int pk1_win_count;
+	private int pk1_fail_count;
+	private int pk2_win_count;
+	private int pk2_fail_count;
+
+	public int getPk1_win_count() {
+		return pk1_win_count;
+	}
+
+	public void setPk1_win_count(int pk1_win_count) {
+		this.pk1_win_count = pk1_win_count;
+	}
+
+	public int getPk1_fail_count() {
+		return pk1_fail_count;
+	}
+
+	public void setPk1_fail_count(int pk1_fail_count) {
+		this.pk1_fail_count = pk1_fail_count;
+	}
+
+	public int getPk2_win_count() {
+		return pk2_win_count;
+	}
+
+	public void setPk2_win_count(int pk2_win_count) {
+		this.pk2_win_count = pk2_win_count;
+	}
+
+	public int getPk2_fail_count() {
+		return pk2_fail_count;
+	}
+
+	public void setPk2_fail_count(int pk2_fail_count) {
+		this.pk2_fail_count = pk2_fail_count;
+	}
+
 	public int getPk_state() {
 		return pk_state;
 	}

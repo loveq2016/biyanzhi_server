@@ -16,6 +16,14 @@
 		<result property="pk_time" column="pk_time" />
 		<result property="pk_state" column="pk_state" />
 		<result property="pk_winer_user_id" column="pk_winer_user_id" />
+		<association property="pk1_win_count" column="pk1_user_id"
+			javaType="int" select="getPK1WinCount" />
+		<association property="pk1_fail_count" column="pk1_user_id"
+			javaType="int" select="getPK1FailCount" />
+		<association property="pk2_win_count" column="pk2_user_id"
+			javaType="int" select="getPK2WinCount" />
+		<association property="pk2_fail_count" column="pk2_user_id"
+			javaType="int" select="getPK2FailCount" />
 		<collection property="pkVotes" column="pk_id"
 			ofType="com.biyanzhi.bean.PKVote" select="getPKVoteListByPKID" />
 	</resultMap>
@@ -61,6 +69,71 @@
 	<select id="getPKVoteListByPKID" parameterType="Integer"
 		resultType="com.biyanzhi.bean.PKVote">
 		select * from pk_vote where pk_id = #{pk_id}
+
+	</select>
+
+
+	<select id="getPKIngList" parameterType="Integer" resultMap="PK">
+		select
+		* from pk where pk_time > #{pk_time} and pk_state is null order
+		by
+		pk_time desc limit
+		0,10
+
+	</select>
+	<select id="loadPKIngMorePKList" parameterType="Integer"
+		resultMap="PK">
+	<![CDATA[	select * from pk where pk_time < #{pk_time} and pk_state is null
+		order by
+		pk_time desc limit 0,10]]>
+
+	</select>
+
+
+	<select id="getPKFinishedList" parameterType="Integer"
+		resultMap="PK">
+		select
+		* from pk where pk_time > #{pk_time} and pk_state=1
+		order by pk_time
+		desc limit
+		0,10
+
+	</select>
+	<select id="loadPKFinishedMorePKList" parameterType="Integer"
+		resultMap="PK">
+	<![CDATA[	select * from pk where pk_time < #{pk_time} and pk_state=1
+		order by
+		pk_time desc limit 0,10]]>
+
+	</select>
+	<select id="getPK1WinCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM pk WHERE (pk1_user_id=#{pk1_user_id} OR
+		pk2_user_id =#{pk1_user_id}) and
+		pk_state=1 AND
+		pk_winer_user_id=#{pk1_user_id}
+
+	</select>
+	<select id="getPK1FailCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM pk WHERE (pk1_user_id=#{pk1_user_id} OR
+		pk2_user_id =#{pk1_user_id}) and
+		pk_state=1 AND
+		pk_winer_user_id
+		!=#{pk1_user_id}
+
+	</select>
+	<select id="getPK2WinCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM pk WHERE (pk2_user_id=#{pk2_user_id} OR
+		pk2_user_id =#{pk2_user_id} )and
+		pk_state=1 AND
+		pk_winer_user_id=#{pk2_user_id}
+
+	</select>
+	<select id="getPK2FailCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM pk WHERE (pk2_user_id=#{pk2_user_id} OR
+		pk2_user_id =#{pk2_user_id} ) and
+		pk_state=1 AND
+		pk_winer_user_id
+		!=#{pk2_user_id}
 
 	</select>
 </mapper>
