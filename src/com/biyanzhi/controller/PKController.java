@@ -61,6 +61,26 @@ public class PKController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/tiaoZhanPK.do", method = RequestMethod.POST)
+	public String tiaoZhanPK(HttpServletRequest request) {
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
+		String pk1_user_gender = request.getParameter("pk1_user_gender");
+		String pk1_user_picture = request.getParameter("pk1_user_picture");
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
+		User user1 = uDao.findUserByUserID(pk1_user_id);
+		User user2 = uDao.findUserByUserID(pk2_user_id);
+		if (user2 != null && user1 != null) {
+			EasemobMessages.sendTextMessageForTiaoZhan(user2.getUser_chat_id(),
+					user1.getUser_name() + " 向你发起了PK挑战", pk1_user_id,
+					pk1_user_gender, pk1_user_picture);
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/addPK.do", method = RequestMethod.POST)
 	public String addPK(HttpServletRequest request) {
 		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));

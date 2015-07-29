@@ -18,6 +18,15 @@ public class Picture {
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
 	private User user;
+	private List<PictureScore> scores = new ArrayList<PictureScore>();
+
+	public List<PictureScore> getScores() {
+		return scores;
+	}
+
+	public void setScores(List<PictureScore> scores) {
+		this.scores = scores;
+	}
 
 	public User getUser() {
 		return user;

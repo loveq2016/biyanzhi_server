@@ -307,6 +307,20 @@ public class EasemobMessages {
 				message_content, ext);
 	}
 
+	public static void sendTextMessageForTiaoZhan(String to_user_chat_id,
+			String message_content, int pk1_user_id, String pk1_user_gender,
+			String pk1_user_picture) {
+		ObjectNode ext = factory.objectNode();
+		ext.put("from_user_name", "比颜值");
+		ext.put("from_user_avatar", Constants.APP_AVATAR);
+		ext.put("user_id", -1);
+		ext.put("pk1_user_id", pk1_user_id);
+		ext.put("pk1_user_id", pk1_user_gender);
+		ext.put("pk1_user_id", pk1_user_picture);
+		sendUserMessage(to_user_chat_id, EasemobConstans.TIAOZHAN_PK_USER_ID,
+				message_content, ext);
+	}
+
 	/**
 	 * 评论 提醒
 	 * 
