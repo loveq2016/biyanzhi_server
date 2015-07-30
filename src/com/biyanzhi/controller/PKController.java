@@ -67,15 +67,72 @@ public class PKController {
 		String pk1_user_gender = request.getParameter("pk1_user_gender");
 		String pk1_user_picture = request.getParameter("pk1_user_picture");
 		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
+		String pk2_user_picture = request.getParameter("pk2_user_picture");
 		User user1 = uDao.findUserByUserID(pk1_user_id);
 		User user2 = uDao.findUserByUserID(pk2_user_id);
 		if (user2 != null && user1 != null) {
 			EasemobMessages.sendTextMessageForTiaoZhan(user2.getUser_chat_id(),
 					user1.getUser_name() + " 向你发起了PK挑战", pk1_user_id,
-					pk1_user_gender, pk1_user_picture);
+					pk1_user_gender, pk1_user_picture, pk2_user_picture);
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/receivePK.do", method = RequestMethod.POST)
+	public String receivePK(HttpServletRequest request) {
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
+		String pk1_user_gender = request.getParameter("pk1_user_gender");
+		String pk1_user_picture = request.getParameter("pk1_user_picture");
+		int pk1_ticket_count = Integer.valueOf(request
+				.getParameter("pk1_ticket_count"));
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
+		String pk2_user_picture = request.getParameter("pk2_user_picture");
+		int pk2_ticket_count = Integer.valueOf(request
+				.getParameter("pk2_ticket_count"));
+		PK pk = new PK();
+		pk.setPk1_ticket_count(pk1_ticket_count);
+		pk.setPk1_user_id(pk1_user_id);
+		pk.setPk1_user_gender(pk1_user_gender);
+		pk.setPk1_user_picture(pk1_user_picture);
+		pk.setPk2_ticket_count(pk2_ticket_count);
+		pk.setPk2_user_id(pk2_user_id);
+		pk.setPk2_user_picture(pk2_user_picture);
+		pk.setPk_time(DateUtils.getPicturePublishTime());
+		int result = dao.addPK(pk);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (result > 0) {
+			params.put("rt", 1);
+			User user1 = uDao.findUserByUserID(pk1_user_id);
+			User user2 = uDao.findUserByUserID(pk2_user_id);
+			if (user2 != null && user1 != null) {
+				EasemobMessages.sendTextMessageForPK(user1.getUser_chat_id(),
+						user2.getUser_name() + " 接受了你的PK挑战,快去PK大厅看看吧");
+			}
+		} else {
+			params.put("rt", 0);
+			params.put("err", ErrorEnum.INVALID.name());
+		}
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/refusePK.do", method = RequestMethod.POST)
+	public String refusePK(HttpServletRequest request) {
+		int pk1_user_id = Integer.valueOf(request.getParameter("pk1_user_id"));
+		int pk2_user_id = Integer.valueOf(request.getParameter("pk2_user_id"));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rt", 1);
+		User user1 = uDao.findUserByUserID(pk1_user_id);
+		User user2 = uDao.findUserByUserID(pk2_user_id);
+		if (user2 != null && user1 != null) {
+			EasemobMessages.sendTextMessageForPK(user1.getUser_chat_id(),
+					user2.getUser_name() + " 拒绝了你的PK挑战");
+		}
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 	}
