@@ -78,4 +78,9 @@ public class PKImpl implements PKDao {
 		return dao.loadPKFinishedMorePKList(pk_time);
 	}
 
+	public PK getPKByPKID(int pk_id) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.getPKByPKID(pk_id);
+	}
+
 }

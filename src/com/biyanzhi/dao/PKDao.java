@@ -34,4 +34,6 @@ public interface PKDao {
 	List<PK> getPKFinishedList(String pk_time);
 
 	List<PK> loadPKFinishedMorePKList(String pk_time);
+
+	PK getPKByPKID(int pk_id);
 }

@@ -16,6 +16,7 @@ public class EasemobConstans {
 	public static final String GUANZHU_USER_ID = "guanzhu";
 	public static final String PK_USER_ID = "pk";
 	public static final String TIAOZHAN_PK_USER_ID = "tiaozhan_pk";
+	public static final String PK_WIN_USER_ID = "pk_win";
 
 	public static final String KICK_OUT_USER_ID = "kickout";
 	public static final String ADD_USER_FRIEND_INVITE = "adduserfriendinvite";

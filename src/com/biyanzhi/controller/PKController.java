@@ -233,7 +233,7 @@ public class PKController {
 			if (user != null) {
 				String pk1_user_chat_id = user.getUser_chat_id();
 				EasemobMessages.sendTextMessageForPK(pk1_user_chat_id,
-						pk2_user_name + " 和你PK了快去PK大厅看看吧");
+						pk2_user_name + " 和你PK了,快去PK大厅看看吧");
 			}
 		} else {
 			params.put("rt", 0);
@@ -257,25 +257,29 @@ public class PKController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			User pk2_user = uDao.findUserByUserID(pk2_user_id);
+			User pk1_user = uDao.findUserByUserID(pk1_user_id);
 			if (pk2_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk2_user_id);
-				User pk2_user = uDao.findUserByUserID(pk2_user_id);
-				if (pk2_user != null) {
-					User pk1_user = uDao.findUserByUserID(pk1_user_id);
-					if (pk2_user != null) {
-						EasemobMessages.sendTextMessageForPK(
-								pk2_user.getUser_chat_id(), "恭喜你,你和 "
-										+ pk1_user.getUser_name()
-										+ " 的PK中取得了胜利,快去PK大厅查看结果吧");
-						EasemobMessages.sendTextMessageForPK(
-								pk1_user.getUser_chat_id(), "很遗憾,你和 "
-										+ pk2_user.getUser_name()
-										+ " 的PK中失败了,快去打扮一下继续PK TA");
-					}
+				if (pk2_user != null && pk2_user != null) {
+					PK pk = dao.getPKByPKID(pk_id);
+					JSONObject jsonObjectFromMap = JSONObject.fromObject(pk);
+					System.out.println(jsonObjectFromMap.toString());
+					EasemobMessages
+							.sendTextMessageForPKWin(
+									pk2_user.getUser_chat_id(), "恭喜你,你在和 "
+											+ pk1_user.getUser_name()
+											+ " 的PK中取得了胜利",
+									jsonObjectFromMap.toString());
+					EasemobMessages.sendTextMessageForPK(
+							pk1_user.getUser_chat_id(),
+							"很遗憾,你在和 " + pk2_user.getUser_name()
+									+ " 的PK中失败了,快去打扮一下继续PK TA");
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
-
+			EasemobMessages.sendTextMessageForPK(pk2_user.getUser_chat_id(),
+					"有人在你的PK中投票了,快去看看吧");
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -297,24 +301,29 @@ public class PKController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			User pk1_user = uDao.findUserByUserID(pk1_user_id);
+			User pk2_user = uDao.findUserByUserID(pk2_user_id);
 			if (pk1_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk1_user_id);
-				User pk1_user = uDao.findUserByUserID(pk1_user_id);
-				if (pk1_user != null) {
-					User pk2_user = uDao.findUserByUserID(pk2_user_id);
-					if (pk2_user != null) {
-						EasemobMessages.sendTextMessageForPK(
-								pk1_user.getUser_chat_id(), "恭喜你,你和 "
-										+ pk2_user.getUser_name()
-										+ " 的PK中取得了胜利,快去PK大厅查看结果吧");
-						EasemobMessages.sendTextMessageForPK(
-								pk2_user.getUser_chat_id(), "很遗憾,你和 "
-										+ pk1_user.getUser_name()
-										+ " 的PK中失败了,快去打扮一下继续PK TA");
-					}
+				if (pk1_user != null && pk2_user != null) {
+					PK pk = dao.getPKByPKID(pk_id);
+					JSONObject jsonObjectFromMap = JSONObject.fromObject(pk);
+					System.out.println(jsonObjectFromMap.toString());
+					EasemobMessages
+							.sendTextMessageForPKWin(
+									pk1_user.getUser_chat_id(), "恭喜你,你在和 "
+											+ pk2_user.getUser_name()
+											+ " 的PK中取得了胜利",
+									jsonObjectFromMap.toString());
+					EasemobMessages.sendTextMessageForPK(
+							pk2_user.getUser_chat_id(),
+							"很遗憾,你在和 " + pk1_user.getUser_name()
+									+ " 的PK中失败了,快去打扮一下继续PK TA");
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
+			EasemobMessages.sendTextMessageForPK(pk1_user.getUser_chat_id(),
+					"有人在你的PK中投票了,快去PK大厅看看吧");
 
 		} else {
 			params.put("rt", 0);

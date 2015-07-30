@@ -136,4 +136,8 @@
 		!=#{pk2_user_id}
 
 	</select>
+	<select id="getPKByPKID" parameterType="Integer" resultMap="PK">
+		select * from pk where pk_id = #{pk_id}
+
+	</select>
 </mapper>

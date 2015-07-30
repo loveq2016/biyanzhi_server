@@ -307,6 +307,33 @@ public class EasemobMessages {
 				message_content, ext);
 	}
 
+	/**
+	 * PK成功
+	 * 
+	 * @param to_user_chat_id
+	 * @param message_content
+	 */
+	public static void sendTextMessageForPKWin(String to_user_chat_id,
+			String message_content, String pk) {
+		ObjectNode ext = factory.objectNode();
+		ext.put("from_user_name", "比颜值");
+		ext.put("from_user_avatar", Constants.APP_AVATAR);
+		ext.put("user_id", -1);
+		ext.put("pk", pk);
+		sendUserMessage(to_user_chat_id, EasemobConstans.PK_WIN_USER_ID,
+				message_content, ext);
+	}
+
+	/**
+	 * PK挑战
+	 * 
+	 * @param to_user_chat_id
+	 * @param message_content
+	 * @param pk1_user_id
+	 * @param pk1_user_gender
+	 * @param pk1_user_picture
+	 * @param pk2_user_picture
+	 */
 	public static void sendTextMessageForTiaoZhan(String to_user_chat_id,
 			String message_content, int pk1_user_id, String pk1_user_gender,
 			String pk1_user_picture, String pk2_user_picture) {
