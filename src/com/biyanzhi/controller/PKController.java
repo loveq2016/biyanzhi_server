@@ -258,9 +258,9 @@ public class PKController {
 		if (result > 0) {
 			params.put("rt", 1);
 			User pk2_user = uDao.findUserByUserID(pk2_user_id);
-			User pk1_user = uDao.findUserByUserID(pk1_user_id);
 			if (pk2_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk2_user_id);
+				User pk1_user = uDao.findUserByUserID(pk1_user_id);
 				if (pk2_user != null && pk2_user != null) {
 					PK pk = dao.getPKByPKID(pk_id);
 					JSONObject jsonObjectFromMap = JSONObject.fromObject(pk);
@@ -278,8 +278,10 @@ public class PKController {
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
-			EasemobMessages.sendTextMessageForPK(pk2_user.getUser_chat_id(),
-					"有人在你的PK中投票了,快去看看吧");
+			if (pk2_user != null) {
+				EasemobMessages.sendTextMessageForPK(
+						pk2_user.getUser_chat_id(), "有人在你的PK中投票了,快去PK大厅看看吧");
+			}
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -302,9 +304,9 @@ public class PKController {
 		if (result > 0) {
 			params.put("rt", 1);
 			User pk1_user = uDao.findUserByUserID(pk1_user_id);
-			User pk2_user = uDao.findUserByUserID(pk2_user_id);
 			if (pk1_ticket_count >= 10) {
 				dao.upDatePKState(pk_id, 1, pk1_user_id);
+				User pk2_user = uDao.findUserByUserID(pk2_user_id);
 				if (pk1_user != null && pk2_user != null) {
 					PK pk = dao.getPKByPKID(pk_id);
 					JSONObject jsonObjectFromMap = JSONObject.fromObject(pk);
@@ -322,8 +324,10 @@ public class PKController {
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
-			EasemobMessages.sendTextMessageForPK(pk1_user.getUser_chat_id(),
-					"有人在你的PK中投票了,快去PK大厅看看吧");
+			if (pk1_user != null) {
+				EasemobMessages.sendTextMessageForPK(
+						pk1_user.getUser_chat_id(), "有人在你的PK中投票了,快去PK大厅看看吧");
+			}
 
 		} else {
 			params.put("rt", 0);

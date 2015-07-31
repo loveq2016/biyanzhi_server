@@ -15,6 +15,15 @@ public class User {
 	private boolean isGuanZhu;
 	private PictureScore pictureScore;
 	private String register_time = "";
+	private int user_state;
+
+	public int getUser_state() {
+		return user_state;
+	}
+
+	public void setUser_state(int user_state) {
+		this.user_state = user_state;
+	}
 
 	public String getRegister_time() {
 		return register_time;
