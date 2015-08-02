@@ -2,7 +2,7 @@ package com.biyanzhi.util;
 
 public class Constants {
 	public static final String APP_VSERSION_NAME = "2.1";
-	public static final int APP_VSERSION_CODE = 21;
+	public static final int APP_VSERSION_CODE = 21; 
 	public static final String VERSION_INFO = "优化PK大厅展示\n增加PK投票提醒功能\n修改打分时的bug";
 	public static final String APP_LINK = "http://123.56.46.254/biyanzhi.apk";
 	public static final String SERVER_PATH = "http://123.56.46.254:8080/biyanzhi";
