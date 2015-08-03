@@ -259,7 +259,8 @@ public class PKController {
 			params.put("rt", 1);
 			User pk2_user = uDao.findUserByUserID(pk2_user_id);
 			if (pk2_ticket_count >= 10) {
-				dao.upDatePKState(pk_id, 1, pk2_user_id);
+				dao.upDatePKState(pk_id, 1, pk2_user_id,
+						DateUtils.getPicturePublishTime());
 				User pk1_user = uDao.findUserByUserID(pk1_user_id);
 				if (pk2_user != null && pk2_user != null) {
 					PK pk = dao.getPKByPKID(pk_id);
@@ -305,7 +306,8 @@ public class PKController {
 			params.put("rt", 1);
 			User pk1_user = uDao.findUserByUserID(pk1_user_id);
 			if (pk1_ticket_count >= 10) {
-				dao.upDatePKState(pk_id, 1, pk1_user_id);
+				dao.upDatePKState(pk_id, 1, pk1_user_id,
+						DateUtils.getPicturePublishTime());
 				User pk2_user = uDao.findUserByUserID(pk2_user_id);
 				if (pk1_user != null && pk2_user != null) {
 					PK pk = dao.getPKByPKID(pk_id);

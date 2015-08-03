@@ -17,11 +17,19 @@ public class PK {
 	private int pk_state;// 0 PKÖÐ £¬1 PK½áÊø
 	private int pk_winer_user_id;
 	private List<PKVote> pkVotes = new ArrayList<PKVote>();
-
+	private String pk_finish_time = "";
 	private int pk1_win_count;
 	private int pk1_fail_count;
 	private int pk2_win_count;
 	private int pk2_fail_count;
+
+	public String getPk_finish_time() {
+		return pk_finish_time;
+	}
+
+	public void setPk_finish_time(String pk_finish_time) {
+		this.pk_finish_time = pk_finish_time;
+	}
 
 	public int getPk1_win_count() {
 		return pk1_win_count;

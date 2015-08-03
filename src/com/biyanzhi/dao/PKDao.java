@@ -25,7 +25,8 @@ public interface PKDao {
 
 	int upDatePKState(@Param("pk_id") int pk_id,
 			@Param("pk_state") int pk_state,
-			@Param("pk_winer_user_id") int pk_winer_user_id);
+			@Param("pk_winer_user_id") int pk_winer_user_id,
+			@Param("pk_finish_time") String pk_finish_time);
 
 	List<PK> getPKIngList(String pk_time);
 
