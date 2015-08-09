@@ -53,9 +53,11 @@ public class PKImpl implements PKDao {
 		return dao.upDatePK1TicketCount(pk_id, pk1_ticket_count);
 	}
 
-	public int upDatePKState(int pk_id, int pk_state, int pk_winer_user_id) {
+	public int upDatePKState(int pk_id, int pk_state, int pk_winer_user_id,
+			String pk_finish_time) {
 		PKDao dao = sqlSession.getMapper(PKDao.class);
-		return dao.upDatePKState(pk_id, pk_state, pk_winer_user_id);
+		return dao.upDatePKState(pk_id, pk_state, pk_winer_user_id,
+				pk_finish_time);
 	}
 
 	public List<PK> getPKIngList(String pk_time) {

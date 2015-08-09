@@ -16,6 +16,7 @@
 		<result property="pk_time" column="pk_time" />
 		<result property="pk_state" column="pk_state" />
 		<result property="pk_winer_user_id" column="pk_winer_user_id" />
+		<result property="pk_finish_time" column="pk_finish_time" />
 		<association property="pk1_win_count" column="pk1_user_id"
 			javaType="int" select="getPK1WinCount" />
 		<association property="pk1_fail_count" column="pk1_user_id"
@@ -62,7 +63,9 @@
 	<update id="upDatePKState" parameterType="Map">
 		UPDATE pk SET
 		pk_state =
-		#{pk_state} , pk_winer_user_id = #{pk_winer_user_id}
+		#{pk_state} , pk_winer_user_id = #{pk_winer_user_id}, pk_finish_time
+		=
+		#{pk_finish_time}
 		WHERE pk_id=
 		#{pk_id}
 	</update>
@@ -93,25 +96,24 @@
 	<select id="getPKFinishedList" parameterType="Integer"
 		resultMap="PK">
 		select
-		* from pk where pk_time > #{pk_time} and pk_state=1
-		order by pk_time
+		* from pk where pk_finish_time > #{pk_finish_time} and
+		pk_state=1
+		order by pk_finish_time
 		desc limit
 		0,10
 
 	</select>
 	<select id="loadPKFinishedMorePKList" parameterType="Integer"
 		resultMap="PK">
-	<![CDATA[	select * from pk where pk_time < #{pk_time} and pk_state=1
+	<![CDATA[	select * from pk where pk_finish_time < #{pk_finish_time} and pk_state=1
 		order by
-		pk_time desc limit 0,10]]>
+		pk_finish_time desc limit 0,10]]>
 
 	</select>
 	<select id="getPK1WinCount" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) FROM pk WHERE (pk1_user_id=#{pk1_user_id} OR
-		pk2_user_id =#{pk1_user_id}) and
+		SELECT COUNT(*) FROM pk WHERE
 		pk_state=1 AND
 		pk_winer_user_id=#{pk1_user_id}
-
 	</select>
 	<select id="getPK1FailCount" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM pk WHERE (pk1_user_id=#{pk1_user_id} OR
@@ -122,8 +124,7 @@
 
 	</select>
 	<select id="getPK2WinCount" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) FROM pk WHERE (pk2_user_id=#{pk2_user_id} OR
-		pk2_user_id =#{pk2_user_id} )and
+		SELECT COUNT(*) FROM pk WHERE
 		pk_state=1 AND
 		pk_winer_user_id=#{pk2_user_id}
 
