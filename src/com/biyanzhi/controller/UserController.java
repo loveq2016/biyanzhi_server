@@ -486,7 +486,7 @@ public class UserController {
 		return jsonObjectFromMap.toString();
 
 	}
- 
+  
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
 	public String changePassword(HttpServletRequest request) {
