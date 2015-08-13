@@ -3,8 +3,8 @@
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
-<mapper namespace="com.biyanzhi.dao.PKDao">
-	<resultMap type="com.biyanzhi.bean.PK" id="PK">
+<mapper namespace="com.biyanzhi.dao.PKResultDao">
+	<resultMap type="com.biyanzhi.bean.PKResult" id="PKResult">
 		<id property="id" column="id" />
 		<result property="user_id" column="user_id" />
 		<result property="picture_id" column="picture_id" />
@@ -13,5 +13,49 @@
 
 	</resultMap>
 	<!-- id必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
-
+	<insert id="insert" parameterType="com.biyanzhi.bean.PKResult">
+		insert into
+		pk_result(user_id,picture_id,user_win_count,user_fail_count)
+		values(#{user_id},#{picture_id},#{user_win_count},#{user_fail_count})
+	</insert>
+	<select id="getResultByUserIDAndPictureID" resultType="int"
+		parameterType="Map">
+		select
+		count(*) from pk_result
+		where user_id = #{user_id}
+		and
+		picture_id=#{picture_id}
+	</select>
+	<select id="getWinCount" resultType="int" parameterType="Map">
+		select
+		user_win_count from pk_result
+		where user_id = #{user_id}
+		and
+		picture_id=#{picture_id}
+	</select>
+	<select id="getFailCount" resultType="int" parameterType="Map">
+		select
+		user_fail_count from pk_result
+		where user_id = #{user_id}
+		and
+		picture_id=#{picture_id}
+	</select>
+	<update id="updateWinCount" parameterType="Map">
+		UPDATE pk_result SET
+		user_win_count
+		=
+		#{user_win_count}
+		where user_id = #{user_id}
+		and
+		picture_id=#{picture_id}
+	</update>
+	<update id="updateFailCount" parameterType="Map">
+		UPDATE pk_result SET
+		user_fail_count
+		=
+		#{user_fail_count}
+		where user_id = #{user_id}
+		and
+		picture_id=#{picture_id}
+	</update>
 </mapper>

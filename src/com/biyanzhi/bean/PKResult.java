@@ -3,7 +3,7 @@ package com.biyanzhi.bean;
 public class PKResult {
 	private int id;
 	private int user_id;
-	private int picture_id;
+	private String picture_id;
 	private int user_win_count;
 	private int user_fail_count;
 
@@ -23,11 +23,11 @@ public class PKResult {
 		this.user_id = user_id;
 	}
 
-	public int getPicture_id() {
+	public String getPicture_id() {
 		return picture_id;
 	}
 
-	public void setPicture_id(int picture_id) {
+	public void setPicture_id(String picture_id) {
 		this.picture_id = picture_id;
 	}
 

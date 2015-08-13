@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biyanzhi.bean.PK;
+import com.biyanzhi.bean.PKResult;
 import com.biyanzhi.bean.PKVote;
 import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.PKDao;
+import com.biyanzhi.dao.PKResultDao;
 import com.biyanzhi.dao.PKVoteDao;
 import com.biyanzhi.dao.UserDao;
 import com.biyanzhi.enums.ErrorEnum;
@@ -27,6 +29,17 @@ import com.biyanzhi.util.DateUtils;
 
 @Controller
 public class PKController {
+	@Autowired
+	private PKResultDao pkResultDao;
+
+	public PKResultDao getPkResultDao() {
+		return pkResultDao;
+	}
+
+	public void setPkResultDao(PKResultDao pkResultDao) {
+		this.pkResultDao = pkResultDao;
+	}
+
 	@Autowired
 	private PKDao dao;
 
@@ -112,6 +125,25 @@ public class PKController {
 				EasemobMessages.sendTextMessageForPK(user1.getUser_chat_id(),
 						user2.getUser_name() + " 接受了你的PK挑战,快去PK大厅看看吧");
 			}
+			if (pkResultDao.getResultByUserIDAndPictureID(pk1_user_id,
+					pk1_user_picture) <= 0) {
+				PKResult pkResult = new PKResult();
+				pkResult.setPicture_id(pk1_user_picture);
+				pkResult.setUser_id(pk1_user_id);
+				pkResult.setUser_fail_count(0);
+				pkResult.setUser_win_count(0);
+				pkResultDao.insert(pkResult);
+			}
+			if (pkResultDao.getResultByUserIDAndPictureID(pk2_user_id,
+					pk2_user_picture) <= 0) {
+				PKResult pkResult = new PKResult();
+				pkResult.setPicture_id(pk2_user_picture);
+				pkResult.setUser_id(pk2_user_id);
+				pkResult.setUser_fail_count(0);
+				pkResult.setUser_win_count(0);
+				pkResultDao.insert(pkResult);
+			}
+
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -162,6 +194,16 @@ public class PKController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (result > 0) {
 			params.put("rt", 1);
+			if (pkResultDao.getResultByUserIDAndPictureID(pk1_user_id,
+					pk1_user_picture) <= 0) {
+				PKResult pkResult = new PKResult();
+				pkResult.setPicture_id(pk1_user_picture);
+				pkResult.setUser_id(pk1_user_id);
+				pkResult.setUser_fail_count(0);
+				pkResult.setUser_win_count(0);
+				pkResultDao.insert(pkResult);
+			}
+
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -235,6 +277,15 @@ public class PKController {
 				EasemobMessages.sendTextMessageForPK(pk1_user_chat_id,
 						pk2_user_name + " 和你PK了,快去PK大厅看看吧");
 			}
+			if (pkResultDao.getResultByUserIDAndPictureID(pk2_user_id,
+					pk2_user_picture) <= 0) {
+				PKResult pkResult = new PKResult();
+				pkResult.setPicture_id(pk2_user_picture);
+				pkResult.setUser_id(pk2_user_id);
+				pkResult.setUser_fail_count(0);
+				pkResult.setUser_win_count(0);
+				pkResultDao.insert(pkResult);
+			}
 		} else {
 			params.put("rt", 0);
 			params.put("err", ErrorEnum.INVALID.name());
@@ -276,6 +327,16 @@ public class PKController {
 							pk1_user.getUser_chat_id(),
 							"很遗憾,你在和 " + pk2_user.getUser_name()
 									+ " 的PK中失败了,快去打扮一下继续PK TA");
+					pkResultDao.updateFailCount(
+							pk1_user_id,
+							pk.getPk1_user_picture(),
+							pkResultDao.getFailCount(pk1_user_id,
+									pk.getPk1_user_picture()) + 1);
+					pkResultDao.updateWinCount(
+							pk2_user_id,
+							pk.getPk2_user_picture(),
+							pkResultDao.getWinCount(pk2_user_id,
+									pk.getPk2_user_picture()) + 1);
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));
@@ -313,6 +374,7 @@ public class PKController {
 					PK pk = dao.getPKByPKID(pk_id);
 					JSONObject jsonObjectFromMap = JSONObject.fromObject(pk);
 					System.out.println(jsonObjectFromMap.toString());
+
 					EasemobMessages
 							.sendTextMessageForPKWin(
 									pk1_user.getUser_chat_id(), "恭喜你,你在和 "
@@ -323,6 +385,16 @@ public class PKController {
 							pk2_user.getUser_chat_id(),
 							"很遗憾,你在和 " + pk1_user.getUser_name()
 									+ " 的PK中失败了,快去打扮一下继续PK TA");
+					pkResultDao.updateFailCount(
+							pk2_user_id,
+							pk.getPk2_user_picture(),
+							pkResultDao.getFailCount(pk2_user_id,
+									pk.getPk2_user_picture()) + 1);
+					pkResultDao.updateWinCount(
+							pk1_user_id,
+							pk.getPk1_user_picture(),
+							pkResultDao.getWinCount(pk1_user_id,
+									pk.getPk1_user_picture()) + 1);
 				}
 			}
 			voteDao.addPKVode(new PKVote(pk_id, user_id));

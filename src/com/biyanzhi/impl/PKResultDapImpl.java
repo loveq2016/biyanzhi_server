@@ -26,19 +26,30 @@ public class PKResultDapImpl implements PKResultDao {
 		return dao.insert(result);
 	}
 
-	public int getResultByUserIDAndPictureID(int user_id, int picture_id) {
+	public int getResultByUserIDAndPictureID(int user_id, String picture_id) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
 		return dao.getResultByUserIDAndPictureID(user_id, picture_id);
 	}
 
-	public int updateWinCount(int user_id, int picture_id) {
+	public int updateWinCount(int user_id, String picture_id, int user_win_count) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
-		return dao.updateWinCount(user_id, picture_id);
+		return dao.updateWinCount(user_id, picture_id, user_win_count);
 	}
 
-	public int updateFailCount(int user_id, int picture_id) {
+	public int updateFailCount(int user_id, String picture_id,
+			int user_fail_count) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
-		return dao.updateFailCount(user_id, picture_id);
+		return dao.updateFailCount(user_id, picture_id, user_fail_count);
+	}
+
+	public Integer getWinCount(int user_id, String picture_id) {
+		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
+		return dao.getWinCount(user_id, picture_id);
+	}
+
+	public Integer getFailCount(int user_id, String picture_id) {
+		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
+		return dao.getFailCount(user_id, picture_id);
 	}
 
 }
