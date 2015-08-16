@@ -506,4 +506,18 @@ public class PKController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getPkResultList.do", method = RequestMethod.POST)
+	public String getPkResultList(HttpServletRequest request) {
+		List<PKResult> lists = new ArrayList<PKResult>();
+		lists.addAll(pkResultDao.getPkResultList());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("results", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
 }

@@ -1,5 +1,7 @@
 package com.biyanzhi.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -50,6 +52,11 @@ public class PKResultDapImpl implements PKResultDao {
 	public Integer getFailCount(int user_id, String picture_id) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
 		return dao.getFailCount(user_id, picture_id);
+	}
+
+	public List<PKResult> getPkResultList() {
+		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
+		return dao.getPkResultList();
 	}
 
 }

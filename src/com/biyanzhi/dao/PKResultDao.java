@@ -1,5 +1,7 @@
 package com.biyanzhi.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.biyanzhi.bean.PKResult;
@@ -23,4 +25,6 @@ public interface PKResultDao {
 
 	Integer getFailCount(@Param("user_id") int user_id,
 			@Param("picture_id") String picture_id);
+
+	List<PKResult> getPkResultList();
 }

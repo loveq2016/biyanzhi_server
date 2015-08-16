@@ -6,6 +6,15 @@ public class PKResult {
 	private String picture_id;
 	private int user_win_count;
 	private int user_fail_count;
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
