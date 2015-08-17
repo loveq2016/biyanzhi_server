@@ -61,9 +61,18 @@
 		picture_id=#{picture_id}
 	</update>
 	<select id="getPkResultList" resultMap="PKResult">
-		SELECT * FROM pk_result
-		LEFT JOIN `user` ON pk_result.user_id
-		=`user`.user_id ORDER BY
-		user_win_count DESC
+		SELECT
+		SUM(pk_result.user_win_count) user_win_count,
+		SUM(pk_result.user_fail_count) user_fail_count,
+		`user`.*
+		FROM
+		pk_result
+		LEFT JOIN `user` ON pk_result.user_id = `user`.user_id
+		GROUP BY
+		pk_result.user_id
+		ORDER BY
+		user_win_count DESC,user_fail_count ASC
+		LIMIT 0,
+		20
 	</select>
 </mapper>

@@ -277,8 +277,8 @@ public class HTTPClientUtils {
 		URL url = null;
 
 		try {
-			url = new URL(EasemobConstants.API_HTTP_SCHEMA, EasemobConstants.API_SERVER_HOST,
-					"/" + path);
+			url = new URL(EasemobConstants.API_HTTP_SCHEMA,
+					EasemobConstants.API_SERVER_HOST, "/" + path);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

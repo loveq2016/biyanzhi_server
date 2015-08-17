@@ -508,6 +508,37 @@ public class PKController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getPKListByUserID.do", method = RequestMethod.POST)
+	public String getPKListByUserID(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("pk_user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.getPKListByUserID(pk_time, user_id));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadMorePKListByUserID.do", method = RequestMethod.POST)
+	public String loadMorePKListByUserID(HttpServletRequest request) {
+		String pk_time = request.getParameter("pk_time");
+		int user_id = Integer.valueOf(request.getParameter("pk_user_id"));
+		List<PK> lists = new ArrayList<PK>();
+		lists.addAll(dao.loadMorePKListByUserID(pk_time, user_id));
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pks", lists);
+		params.put("rt", 1);
+		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		System.out.println("size:" + jsonObjectFromMap.toString());
+		return jsonObjectFromMap.toString();
+
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/getPkResultList.do", method = RequestMethod.POST)
 	public String getPkResultList(HttpServletRequest request) {
 		List<PKResult> lists = new ArrayList<PKResult>();
@@ -520,4 +551,133 @@ public class PKController {
 		return jsonObjectFromMap.toString();
 
 	}
+
+	// @ResponseBody
+	// @RequestMapping(value = "/getPKFinishedList1.do", method =
+	// RequestMethod.GET)
+	// public String getPKFinishedList1(HttpServletRequest request) {
+	// String pk_time = request.getParameter("pk_time");
+	// List<PK> lists = new ArrayList<PK>();
+	// lists.addAll(dao.getPKFinishedList(pk_time));
+	// int i=0;
+	// for (PK pk : lists) {
+	// i++;
+	// int pk1_user_id = pk.getPk1_user_id();
+	// int pk2_user_id = pk.getPk2_user_id();
+	// String pk1_user_picture = pk.getPk1_user_picture();
+	// String pk2_user_picture = pk.getPk2_user_picture();
+	// int pk_winer_user_id = pk.getPk_winer_user_id();
+	// if (pk_winer_user_id == pk1_user_id) {
+	// int pk1_result = pkResultDao.getResultByUserIDAndPictureID(
+	// pk1_user_id, pk1_user_picture);
+	// if (pk1_result == 0) {// 插入 winCount=1,
+	// PKResult pkResult = new PKResult();
+	// pkResult.setPicture_id(pk1_user_picture);
+	// pkResult.setUser_id(pk1_user_id);
+	// pkResult.setUser_fail_count(0);
+	// pkResult.setUser_win_count(1);
+	// pkResultDao.insert(pkResult);
+	// } else {// 更新 winCount+1
+	// pkResultDao.updateWinCount(pk1_user_id, pk1_user_picture,
+	// pkResultDao.getWinCount(pk1_user_id,
+	// pk1_user_picture) + 1);
+	// }
+	// int pk2_result = pkResultDao.getResultByUserIDAndPictureID(
+	// pk2_user_id, pk2_user_picture);
+	//
+	// if (pk2_result == 0) {// 插入failCount=1,
+	// PKResult pkResult = new PKResult();
+	// pkResult.setPicture_id(pk2_user_picture);
+	// pkResult.setUser_id(pk2_user_id);
+	// pkResult.setUser_fail_count(1);
+	// pkResult.setUser_win_count(0);
+	// pkResultDao.insert(pkResult);
+	// } else {// 更新 failCount+1
+	// pkResultDao.updateFailCount(pk2_user_id, pk2_user_picture,
+	// pkResultDao.getWinCount(pk2_user_id,
+	// pk2_user_picture) + 1);
+	// }
+	//
+	// } else {
+	//
+	// int pk1_result = pkResultDao.getResultByUserIDAndPictureID(
+	// pk1_user_id, pk1_user_picture);
+	// if (pk1_result == 0) {// 插入 failCount=1,
+	// PKResult pkResult = new PKResult();
+	// pkResult.setPicture_id(pk1_user_picture);
+	// pkResult.setUser_id(pk1_user_id);
+	// pkResult.setUser_fail_count(1);
+	// pkResult.setUser_win_count(0);
+	// pkResultDao.insert(pkResult);
+	// } else {// 更新 failCount+1
+	// pkResultDao.updateFailCount(pk1_user_id, pk1_user_picture,
+	// pkResultDao.getWinCount(pk1_user_id,
+	// pk1_user_picture) + 1);
+	// }
+	// int pk2_result = pkResultDao.getResultByUserIDAndPictureID(
+	// pk2_user_id, pk2_user_picture);
+	//
+	// if (pk2_result == 0) {// 插入winCount=1,
+	// PKResult pkResult = new PKResult();
+	// pkResult.setPicture_id(pk2_user_picture);
+	// pkResult.setUser_id(pk2_user_id);
+	// pkResult.setUser_fail_count(0);
+	// pkResult.setUser_win_count(1);
+	// pkResultDao.insert(pkResult);
+	// } else {// 更新 winCount+1
+	// pkResultDao.updateWinCount(pk2_user_id, pk2_user_picture,
+	// pkResultDao.getWinCount(pk2_user_id,
+	// pk2_user_picture) + 1);
+	// }
+	//
+	// }
+	// System.out.println(i);
+	// /*
+	// * if
+	// * (pkResultDao.getResultByUserIDAndPictureID(pk.getPk1_user_id(),
+	// * pk.getPk1_user_picture()) <= 0) { PKResult pkResult = new
+	// * PKResult(); pkResult.setPicture_id(pk.getPk1_user_picture());
+	// * pkResult.setUser_id(pk.getPk1_user_id());
+	// * pkResult.setUser_fail_count(0); pkResult.setUser_win_count(0);
+	// * pkResultDao.insert(pkResult);
+	// * System.out.println(pk.getPk_winer_user_id()); }
+	// */
+	// // if
+	// // (pkResultDao.getResultByUserIDAndPictureID(pk.getPk2_user_id(),
+	// // pk.getPk2_user_picture()) <= 0) {
+	// // PKResult pkResult = new PKResult();
+	// // pkResult.setPicture_id(pk.getPk2_user_picture());
+	// // pkResult.setUser_id(pk.getPk2_user_id());
+	// // pkResult.setUser_fail_count(0);
+	// // pkResult.setUser_win_count(0);
+	// // pkResultDao.insert(pkResult);
+	// // }
+	// // if (pk.getPk_winer_user_id() == pk.getPk1_user_id()) {
+	// // pkResultDao.updateWinCount(
+	// // pk.getPk1_user_id(),
+	// // pk.getPk1_user_picture(),
+	// // pkResultDao.getWinCount(pk.getPk1_user_id(),
+	// // pk.getPk1_user_picture()) + 1);
+	// // pkResultDao.updateFailCount(
+	// // pk.getPk2_user_id(),
+	// // pk.getPk2_user_picture(),
+	// // pkResultDao.getFailCount(pk.getPk2_user_id(),
+	// // pk.getPk2_user_picture()) + 1);
+	// // } else {
+	// // pkResultDao.updateFailCount(
+	// // pk.getPk1_user_id(),
+	// // pk.getPk1_user_picture(),
+	// // pkResultDao.getFailCount(pk.getPk1_user_id(),
+	// // pk.getPk1_user_picture()) + 1);
+	// // pkResultDao.updateWinCount(
+	// // pk.getPk2_user_id(),
+	// // pk.getPk2_user_picture(),
+	// // pkResultDao.getWinCount(pk.getPk2_user_id(),
+	// // pk.getPk2_user_picture()) + 1);
+	// // }
+	//
+	// }
+	// return "finish";
+	//
+	// }
 }

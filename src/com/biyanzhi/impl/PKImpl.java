@@ -85,4 +85,14 @@ public class PKImpl implements PKDao {
 		return dao.getPKByPKID(pk_id);
 	}
 
+	public List<PK> getPKListByUserID(String pk_time, int user_id) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.getPKListByUserID(pk_time, user_id);
+	}
+
+	public List<PK> loadMorePKListByUserID(String pk_time, int user_id) {
+		PKDao dao = sqlSession.getMapper(PKDao.class);
+		return dao.loadMorePKListByUserID(pk_time, user_id);
+	}
+
 }
