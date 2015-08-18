@@ -38,8 +38,11 @@ public interface PKDao {
 
 	PK getPKByPKID(int pk_id);
 
-	List<PK> getPKListByUserID(@Param("pk_finish_time") String pk_time,
+	List<PK> getPKListByUserID(@Param("page") int page,
 			@Param("user_id") int user_id);
+
+	// List<PK> getPKListByUserID(@Param("pk_finish_time") String pk_time,
+	// @Param("user_id") int user_id);
 
 	List<PK> loadMorePKListByUserID(@Param("pk_finish_time") String pk_time,
 			@Param("user_id") int user_id);

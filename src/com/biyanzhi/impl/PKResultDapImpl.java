@@ -46,12 +46,20 @@ public class PKResultDapImpl implements PKResultDao {
 
 	public Integer getWinCount(int user_id, String picture_id) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
-		return dao.getWinCount(user_id, picture_id);
+		Integer count = dao.getWinCount(user_id, picture_id);
+		if (count == null) {
+			return 0;
+		}
+		return count;
 	}
 
 	public Integer getFailCount(int user_id, String picture_id) {
 		PKResultDao dao = sqlSession.getMapper(PKResultDao.class);
-		return dao.getFailCount(user_id, picture_id);
+		Integer count = dao.getFailCount(user_id, picture_id);
+		if (count == null) {
+			return 0;
+		}
+		return count;
 	}
 
 	public List<PKResult> getPkResultList() {

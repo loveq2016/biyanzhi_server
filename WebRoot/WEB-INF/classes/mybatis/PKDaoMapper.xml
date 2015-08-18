@@ -111,11 +111,12 @@
 	</select>
 	<select id="getPKListByUserID" parameterType="Map" resultMap="PK">
 		select
-		* from pk where pk_finish_time > #{pk_finish_time} and
-		pk_state=1 and (pk1_user_id=#{user_id} or pk2_user_id=#{user_id} )
+		* from pk where 
+		pk_state=1 and (pk1_user_id=#{user_id} or
+		pk2_user_id=#{user_id} )
 		order
 		by pk_finish_time
-		desc limit 0,10
+		desc limit #{page} ,10
 	</select>
 	<select id="loadMorePKListByUserID" parameterType="Map"
 		resultMap="PK">

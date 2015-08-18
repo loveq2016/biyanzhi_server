@@ -510,10 +510,11 @@ public class PKController {
 	@ResponseBody
 	@RequestMapping(value = "/getPKListByUserID.do", method = RequestMethod.POST)
 	public String getPKListByUserID(HttpServletRequest request) {
-		String pk_time = request.getParameter("pk_time");
+		// String pk_time = request.getParameter("pk_time");
+		int page = Integer.valueOf(request.getParameter("page"));
 		int user_id = Integer.valueOf(request.getParameter("pk_user_id"));
 		List<PK> lists = new ArrayList<PK>();
-		lists.addAll(dao.getPKListByUserID(pk_time, user_id));
+		lists.addAll(dao.getPKListByUserID(page, user_id));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pks", lists);
 		params.put("rt", 1);
@@ -559,7 +560,7 @@ public class PKController {
 	// String pk_time = request.getParameter("pk_time");
 	// List<PK> lists = new ArrayList<PK>();
 	// lists.addAll(dao.getPKFinishedList(pk_time));
-	// int i=0;
+	// int i = 0;
 	// for (PK pk : lists) {
 	// i++;
 	// int pk1_user_id = pk.getPk1_user_id();
@@ -632,49 +633,6 @@ public class PKController {
 	//
 	// }
 	// System.out.println(i);
-	// /*
-	// * if
-	// * (pkResultDao.getResultByUserIDAndPictureID(pk.getPk1_user_id(),
-	// * pk.getPk1_user_picture()) <= 0) { PKResult pkResult = new
-	// * PKResult(); pkResult.setPicture_id(pk.getPk1_user_picture());
-	// * pkResult.setUser_id(pk.getPk1_user_id());
-	// * pkResult.setUser_fail_count(0); pkResult.setUser_win_count(0);
-	// * pkResultDao.insert(pkResult);
-	// * System.out.println(pk.getPk_winer_user_id()); }
-	// */
-	// // if
-	// // (pkResultDao.getResultByUserIDAndPictureID(pk.getPk2_user_id(),
-	// // pk.getPk2_user_picture()) <= 0) {
-	// // PKResult pkResult = new PKResult();
-	// // pkResult.setPicture_id(pk.getPk2_user_picture());
-	// // pkResult.setUser_id(pk.getPk2_user_id());
-	// // pkResult.setUser_fail_count(0);
-	// // pkResult.setUser_win_count(0);
-	// // pkResultDao.insert(pkResult);
-	// // }
-	// // if (pk.getPk_winer_user_id() == pk.getPk1_user_id()) {
-	// // pkResultDao.updateWinCount(
-	// // pk.getPk1_user_id(),
-	// // pk.getPk1_user_picture(),
-	// // pkResultDao.getWinCount(pk.getPk1_user_id(),
-	// // pk.getPk1_user_picture()) + 1);
-	// // pkResultDao.updateFailCount(
-	// // pk.getPk2_user_id(),
-	// // pk.getPk2_user_picture(),
-	// // pkResultDao.getFailCount(pk.getPk2_user_id(),
-	// // pk.getPk2_user_picture()) + 1);
-	// // } else {
-	// // pkResultDao.updateFailCount(
-	// // pk.getPk1_user_id(),
-	// // pk.getPk1_user_picture(),
-	// // pkResultDao.getFailCount(pk.getPk1_user_id(),
-	// // pk.getPk1_user_picture()) + 1);
-	// // pkResultDao.updateWinCount(
-	// // pk.getPk2_user_id(),
-	// // pk.getPk2_user_picture(),
-	// // pkResultDao.getWinCount(pk.getPk2_user_id(),
-	// // pk.getPk2_user_picture()) + 1);
-	// // }
 	//
 	// }
 	// return "finish";
