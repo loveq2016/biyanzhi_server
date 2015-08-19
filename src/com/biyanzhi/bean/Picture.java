@@ -14,11 +14,20 @@ public class Picture {
 	private String picture_image_url = "";
 	private int average_score;
 	private boolean is_play_score;
+	private int state;
 
 	private int score_number;// 打分人数
 	private List<Comment> comments = new ArrayList<Comment>();
 	private User user;
 	private List<PictureScore> scores = new ArrayList<PictureScore>();
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
 
 	public List<PictureScore> getScores() {
 		return scores;
