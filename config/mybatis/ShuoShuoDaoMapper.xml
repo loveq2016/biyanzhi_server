@@ -14,11 +14,11 @@
 		<result property="publisher_avatar" column="publisher_avatar" />
 		<result property="state" column="state" />
 		<collection property="comments" column="shuoshuo_id"
-			ofType="com.biyanzhi.bean.ShuoShuoComment" select="getCommentByPictureID" />
+			ofType="com.biyanzhi.bean.ShuoShuoComment" select="com.biyanzhi.dao.ShuoShuoCommentDao.getCommentByShuoShuoID" />
 		<collection property="images" column="shuoshuo_id"
-			ofType="com.biyanzhi.bean.ShuoShuoImage" select="getCommentByPictureID" />
+			ofType="com.biyanzhi.bean.ShuoShuoImage" select="com.biyanzhi.dao.ShuoShuoImageDao.getImageByShuoShuoID" />
 		<collection property="praises" column="shuoshuo_id"
-			ofType="com.biyanzhi.bean.ShuoShuoPraise" select="getCommentByPictureID" />
+			ofType="com.biyanzhi.bean.ShuoShuoPraise" select="com.biyanzhi.dao.ShuoShuoPraiseDao.getPariseByShuoShuoID" />
 	</resultMap>
 	<!-- getAppLists必须和接口中的方法名一样 返回一个 就是刚才的别名 如果不弄别名要连类路径一起写 麻烦 -->
 	<insert id="insert" parameterType="com.biyanzhi.bean.ShuoShuo"
