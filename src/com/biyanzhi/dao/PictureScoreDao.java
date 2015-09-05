@@ -2,6 +2,8 @@ package com.biyanzhi.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.biyanzhi.bean.PictureScore;
 
 public interface PictureScoreDao {
@@ -11,7 +13,8 @@ public interface PictureScoreDao {
 
 	int addPictureScore(PictureScore pictureScore);
 
-	List<PictureScore> getPlayScoreUserListByPictureID(int picture_id);
+	List<PictureScore> getPlayScoreUserListByPictureID(@Param("page") int page,
+			@Param("picture_id") int picture_id);
 
-//	int getPlayScoreByUserID(int user_id);
+	// int getPlayScoreByUserID(int user_id);
 }

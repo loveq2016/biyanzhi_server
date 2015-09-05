@@ -484,9 +484,9 @@ public class UserController {
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		System.out.println("version:" + jsonObjectFromMap.toString());
 		return jsonObjectFromMap.toString();
-  
+
 	}
-  
+
 	@ResponseBody
 	@RequestMapping(value = "/changePassword.do", method = RequestMethod.POST)
 	public String changePassword(HttpServletRequest request) {
@@ -540,8 +540,9 @@ public class UserController {
 	@RequestMapping(value = "/getPlayScoreUserListsByPictureID.do", method = RequestMethod.POST)
 	public String getPlayScoreUserListsByPictureID(HttpServletRequest request) {
 		int picture_id = Integer.valueOf(request.getParameter("picture_id"));
-		List<PictureScore> users = scoreDao
-				.getPlayScoreUserListByPictureID(picture_id);
+		int page = Integer.valueOf(request.getParameter("page"));
+		List<PictureScore> users = scoreDao.getPlayScoreUserListByPictureID(
+				page, picture_id);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("rt", 1);
 		params.put("users", users);

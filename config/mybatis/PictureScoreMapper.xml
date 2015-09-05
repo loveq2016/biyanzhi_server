@@ -34,12 +34,11 @@
 		picture_score(user_id,picture_id,picture_score ,play_score_time)
 		values(#{user_id},#{picture_id},#{picture_score},#{play_score_time})
 	</insert>
-	<select id="getPlayScoreUserListByPictureID" parameterType="Integer"
+	<select id="getPlayScoreUserListByPictureID" parameterType="Map"
 		resultMap="PictureScore">
 		select * from picture_score where picture_id=#{picture_id}
 		order by
-		play_score_time desc
-
+		play_score_time desc limit #{page} ,10
 
 	</select>
 	<select id="getPlayScoreByUserID" parameterType="Integer"

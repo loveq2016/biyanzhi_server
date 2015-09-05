@@ -109,7 +109,7 @@ public class ShuoShuoController {
 		}
 		List<ShuoShuoImage> images = new ArrayList<ShuoShuoImage>();
 		// ±£´æÍ¼Æ¬
-		List<MultipartFile> files = multipartRequest.getFiles("images");
+		List<MultipartFile> files = multipartRequest.getFiles("image");
 		String serverPath = Constants.SERVER_PATH + "/shuoshuo_images/";
 		int index = 1;
 		for (MultipartFile file : files) {
@@ -135,6 +135,7 @@ public class ShuoShuoController {
 			} catch (IOException e) {
 			}
 		}
+
 		imgDao.insert(images);
 		params.put("rt", 1);
 		params.put("shuoshuo_id", shuoshuo_id);
