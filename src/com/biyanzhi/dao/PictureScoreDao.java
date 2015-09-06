@@ -16,5 +16,6 @@ public interface PictureScoreDao {
 	List<PictureScore> getPlayScoreUserListByPictureID(@Param("page") int page,
 			@Param("picture_id") int picture_id);
 
+	List<PictureScore> getPlayScoreUserListByPictureIDByOld(int picture_id);// 没有分页之前方法
 	// int getPlayScoreByUserID(int user_id);
 }

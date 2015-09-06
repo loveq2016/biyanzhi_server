@@ -41,6 +41,13 @@
 		play_score_time desc limit #{page} ,10
 
 	</select>
+	<select id="getPlayScoreUserListByPictureIDByOld" parameterType="Integer"
+		resultMap="PictureScore">
+		select * from picture_score where picture_id=#{picture_id}
+		order by
+		play_score_time desc
+
+	</select>
 	<select id="getPlayScoreByUserID" parameterType="Integer"
 		resultType="int">
 		SELECT count(*) from picture_score WHERE
