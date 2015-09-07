@@ -7,3 +7,5 @@ encoding//src/com/biyanzhi/huanxinImpl/EasemobMessages.java=UTF-8
 encoding//src/com/biyanzhi/smscode/DateUtil.java=UTF-8
 encoding//src/com/biyanzhi/smscode/SSLHttpClient.java=UTF-8
 encoding//src/com/biyanzhi/util/MD5.java=UTF-8
+encoding//src/com/biyanzhi/util/QuartzJob.java=UTF-8
+encoding//src/com/biyanzhi/util/QuartzThread.java=UTF-8

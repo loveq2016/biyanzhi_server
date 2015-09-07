@@ -20,4 +20,9 @@ public class Utils {
 		}
 		return str.toString();
 	}
+
+	public static int getRandRom(int min, int max) {
+		Random random = new Random();
+		return random.nextInt(max) % (max - min + 1) + min;
+	}
 }

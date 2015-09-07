@@ -13,6 +13,7 @@
 		<result property="publisher_name" column="publisher_name" />
 		<result property="publisher_avatar" column="publisher_avatar" />
 		<result property="picture_image_url" column="picture_image_url" />
+		<result property="state" column="state" />
 		<association property="user"
 			select="com.biyanzhi.dao.UserDao.findUserByUserID" column="publisher_id"
 			javaType="com.biyanzhi.bean.User" />
@@ -45,24 +46,28 @@
 	</select>
 	<select id="getPictureByPictureID" parameterType="Integer"
 		resultMap="Picture">
-		select * from picture where picture_id = #{picture_id}
+		select * from picture where picture_id = #{picture_id} and
+		state !=-1
 	</select>
 	<select id="loadMorePictureList" parameterType="Integer"
 		resultMap="Picture">
-	<![CDATA[	select * from picture where publish_time < #{publish_time}
+	<![CDATA[	select * from picture where publish_time < #{publish_time} and
+		state !=-1
 		order by
 		publish_time desc limit 0,10]]>
 
 	</select>
 	<select id="getPictureListByUserID" parameterType="Integer"
 		resultMap="Picture">
-		select * from picture where publisher_id=#{publisher_id}
+		select * from picture where publisher_id=#{publisher_id} and
+		state !=-1
 		order by
 		publish_time desc limit 0,10
 	</select>
 	<select id="getPictureListMoreByUserID" parameterType="Map"
 		resultMap="Picture">
-	<![CDATA[	select * from picture where publisher_id=#{publisher_id} and publish_time < #{publish_time}
+	<![CDATA[	select * from picture where publisher_id=#{publisher_id} and publish_time < #{publish_time} and
+		state !=-1
 		order by
 		publish_time desc limit 0,10]]>
 
@@ -101,7 +106,8 @@
 		LEFT JOIN picture pic ON
 		p.picture_id = pic.picture_id
 		LEFT JOIN `user` u ON pic.publisher_id =
-		u.user_id WHERE u.user_gender="女"
+		u.user_id WHERE u.user_gender="女" and
+		pic.state !=-1
 		GROUP BY
 		p.picture_id
 		ORDER BY
@@ -119,7 +125,8 @@
 		LEFT JOIN picture pic ON
 		p.picture_id = pic.picture_id
 		LEFT JOIN `user` u ON pic.publisher_id =
-		u.user_id WHERE u.user_gender="男"
+		u.user_id WHERE u.user_gender="男" and
+		pic.state !=-1
 		GROUP BY
 		p.picture_id
 		ORDER BY
@@ -133,6 +140,13 @@
 		picture_id = #{picture_id}
 	</update>
 	<delete id="delPicture">
-		DELETE FROM picture WHERE picture_id=#{picture_id}
+		UPDATE
+		picture
+		SET
+		state = -1
+		WHERE
+		picture_id =
+		#{picture_id}
+		<!-- DELETE FROM picture WHERE picture_id=#{picture_id} -->
 	</delete>
 </mapper>

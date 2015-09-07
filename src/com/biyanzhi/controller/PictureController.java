@@ -23,6 +23,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.biyanzhi.bean.Picture;
 import com.biyanzhi.bean.PictureScore;
+import com.biyanzhi.bean.User;
 import com.biyanzhi.dao.CommentDao;
 import com.biyanzhi.dao.PictureDao;
 import com.biyanzhi.dao.PictureScoreDao;
@@ -31,9 +32,12 @@ import com.biyanzhi.enums.ErrorEnum;
 import com.biyanzhi.huanxinImpl.EasemobMessages;
 import com.biyanzhi.util.Constants;
 import com.biyanzhi.util.DateUtils;
+import com.biyanzhi.util.QuartzThread;
+import com.biyanzhi.util.Utils;
 
 @Controller
 public class PictureController {
+
 	@Autowired
 	private UserDao uDao;
 
@@ -141,6 +145,7 @@ public class PictureController {
 		params.put("rt", 1);
 		params.put("picture_id", picture_id);
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
+		new QuartzThread(picture_id, publisher_id).start();
 		return jsonObjectFromMap.toString();
 	}
 
@@ -333,5 +338,33 @@ public class PictureController {
 		JSONObject jsonObjectFromMap = JSONObject.fromObject(params);
 		return jsonObjectFromMap.toString();
 
+	}
+
+	public void systemPlayScore(int picture_id, int picture_publisher_id) {
+		int playscore_count = Utils.getRandRom(Constants.MIN_PLAYSCORE_COUNT,
+				Constants.MAXN_PLAYSCORE_COUNT);
+		for (int i = 0; i < playscore_count; i++) {
+			int user_id = Utils.getRandRom(Constants.PLAYSCORE_START_USER_ID,
+					Constants.PLAYSCORE_END_USER_ID);
+			int picture_score = Utils.getRandRom(Constants.MIN_SCORE,
+					Constants.MAXN_SCORE);
+			User user = uDao.findUserByUserID(user_id);
+			if (user == null) {
+				continue;
+			}
+			String user_name = user.getUser_name();
+			PictureScore score = new PictureScore();
+			score.setPicture_id(picture_id);
+			score.setPicture_score(picture_score);
+			score.setUser_id(user_id);
+			score.setPlay_score_time(DateUtils.getPicturePublishTime());
+			int result = scoreDao.addPictureScore(score);
+			if (result > 0) {
+				String user_chat_id = uDao.getUserChatIDByPictureID(picture_id,
+						picture_publisher_id);
+				EasemobMessages.sendTextMessageForPlayScore(picture_id,
+						user_chat_id, "'" + user_name + "‘ 给你的照片打分了快去看看吧");
+			}
+		}
 	}
 }
