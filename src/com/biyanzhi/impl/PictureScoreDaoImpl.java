@@ -67,9 +67,10 @@ public class PictureScoreDaoImpl implements PictureScoreDao {
 		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
 		return dao.getPlayScoreUserListByPictureIDByOld(picture_id);
 	}
-	// public int getPlayScoreByUserID(int user_id) {
-	// PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
-	// return dao.getPlayScoreByUserID(user_id);
-	// }
+
+	public int getPlayScoreByUserID(int picture_id, int user_id) {
+		PictureScoreDao dao = sqlSession.getMapper(PictureScoreDao.class);
+		return dao.getPlayScoreByUserID(picture_id, user_id);
+	}
 
 }

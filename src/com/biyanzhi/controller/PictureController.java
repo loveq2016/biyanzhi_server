@@ -153,12 +153,13 @@ public class PictureController {
 	@RequestMapping(value = "/getpicturelists.do", method = RequestMethod.POST)
 	public String getPictureList(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");
-		// int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getPictureList(publish_time));
-		// for (Picture pic : lists) {
-		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
-		// }
+		for (Picture pic : lists) {
+			pic.setIs_play_score(scoreDao.getPlayScoreByUserID(
+					pic.getPicture_id(), user_id) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -205,12 +206,13 @@ public class PictureController {
 	@RequestMapping(value = "/loadMorePictureList.do", method = RequestMethod.POST)
 	public String loadMorePictureList(HttpServletRequest request) {
 		String publish_time = request.getParameter("publish_time");
-		// int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.loadMorePictureList(publish_time));
-		// for (Picture pic : lists) {
-		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
-		// }
+		for (Picture pic : lists) {
+			pic.setIs_play_score(scoreDao.getPlayScoreByUserID(
+					pic.getPicture_id(), user_id) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -223,12 +225,13 @@ public class PictureController {
 	@ResponseBody
 	@RequestMapping(value = "/getGirlBangPictureList.do", method = RequestMethod.POST)
 	public String getGirlBangPictureList(HttpServletRequest request) {
-		// int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getGirlBangPictureList());
-		// for (Picture pic : lists) {
-		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
-		// }
+		for (Picture pic : lists) {
+			pic.setIs_play_score(scoreDao.getPlayScoreByUserID(
+					pic.getPicture_id(), user_id) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
@@ -241,12 +244,13 @@ public class PictureController {
 	@ResponseBody
 	@RequestMapping(value = "/getBoyBangPictureList.do", method = RequestMethod.POST)
 	public String getBoyBangPictureList(HttpServletRequest request) {
-		// int user_id = Integer.valueOf(request.getParameter("user_id"));
+		int user_id = Integer.valueOf(request.getParameter("user_id"));
 		List<Picture> lists = new ArrayList<Picture>();
 		lists.addAll(pictureDao.getBoyBangPictureList());
-		// for (Picture pic : lists) {
-		// pic.setIs_play_score(scoreDao.getPlayScoreByUserID(user_id) > 0);
-		// }
+		for (Picture pic : lists) {
+			pic.setIs_play_score(scoreDao.getPlayScoreByUserID(
+					pic.getPicture_id(), user_id) > 0);
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("pictures", lists);
 		params.put("rt", 1);
