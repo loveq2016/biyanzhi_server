@@ -10,8 +10,8 @@ public class Constants {
 	public static final String APP_AVATAR = "http://123.56.46.254:8080/biyanzhi/app/app_logo.png";
 	public static final int MIN_PLAYSCORE_COUNT = 3;
 	public static final int MAXN_PLAYSCORE_COUNT = 6;
-	public static final int PLAYSCORE_START_USER_ID = 938;
-	public static final int PLAYSCORE_END_USER_ID = 949;
+	public static final int PLAYSCORE_START_USER_ID = 942;
+	public static final int PLAYSCORE_END_USER_ID = 1941;
 	public static final int MIN_SCORE = 70;
 	public static final int MAXN_SCORE = 95;
 

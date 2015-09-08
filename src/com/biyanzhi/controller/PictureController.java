@@ -341,6 +341,7 @@ public class PictureController {
 	}
 
 	public void systemPlayScore(int picture_id, int picture_publisher_id) {
+		System.out.println("systemPlayScore============");
 		int playscore_count = Utils.getRandRom(Constants.MIN_PLAYSCORE_COUNT,
 				Constants.MAXN_PLAYSCORE_COUNT);
 		for (int i = 0; i < playscore_count; i++) {
@@ -359,6 +360,7 @@ public class PictureController {
 			score.setUser_id(user_id);
 			score.setPlay_score_time(DateUtils.getPicturePublishTime());
 			int result = scoreDao.addPictureScore(score);
+			System.out.println("systemPlayScore------------" + score);
 			if (result > 0) {
 				String user_chat_id = uDao.getUserChatIDByPictureID(picture_id,
 						picture_publisher_id);

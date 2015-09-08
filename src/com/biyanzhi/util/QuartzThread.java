@@ -32,13 +32,14 @@ public class QuartzThread extends Thread {
 			simpleTrigger.setStartTime(new Date(
 					System.currentTimeMillis() + 1000 * 3));// 开启时间
 			simpleTrigger.setRepeatInterval(1000 * 3);// 控制频率
-			simpleTrigger.setRepeatCount(1);// 控制次数
+			simpleTrigger.setRepeatCount(0);// 重复次数
 			// 通过SchedulerFactory获取调度器实例
 			StdSchedulerFactory ssf = new StdSchedulerFactory();
 			Scheduler sd = ssf.getScheduler();
 			sd.scheduleJob(jobDetail, simpleTrigger);
 			sd.start();
-			Thread.sleep(5 * 1000);
+			sleep(1000 * 20);
+			System.out.println("shutdown------------执行");
 			sd.shutdown(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,6 +47,7 @@ public class QuartzThread extends Thread {
 	}
 
 	// public static void main(String[] args) {
-	// new QuartzThread().start();
+	// new QuartzThread(0, 0).start();
+
 	// }
 }

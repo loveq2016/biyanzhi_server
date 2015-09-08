@@ -26,6 +26,7 @@ public class QuartzJob implements Job {
 			pictureController.systemPlayScore(picture_id, picture_publisher_id);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("QuartzJob---"+e.toString());
 		}
 	}
 
